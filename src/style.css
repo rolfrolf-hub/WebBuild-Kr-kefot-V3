@@ -1,9 +1,13 @@
-/* 2026 Gold Standard: CSS Cascade Layers */
-@layer tailwind-base, tailwind-components, custom, tailwind-utilities;
+@import "tailwindcss";
 
-@import "tailwindcss/base" layer(tailwind-base);
-@import "tailwindcss/components" layer(tailwind-components);
-@import "tailwindcss/utilities" layer(tailwind-utilities);
+/* Tailwind v4 theme: maps CSS vars to Tailwind utilities (bg-accent, text-accent, font-sans…) */
+@theme inline {
+  --font-sans: 'Montserrat', sans-serif;
+  --font-serif: 'Montserrat', sans-serif;
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-accent-dark: var(--accent-dark);
+}
 
 :root {
     /* Farger - 2026 Gold Standard: oklch() with hex fallbacks */
