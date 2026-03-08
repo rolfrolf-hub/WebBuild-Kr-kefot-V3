@@ -1,0 +1,42 @@
+#!/bin/bash
+# Kråkefot — Beskyttelseshook mot utilsiktede slettinger i kildekode
+
+# Hent staged deletions, filtrer ut gitignorerte filer
+DELETED_LIST=""
+while IFS= read -r file; do
+  [ -z "$file" ] && continue
+  if ! git check-ignore -q "$file" 2>/dev/null; then
+    DELETED_LIST="${DELETED_LIST}${file}"$'\n'
+  fi
+done < <(git diff --cached --name-only --diff-filter=D 2>/dev/null)
+
+# Tell antall slettede kildekode-filer (printf unngår trailing newline-feil)
+DELETED_COUNT=0
+if [ -n "$DELETED_LIST" ]; then
+  DELETED_COUNT=$(printf '%s' "$DELETED_LIST" | grep -c '.')
+fi
+
+# Blokker hvis mer enn 2 ikke-ignorerte kildekode-filer slettes
+if [ "$DELETED_COUNT" -gt 2 ]; then
+  echo ""
+  echo "🛑 COMMIT BLOKKERT: $DELETED_COUNT kildekode-filer er markert for sletting."
+  echo ""
+  echo "Filer som ville blitt slettet:"
+  printf '%s' "$DELETED_LIST" | sed 's/^/  - /'
+  echo ""
+  echo "Dette er sannsynligvis en feil. Bekreft at du mener dette."
+  echo "For å overstyre: git commit --no-verify"
+  echo ""
+  exit 1
+fi
+
+# Advar hvis mer enn 100 linjer slettes
+LINES_DELETED=$(git diff --cached --stat 2>/dev/null | grep -oE '[0-9]+ deletion' | grep -oE '[0-9]+' | awk '{sum+=$1} END {print sum+0}')
+if [ "$LINES_DELETED" -gt 100 ]; then
+  echo ""
+  echo "⚠️  ADVARSEL: $LINES_DELETED linjer slettes i denne committen."
+  echo "Trykk Enter for å fortsette, eller Ctrl+C for å avbryte."
+  read -r
+fi
+
+exit 0
