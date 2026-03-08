@@ -19,9 +19,11 @@ interface AboutStorySectionProps {
     onUpdate: (newData: Partial<BrandState>) => void;
     scrollY: number;
     scrollContainerRef?: React.RefObject<HTMLDivElement>;
+    mode?: 'edit' | 'publish';
 }
 
-export const AboutStorySection: React.FC<AboutStorySectionProps> = ({ brandData, onUpdate, scrollY, scrollContainerRef }) => {
+export const AboutStorySection: React.FC<AboutStorySectionProps> = ({ brandData, onUpdate, scrollY, scrollContainerRef, mode = 'edit' }) => {
+    const isPublish = mode === 'publish';
     const isMobile = brandData.isMobilePreview;
     const data = brandData.sections.about.story;
     const { layout, visuals, framing } = data;
@@ -75,6 +77,7 @@ export const AboutStorySection: React.FC<AboutStorySectionProps> = ({ brandData,
                         className="text-[var(--accent)] text-sm font-bold uppercase tracking-[0.3em] block text-center"
                         value={data.tagline || "Vår Historie"}
                         onSave={(val) => updateSection({ tagline: val })}
+                        mode={mode}
                     />
                 </FadeIn>
 
@@ -88,6 +91,7 @@ export const AboutStorySection: React.FC<AboutStorySectionProps> = ({ brandData,
                             className={`text-zinc-300 ${isMobile ? 'text-xl' : 'text-2xl'} leading-relaxed font-light italic border-l-2 border-accent pl-8 whitespace-pre-wrap`}
                             value={data.text}
                             onSave={(val) => updateSection({ text: val })}
+                            mode={mode}
                         />
                     </FadeIn>
 
@@ -110,6 +114,7 @@ export const AboutStorySection: React.FC<AboutStorySectionProps> = ({ brandData,
                     </FadeIn>
                 </div>
 
+                {!isPublish && (
                 <div className="absolute top-0 right-0 z-50 h-full pointer-events-none">
                     <div className="sticky top-6 right-6 pointer-events-auto">
                         <FloatingControlPanel title="Story Section" isMobile={brandData.isMobilePreview}>
@@ -194,6 +199,7 @@ export const AboutStorySection: React.FC<AboutStorySectionProps> = ({ brandData,
                         </FloatingControlPanel>
                     </div>
                 </div>
+                )}
             </div>
         </section>
     );

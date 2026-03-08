@@ -20,9 +20,11 @@ interface ContactSectionProps {
     onUpdate: (newData: Partial<BrandState>) => void;
     scrollY: number;
     scrollContainerRef?: React.RefObject<HTMLDivElement>;
+    mode?: 'edit' | 'publish';
 }
 
-export const ContactSection: React.FC<ContactSectionProps> = ({ brandData, onUpdate, scrollY, scrollContainerRef }) => {
+export const ContactSection: React.FC<ContactSectionProps> = ({ brandData, onUpdate, scrollY, scrollContainerRef, mode = 'edit' }) => {
+    const isPublish = mode === 'publish';
     const isMobile = brandData.isMobilePreview;
     const data = brandData.sections.contact;
     const { layout, visuals, framing } = data;
@@ -76,6 +78,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ brandData, onUpd
                 />
             </div>
 
+            {!isPublish && (
             <div className="absolute top-0 right-0 z-50 h-full pointer-events-none">
                 <div className="sticky top-6 right-6 pointer-events-auto">
                     <FloatingControlPanel title="Contact Section" isMobile={brandData.isMobilePreview}>
@@ -164,6 +167,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ brandData, onUpd
                     </FloatingControlPanel>
                 </div>
             </div>
+            )}
 
             <a
                 href={`mailto:${data.email}`}
@@ -183,6 +187,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ brandData, onUpd
                         className="text-[var(--accent)] font-bold text-xs uppercase tracking-[0.3em] block mb-6"
                         value={data.tagline}
                         onSave={(val) => updateSection({ tagline: val })}
+                        mode={mode}
                     />
                     <InlineText
                         styleKey="contactHeadline"
@@ -191,6 +196,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ brandData, onUpd
                         className={`${isMobile ? 'text-3xl sm:text-4xl' : 'text-5xl md:text-6xl lg:text-7xl'} font-serif text-white mb-6 md:mb-8 leading-tight glitch-heading`}
                         value={data.headline}
                         onSave={(val) => updateSection({ headline: val })}
+                        mode={mode}
                         {...{ "data-text": data.headline } as any}
                     />
                     <InlineText
@@ -200,6 +206,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ brandData, onUpd
                         className={`${isMobile ? 'text-base sm:text-lg' : 'text-lg md:text-xl'} text-zinc-300 font-light mb-8 md:mb-12 max-w-2xl mx-auto leading-relaxed px-2`}
                         value={data.text}
                         onSave={(val) => updateSection({ text: val })}
+                        mode={mode}
                     />
                     <div className={`inline-flex items-center gap-2 md:gap-3 ${isMobile ? 'text-xl sm:text-2xl' : 'text-2xl md:text-3xl lg:text-4xl'} font-bold text-white group-hover/card:text-[var(--accent-light)] transition-all cursor-pointer break-all px-2`}>
                         <InlineText
@@ -207,7 +214,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ brandData, onUpd
                             brandData={brandData}
                             value={data.email}
                             onSave={(val) => updateSection({ email: val })}
-                            className="pointer-events-none" // The parent <a> handles the link
+                            className="pointer-events-none"
+                            mode={mode}
                         />
                     </div>
                 </div>
@@ -227,6 +235,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ brandData, onUpd
                                 newAddrs[idx].label = val;
                                 updateSection({ addresses: newAddrs });
                             }}
+                            mode={mode}
                         />
                         <InlineText
                             styleKey="contactAddressValue"
@@ -239,6 +248,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ brandData, onUpd
                                 newAddrs[idx].address = val;
                                 updateSection({ addresses: newAddrs });
                             }}
+                            mode={mode}
                         />
                     </div>
                 ))}

@@ -10,6 +10,7 @@ interface InlineTextProps {
   multiline?: boolean;
   styleKey?: string;
   brandData?: ProjectState;
+  mode?: 'edit' | 'publish';
 }
 
 export const InlineText: React.FC<InlineTextProps> = ({
@@ -19,8 +20,10 @@ export const InlineText: React.FC<InlineTextProps> = ({
   tagName = 'span',
   multiline = false,
   styleKey,
-  brandData
+  brandData,
+  mode = 'edit'
 }) => {
+  const isPublish = mode === 'publish';
   const [isEditing, setIsEditing] = useState(false);
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 
@@ -101,7 +104,7 @@ export const InlineText: React.FC<InlineTextProps> = ({
     ...(customAccent && { '--accent': customAccent } as any),
   };
 
-  if (isEditing) {
+  if (isEditing && !isPublish) {
     const commonClasses = `bg-zinc-900/90 text-white outline-none border-b-2 border-[var(--accent)] w-full rounded px-2 py-1 shadow-xl ${className} ${customClasses}`;
     if (multiline) {
       return (
@@ -162,6 +165,19 @@ export const InlineText: React.FC<InlineTextProps> = ({
   };
 
   const Tag = tagName as any;
+
+  if (isPublish) {
+    return (
+      <Tag
+        className={`${finalClasses} ${isGlitching ? 'glitch-active' : ''}`}
+        data-text={value}
+        style={inlineStyle}
+      >
+        {value}
+      </Tag>
+    );
+  }
+
   return (
     <Tag
       onClick={(e: React.MouseEvent) => {

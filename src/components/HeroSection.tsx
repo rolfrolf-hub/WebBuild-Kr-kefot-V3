@@ -19,9 +19,11 @@ interface HeroSectionProps {
     onUpdate: (newData: Partial<BrandState>) => void;
     scrollY: number;
     scrollContainerRef?: React.RefObject<HTMLDivElement>;
+    mode?: 'edit' | 'publish';
 }
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ brandData, onUpdate, scrollY, scrollContainerRef }) => {
+export const HeroSection: React.FC<HeroSectionProps> = ({ brandData, onUpdate, scrollY, scrollContainerRef, mode = 'edit' }) => {
+    const isPublish = mode === 'publish';
     const isMobile = brandData.isMobilePreview;
     const data = brandData.sections.home.hero;
     const { layout, visuals, framing } = data;
@@ -98,6 +100,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ brandData, onUpdate, s
                 />
             </div>
 
+            {!isPublish && (
             <div className="absolute top-0 right-0 z-50 h-full pointer-events-none">
                 <div className="sticky top-6 right-6 pointer-events-auto">
                     <FloatingControlPanel title="Hero Section" className="absolute top-0 right-0" isMobile={brandData.isMobilePreview}>
@@ -198,6 +201,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ brandData, onUpdate, s
                     </FloatingControlPanel>
                 </div>
             </div>
+            )}
 
             <div className="relative z-10 text-center max-w-6xl w-full">
                 <InlineText
@@ -207,6 +211,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ brandData, onUpdate, s
                     className="text-4xl @md:text-7xl @lg:text-9xl font-bold mb-4 tracking-tighter text-white uppercase leading-none glitch-heading"
                     value={data.headline}
                     onSave={(val) => updateSection({ headline: val })}
+                    mode={mode}
                     {...{ "data-text": data.headline } as any}
                 />
                 <InlineText
@@ -216,6 +221,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ brandData, onUpdate, s
                     className={`${isMobile ? 'text-xl' : 'text-2xl'} text-zinc-300 font-serif italic mb-8`}
                     value={data.subheadline}
                     onSave={(val) => updateSection({ subheadline: val })}
+                    mode={mode}
                 />
                 <div className="flex flex-col items-center gap-4">
                     <button className="relative overflow-hidden group/btn px-8 py-4 bg-black/60 backdrop-blur-md border border-[var(--accent)] text-white hover:text-[var(--accent)] transition-all duration-300 rounded-lg">
@@ -227,6 +233,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ brandData, onUpdate, s
                             className="relative z-10 font-bold uppercase tracking-[0.2em] text-sm"
                             value={data.ctaText}
                             onSave={(val) => updateSection({ ctaText: val })}
+                            mode={mode}
                         />
                     </button>
                     <div className="mt-8 animate-bounce">

@@ -21,9 +21,11 @@ interface AboutHeroSectionProps {
     onUpdate: (newData: Partial<BrandState>) => void;
     scrollY: number;
     scrollContainerRef?: React.RefObject<HTMLDivElement>;
+    mode?: 'edit' | 'publish';
 }
 
-export const AboutHeroSection: React.FC<AboutHeroSectionProps> = ({ brandData, onUpdate, scrollY, scrollContainerRef }) => {
+export const AboutHeroSection: React.FC<AboutHeroSectionProps> = ({ brandData, onUpdate, scrollY, scrollContainerRef, mode = 'edit' }) => {
+    const isPublish = mode === 'publish';
     const isMobile = brandData.isMobilePreview;
     const data = brandData.sections.about.hero;
     const story = brandData.sections.about.story;
@@ -151,6 +153,7 @@ export const AboutHeroSection: React.FC<AboutHeroSectionProps> = ({ brandData, o
                 />
 
                 {/* ── Floating control panel ── */}
+                {!isPublish && (
                 <div className="absolute top-0 right-0 z-50 h-full pointer-events-none">
                     <div className="sticky top-6 right-6 pointer-events-auto">
                         <FloatingControlPanel title="About Hero" isMobile={brandData.isMobilePreview}>
@@ -230,6 +233,7 @@ export const AboutHeroSection: React.FC<AboutHeroSectionProps> = ({ brandData, o
                         </FloatingControlPanel>
                     </div>
                 </div>
+                )}
 
                 {/* ── Intro text — visible at start, fades out over first 5 frames ── */}
                 <div
@@ -244,6 +248,7 @@ export const AboutHeroSection: React.FC<AboutHeroSectionProps> = ({ brandData, o
                             className="text-4xl md:text-8xl font-serif mb-8 leading-tight md:leading-tight drop-shadow-2xl text-white"
                             value={data.introText || ''}
                             onSave={(val) => updateSection({ introText: val })}
+                            mode={mode}
                         />
                     </div>
                 </div>
@@ -261,6 +266,7 @@ export const AboutHeroSection: React.FC<AboutHeroSectionProps> = ({ brandData, o
                             className="text-4xl md:text-8xl font-serif mb-8 leading-tight md:leading-tight drop-shadow-2xl text-white glitch-heading"
                             value={data.headline}
                             onSave={(val) => updateSection({ headline: val })}
+                            mode={mode}
                         />
                         <InlineText
                             styleKey="aboutHeroSubheadline"
@@ -269,6 +275,7 @@ export const AboutHeroSection: React.FC<AboutHeroSectionProps> = ({ brandData, o
                             className="inline-block text-[var(--accent-light)] font-bold tracking-[0.4em] text-xs uppercase mb-6 animate-pulse"
                             value={data.subheadline || "EST. 2024"}
                             onSave={(val) => updateSection({ subheadline: val })}
+                            mode={mode}
                         />
                         <div className="w-32 h-1 bg-[var(--accent-dark)] mx-auto rounded-full shadow-[0_0_20px_rgb(var(--accent-rgb)/0.6)]" />
                     </div>

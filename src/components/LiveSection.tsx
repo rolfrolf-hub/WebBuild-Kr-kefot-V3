@@ -23,9 +23,11 @@ interface LiveSectionProps {
     onUpdate: (newData: Partial<BrandState>) => void;
     scrollY: number;
     scrollContainerRef?: React.RefObject<HTMLDivElement>;
+    mode?: 'edit' | 'publish';
 }
 
-export const LiveSection: React.FC<LiveSectionProps> = ({ brandData, onUpdate, scrollY, scrollContainerRef }) => {
+export const LiveSection: React.FC<LiveSectionProps> = ({ brandData, onUpdate, scrollY, scrollContainerRef, mode = 'edit' }) => {
+    const isPublish = mode === 'publish';
     const liveVideoRef = useRef<any>(null);
     const [isLivePlaying, setIsLivePlaying] = useState(false);
     const isMobile = brandData.isMobilePreview;
@@ -209,7 +211,7 @@ export const LiveSection: React.FC<LiveSectionProps> = ({ brandData, onUpdate, s
 
             <div className="relative z-30 text-center transition-opacity duration-1000 flex flex-col items-center justify-center p-8 md:p-0">
                 <div className={`transition-all duration-1000 transform ${isLivePlaying ? 'opacity-0 translate-y-[-15px] pointer-events-none' : 'opacity-100 translate-y-0'}`}>
-                    <InlineText styleKey="homeLiveTagline" brandData={brandData} tagName="span" className="text-[var(--accent)] font-bold text-lg @md:text-5xl uppercase tracking-[0.5em] block mb-12 drop-shadow-lg" value={data.tagline} onSave={(val) => updateSection({ tagline: val })} />
+                    <InlineText styleKey="homeLiveTagline" brandData={brandData} tagName="span" className="text-[var(--accent)] font-bold text-lg @md:text-5xl uppercase tracking-[0.5em] block mb-12 drop-shadow-lg" value={data.tagline} onSave={(val) => updateSection({ tagline: val })} mode={mode} />
                 </div>
 
                 <div className={`transition-all duration-1000 transform ${isLivePlaying ? 'opacity-0 translate-y-[-15px] pointer-events-none' : 'opacity-100 translate-y-0'}`}>
@@ -220,6 +222,7 @@ export const LiveSection: React.FC<LiveSectionProps> = ({ brandData, onUpdate, s
                         className="text-5xl @md:text-8xl @lg:text-[12rem] font-bold tracking-widest text-white leading-none glitch-heading"
                         value={data.headline}
                         onSave={(val) => updateSection({ headline: val })}
+                        mode={mode}
                         {...{ "data-text": data.headline } as any}
                     />
                 </div>
@@ -257,6 +260,7 @@ export const LiveSection: React.FC<LiveSectionProps> = ({ brandData, onUpdate, s
                                 className="uppercase tracking-[0.2em] text-xs font-bold"
                                 value={data.youtubeText || "Watch on YouTube"}
                                 onSave={(val) => updateSection({ youtubeText: val })}
+                                mode={mode}
                             />
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="transform group-hover:translate-x-1 transition-transform">
                                 <path d="M5 12h14M12 5l7 7-7 7" />
@@ -267,6 +271,7 @@ export const LiveSection: React.FC<LiveSectionProps> = ({ brandData, onUpdate, s
             </div>
 
             {/* Controls - NOT blurred */}
+            {!isPublish && (
             <div className="absolute top-0 right-0 z-50 h-full pointer-events-none">
                 <div className="sticky top-6 right-6 pointer-events-auto">
                     <FloatingControlPanel title="Live Section" className="absolute top-0 right-0" isMobile={brandData.isMobilePreview}>
@@ -391,6 +396,7 @@ export const LiveSection: React.FC<LiveSectionProps> = ({ brandData, onUpdate, s
                     </FloatingControlPanel>
                 </div>
             </div>
+            )}
         </section>
     );
 };

@@ -21,9 +21,11 @@ interface OriginSectionProps {
     onNavigate: (page: 'home' | 'about' | 'contact') => void;
     scrollY: number;
     scrollContainerRef?: React.RefObject<HTMLDivElement>;
+    mode?: 'edit' | 'publish';
 }
 
-export const OriginSection: React.FC<OriginSectionProps> = ({ brandData, onUpdate, onNavigate, scrollY, scrollContainerRef }) => {
+export const OriginSection: React.FC<OriginSectionProps> = ({ brandData, onUpdate, onNavigate, scrollY, scrollContainerRef, mode = 'edit' }) => {
+    const isPublish = mode === 'publish';
     const isMobile = brandData.isMobilePreview;
     const data = brandData.sections.home.origin;
     const { layout, visuals, framing } = data;
@@ -100,6 +102,7 @@ export const OriginSection: React.FC<OriginSectionProps> = ({ brandData, onUpdat
                 />
             </div>
 
+            {!isPublish && (
             <div className="absolute top-0 right-0 z-50 h-full pointer-events-none">
                 <div className="sticky top-6 right-6 pointer-events-auto">
                     <FloatingControlPanel title="Origin Section" className="absolute top-0 right-0" isMobile={brandData.isMobilePreview}>
@@ -187,6 +190,7 @@ export const OriginSection: React.FC<OriginSectionProps> = ({ brandData, onUpdat
                     </FloatingControlPanel>
                 </div>
             </div>
+            )}
 
             <FadeIn className="container relative z-10 mx-auto max-w-4xl text-center px-4">
                 <InlineText
@@ -196,6 +200,7 @@ export const OriginSection: React.FC<OriginSectionProps> = ({ brandData, onUpdat
                     className="text-[var(--accent)] font-bold text-xs uppercase tracking-[0.4em] block mb-4"
                     value={data.tagline}
                     onSave={(val) => updateSection({ tagline: val })}
+                    mode={mode}
                 />
                 <InlineText
                     styleKey="homeOriginHeadline"
@@ -204,6 +209,7 @@ export const OriginSection: React.FC<OriginSectionProps> = ({ brandData, onUpdat
                     className="text-4xl @md:text-7xl @lg:text-9xl font-bold mb-6 tracking-tighter text-white uppercase leading-tight glitch-heading"
                     value={data.headline}
                     onSave={(val) => updateSection({ headline: val })}
+                    mode={mode}
                     {...{ "data-text": data.headline } as any}
                 />
                 <InlineText
@@ -213,6 +219,7 @@ export const OriginSection: React.FC<OriginSectionProps> = ({ brandData, onUpdat
                     className="text-lg @md:text-3xl leading-relaxed font-serif italic mb-6"
                     value={data.text}
                     onSave={(val) => updateSection({ text: val })}
+                    mode={mode}
                 />
                 <InlineText
                     styleKey="homeOriginDescription"
@@ -222,6 +229,7 @@ export const OriginSection: React.FC<OriginSectionProps> = ({ brandData, onUpdat
                     className="text-zinc-400 text-sm @md:text-xl leading-relaxed max-w-3xl mx-auto"
                     value={data.description}
                     onSave={(val) => updateSection({ description: val })}
+                    mode={mode}
                 />
                 <button
                     onClick={() => onNavigate('about')}
@@ -232,6 +240,7 @@ export const OriginSection: React.FC<OriginSectionProps> = ({ brandData, onUpdat
                         brandData={brandData}
                         value={brandData.sections.home.hero.ctaText}
                         onSave={(val) => onUpdate({ sections: { home: { hero: { ctaText: val } } } } as any)}
+                        mode={mode}
                     />
                     <svg className="group-hover:translate-x-1 transition-transform" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />

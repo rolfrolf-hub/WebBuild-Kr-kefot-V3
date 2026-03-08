@@ -20,6 +20,7 @@ interface FooterSectionProps {
     onUpdate: (newData: Partial<BrandState>) => void;
     scrollY: number;
     scrollContainerRef?: React.RefObject<HTMLDivElement>;
+    mode?: 'edit' | 'publish';
 }
 
 const TextField: React.FC<{ label: string; value: string; onChange: (v: string) => void; placeholder?: string }> = ({ label, value, onChange, placeholder }) => (
@@ -34,7 +35,8 @@ const TextField: React.FC<{ label: string; value: string; onChange: (v: string) 
     </div>
 );
 
-export const FooterSection: React.FC<FooterSectionProps> = ({ brandData, onUpdate, scrollY, scrollContainerRef }) => {
+export const FooterSection: React.FC<FooterSectionProps> = ({ brandData, onUpdate, scrollY, scrollContainerRef, mode = 'edit' }) => {
+    const isPublish = mode === 'publish';
     const isMobile = brandData.isMobilePreview;
     const data = brandData.sections.footer;
 
@@ -80,6 +82,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ brandData, onUpdat
                         value={data.upperTagline}
                         onSave={(val) => updateSection({ upperTagline: val })}
                         className="text-[var(--accent)] font-bold text-xs uppercase tracking-[0.4em]"
+                        mode={mode}
                     />
                 )}
             </div>
@@ -110,6 +113,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ brandData, onUpdat
                     />
                 </div>
 
+                {!isPublish && (
                 <div className="absolute top-0 right-0 z-50 h-full pointer-events-none">
                     <div className="sticky top-6 right-6 pointer-events-auto">
                         <FloatingControlPanel title="Get In Touch" isMobile={brandData.isMobilePreview}>
@@ -144,10 +148,11 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ brandData, onUpdat
                         </FloatingControlPanel>
                     </div>
                 </div>
+                )}
 
                 <div className="relative z-10 text-center px-6">
                     <a href="contact.html" className="btn-glass group">
-                        <InlineText styleKey="homeFooterContactText" brandData={brandData} value={data.contactText} onSave={(val) => updateSection({ contactText: val })} />
+                        <InlineText styleKey="homeFooterContactText" brandData={brandData} value={data.contactText} onSave={(val) => updateSection({ contactText: val })} mode={mode} />
                         <svg className="group-hover:translate-x-1 transition-transform ml-2" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                             <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
                         </svg>

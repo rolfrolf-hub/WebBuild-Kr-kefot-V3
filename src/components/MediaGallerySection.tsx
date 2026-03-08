@@ -18,9 +18,11 @@ interface MediaGallerySectionProps {
     brandData: BrandState;
     onUpdate: (newData: Partial<BrandState>) => void;
     scrollContainerRef?: React.RefObject<HTMLDivElement>;
+    mode?: 'edit' | 'publish';
 }
 
-export const MediaGallerySection: React.FC<MediaGallerySectionProps> = ({ brandData, onUpdate, scrollContainerRef }) => {
+export const MediaGallerySection: React.FC<MediaGallerySectionProps> = ({ brandData, onUpdate, scrollContainerRef, mode = 'edit' }) => {
+    const isPublish = mode === 'publish';
     const galleryRef = useRef<HTMLDivElement>(null);
     const [activeMediaId, setActiveMediaId] = useState<string | null>(null);
     const animationRef = useRef<number | null>(null);
@@ -161,6 +163,7 @@ export const MediaGallerySection: React.FC<MediaGallerySectionProps> = ({ brandD
                 position: 'relative'
             }}
         >
+            {!isPublish && (
             <div className="absolute top-0 right-0 z-50 h-full pointer-events-none">
                 <div className="sticky top-6 right-6 pointer-events-auto">
                     <FloatingControlPanel title="Gallery Section" className="absolute top-0 right-0" isMobile={brandData.isMobilePreview}>
@@ -243,6 +246,7 @@ export const MediaGallerySection: React.FC<MediaGallerySectionProps> = ({ brandD
                     </FloatingControlPanel>
                 </div>
             </div>
+            )}
 
             <div ref={blurRef} className="absolute inset-0 z-0" style={{ transition: 'filter 0.1s linear' }}>
                 <UniversalMedia serverBaseUrl={brandData.serverBaseUrl}
@@ -270,6 +274,7 @@ export const MediaGallerySection: React.FC<MediaGallerySectionProps> = ({ brandD
                         className="text-[var(--accent)] font-bold text-xs md:text-sm uppercase tracking-[0.4em]"
                         value={data.title}
                         onSave={(val) => updateSection({ title: val })}
+                        mode={mode}
                     />
                 </div>
             </div>
@@ -319,6 +324,7 @@ export const MediaGallerySection: React.FC<MediaGallerySectionProps> = ({ brandD
                             }}
                         />
                     ))}
+                    {!isPublish && (
                     <div
                         onClick={(e) => {
                             e.stopPropagation();
@@ -334,6 +340,7 @@ export const MediaGallerySection: React.FC<MediaGallerySectionProps> = ({ brandD
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
                         <span className="text-[10px] font-bold uppercase tracking-widest mt-2">Add Media</span>
                     </div>
+                    )}
                 </div>
 
                 {/* Listen On Section (Parity Fix) */}
@@ -344,7 +351,8 @@ export const MediaGallerySection: React.FC<MediaGallerySectionProps> = ({ brandD
                         tagName="h3"
                         className="text-[var(--accent)] font-bold text-xs md:text-sm uppercase tracking-[0.4em]"
                         value="HØR MER"
-                        onSave={() => { }} // Static label, but follows title typography
+                        onSave={() => { }}
+                        mode={mode}
                     />
                     <div className="flex flex-nowrap items-center justify-center gap-4 md:gap-10 text-zinc-400">
                         {brandData.socials.spotifyUrl && (

@@ -15,9 +15,11 @@ interface AboutMissionSectionProps {
     brandData: BrandState;
     onUpdate: (newData: Partial<BrandState>) => void;
     scrollContainerRef?: React.RefObject<HTMLDivElement>;
+    mode?: 'edit' | 'publish';
 }
 
-export const AboutMissionSection: React.FC<AboutMissionSectionProps> = ({ brandData, onUpdate, scrollContainerRef }) => {
+export const AboutMissionSection: React.FC<AboutMissionSectionProps> = ({ brandData, onUpdate, scrollContainerRef, mode = 'edit' }) => {
+    const isPublish = mode === 'publish';
     const isMobile = brandData.isMobilePreview;
     const data = brandData.sections.about.mission;
     const { layout, visuals } = data;
@@ -64,6 +66,7 @@ export const AboutMissionSection: React.FC<AboutMissionSectionProps> = ({ brandD
                         className="text-[var(--accent)] text-sm font-bold uppercase tracking-[0.3em] mb-12 block"
                         value={data.tagline || "Misjon"}
                         onSave={(val) => updateSection({ tagline: val })}
+                        mode={mode}
                     />
                     <div className="relative inline-block w-full">
                         <InlineText
@@ -73,12 +76,14 @@ export const AboutMissionSection: React.FC<AboutMissionSectionProps> = ({ brandD
                             className="text-3xl md:text-5xl font-serif italic text-white leading-tight mb-8 drop-shadow-lg"
                             value={data.text}
                             onSave={(val) => updateSection({ text: val })}
+                            mode={mode}
                         />
                     </div>
                     <div className="w-16 h-px bg-zinc-800 mx-auto mt-12" />
                 </FadeIn>
             </div>
 
+            {!isPublish && (
             <div className="absolute top-0 right-0 z-50 h-full pointer-events-none">
                 <div className="sticky top-6 right-6 pointer-events-auto">
                     <FloatingControlPanel title="Mission Section" isMobile={brandData.isMobilePreview}>
@@ -118,6 +123,7 @@ export const AboutMissionSection: React.FC<AboutMissionSectionProps> = ({ brandD
                     </FloatingControlPanel>
                 </div>
             </div>
+            )}
         </section>
     );
 };
