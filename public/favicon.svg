@@ -1,0 +1,11 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g transform="rotate(45 128 128)">
+    <rect x="44" y="44" width="168" height="168" rx="32" fill="#377876" />
+  </g>
+  <g transform="translate(68, 68) scale(5)">
+    <path d="M12.5 2.5C13.2 2.5 13.5 5.5 13.2 10.5C12.9 15.5 12.5 20.5 12.2 23.5C12 21.5 12.5 15.5 13 10.5C13.5 5.5 12.8 2.5 12.5 2.5Z" fill="white" />
+    <path d="M4 19C7.5 15.5 11.5 11 17 7L18 6C13.5 9.5 8.5 14.5 5 20L4 19Z" fill="white" />
+    <path d="M12.8 11C15 13.5 17.5 16 20 18.5L19 19.5C16.5 17 14 14.5 12.8 11Z" fill="white" />
+    <path d="M17 7L20.5 5L19.5 4L16 6L17 7Z" fill="white" />
+  </g>
+</svg>

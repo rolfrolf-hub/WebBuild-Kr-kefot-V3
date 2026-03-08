@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adaptiv video – 480p / 1080p</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .video-wrapper {
+      width: 100%;
+      max-width: 1920px;
+    }
+
+    video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+<div class="video-wrapper">
+  <!--
+    Nettleseren velger første <source> den kan spille.
+    Media-queryen sørger for at:
+      • Skjermer ≥ 1280 px  → 1080p-fil (6 Mbps)
+      • Skjermer < 1280 px  → 480p-fil  (2 Mbps)
+
+    Bytt ut "filnavn" med faktisk filnavn (uten endelse).
+  -->
+  <video
+    controls
+    playsinline
+    preload="metadata"
+    poster="filnavn-poster.jpg"
+  >
+    <!-- 1080p – kun for brede skjermer / desktop -->
+    <source
+      src="filnavn-1080.mp4"
+      type="video/mp4"
+      media="(min-width: 1280px)"
+    />
+
+    <!-- 480p – fallback for mobil og nettbrett -->
+    <source
+      src="filnavn-480.mp4"
+      type="video/mp4"
+    />
+
+    <p>Nettleseren din støtter ikke video-taggen.</p>
+  </video>
+</div>
+
+<script>
+  /*
+   * Ekstra JS-sjekk (valgfritt men anbefalt):
+   * Hvis siden lastes på desktop MEN brukeren har slått på
+   * "Spar data" (navigator.connection.saveData), byttes kilden
+   * til 480p-filen automatisk.
+   */
+  (function () {
+    const video = document.querySelector("video");
+    if (!video) return;
+
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+
+    if (connection && connection.saveData) {
+      // Fjern alle sources og sett bare 480p
+      while (video.firstChild) video.removeChild(video.firstChild);
+
+      const src = document.createElement("source");
+      src.src  = "filnavn-480.mp4";
+      src.type = "video/mp4";
+      video.appendChild(src);
+      video.load();
+
+      console.info("Datasparingsmodus aktiv – laster 480p.");
+    }
+  })();
+</script>
+
+</body>
+</html>

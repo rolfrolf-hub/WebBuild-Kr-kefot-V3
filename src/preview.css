@@ -1,0 +1,74 @@
+/* Preview Window Styles */
+
+.preview-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #27272a;
+    border-top-color: #10b981;
+    border-radius: 50%;
+    animation: preview-spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes preview-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.preview-device-frame {
+    position: relative;
+    background: #18181b;
+    border-radius: 48px;
+    padding: 12px;
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        0 25px 50px -12px rgba(0, 0, 0, 0.8);
+}
+
+.preview-notch {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 32px;
+    background: #18181b;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.preview-iframe-container {
+    border-radius: 40px;
+    overflow: hidden;
+    background: black;
+}
+
+.preview-update-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #10b981;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    animation: preview-fade-in 0.2s ease-out;
+    z-index: 1000;
+}
+
+@keyframes preview-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

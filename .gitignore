@@ -1,0 +1,55 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Local cache and config
+.npm-cache/
+.npmrc
+
+# Backups
+backups/
+backups_hard_copy/
+*.bak
+*.bak*
+
+tmp-npm-cache/
+
+# Environment variables — NEVER commit secrets
+.env
+.env.*
+!.env.example
+
+# Rapport/eksport-mappe (store, midlertidige filer)
+rapport-anthropic/
+
+# Forensic/debug HTML-filer
+forensic_production_dump.html
+latest_about.html
+latest_live.html
+
+# V3-spesifikt
+rapport-anthropic/
+forensic_production_dump.html
+latest_about.html
+latest_live.html

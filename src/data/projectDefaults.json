@@ -1,0 +1,1215 @@
+{
+  "meta": {
+    "lastModified": 1773002094381,
+    "version": "2.6.0"
+  },
+  "isMobilePreview": false,
+  "ftpUser": "",
+  "ftpPass": "",
+  "serverBaseUrl": "https://kraakefot.com",
+  "savedAssets": [],
+  "companyName": "Kråkefot",
+  "tone": "Mystical",
+  "accentColor": "#2f9b9d",
+  "headingFont": "'Cinzel', serif",
+  "bodyFont": "Inter",
+  "headingScale": 1.45,
+  "bodyScale": 1,
+  "h1Font": "'Montserrat', sans-serif",
+  "h2Font": "'Montserrat', sans-serif",
+  "h3Font": "'Montserrat', sans-serif",
+  "h4Font": "'Montserrat', sans-serif",
+  "textStyles": {
+    "tagline": {
+      "font": "'Montserrat', sans-serif",
+      "scale": 1,
+      "color": "#459694",
+      "classes": "tracking-[0.2em] font-bold",
+      "glitchEnabled": true
+    },
+    "story": {
+      "font": "'Inter', sans-serif",
+      "scale": 0.95,
+      "classes": "font-light italic"
+    },
+    "homeLiveTagline": {
+      "scale": 1,
+      "scaleMobile": 1,
+      "color": "#45b0ae",
+      "glitchEnabled": true,
+      "font": "'Lato', sans-serif",
+      "semanticType": "h6"
+    },
+    "homeFooterContactText": {
+      "font": "'Lato', sans-serif",
+      "color": "#ffffff",
+      "glitchEnabled": false,
+      "semanticType": "body",
+      "customSize": "",
+      "scale": 1,
+      "scaleMobile": 1
+    },
+    "homeFooterUpperTagline": {
+      "font": "'Lato', sans-serif",
+      "scale": 1,
+      "scaleMobile": 0.75,
+      "color": "#46a09b",
+      "glitchEnabled": true,
+      "semanticType": "h6",
+      "classes": ""
+    },
+    "homeFooterTagline": {
+      "font": "'Montserrat', sans-serif",
+      "scale": 1,
+      "scaleMobile": 0.85,
+      "color": "#ffffff",
+      "glitchEnabled": false,
+      "semanticType": "h2"
+    },
+    "vaultTagline": {
+      "font": "'Montserrat', sans-serif",
+      "scale": 1,
+      "color": "#459694",
+      "glitchEnabled": true
+    },
+    "epkHookTagline": {
+      "font": "'Montserrat', sans-serif",
+      "scale": 1,
+      "color": "#459694",
+      "glitchEnabled": true
+    },
+    "epkContactTagline": {
+      "font": "'Montserrat', sans-serif",
+      "scale": 1,
+      "color": "#30827b",
+      "glitchEnabled": true,
+      "scaleMobile": 1,
+      "semanticType": "h6"
+    },
+    "homeSubheadline": {
+      "scale": 1,
+      "scaleMobile": 1,
+      "color": "#00b8b5",
+      "semanticType": "h6"
+    },
+    "homeSpotifyTitle": {
+      "font": "'Lato', sans-serif",
+      "scale": 1,
+      "scaleMobile": 1,
+      "color": "#429e9d",
+      "glitchEnabled": true,
+      "semanticType": "h6"
+    },
+    "homeHeadline": {
+      "font": "'Montserrat', sans-serif",
+      "scale": 1,
+      "color": "#ffffff",
+      "lineHeight": "normal",
+      "glitchEnabled": true,
+      "customSize": "",
+      "scaleMobile": 1,
+      "semanticType": "h1"
+    },
+    "homeOriginHeadline": {
+      "scale": 1,
+      "glitchEnabled": true,
+      "scaleMobile": 1,
+      "font": "'Montserrat', sans-serif",
+      "semanticType": "h2"
+    },
+    "homeOriginTagline": {
+      "font": "'Lato', sans-serif",
+      "scale": 1,
+      "scaleMobile": 1,
+      "color": "#47aeaa",
+      "glitchEnabled": true,
+      "semanticType": "h6",
+      "lineHeight": "loose"
+    },
+    "mission": {
+      "scale": 1.5,
+      "scaleMobile": 1.5,
+      "font": "'Montserrat', sans-serif",
+      "semanticType": "h2"
+    },
+    "contactHeadline": {
+      "font": "'Montserrat', sans-serif",
+      "scale": 1,
+      "scaleMobile": 1,
+      "color": "#dbdbdb",
+      "glitchEnabled": true
+    },
+    "aboutHeroSubheadline": {
+      "font": "'Montserrat', sans-serif",
+      "scale": 1,
+      "color": "#14a39a",
+      "lineHeight": "none",
+      "glitchEnabled": true,
+      "semanticType": "h5"
+    },
+    "aboutHeroHeadline": {
+      "font": "'Montserrat', sans-serif",
+      "scale": 1,
+      "glitchEnabled": true,
+      "customSize": "",
+      "scaleMobile": 1,
+      "semanticType": "h4"
+    },
+    "homeOriginDescription": {
+      "scale": 1,
+      "color": "#fcfcfc",
+      "font": "'Montserrat', sans-serif",
+      "scaleMobile": 0.7
+    },
+    "homeOriginText": {
+      "font": "'Montserrat', sans-serif",
+      "scale": 1,
+      "scaleMobile": 0.8,
+      "color": "#ffffff",
+      "semanticType": "h5"
+    },
+    "homeOriginCtaText": {
+      "font": "'Montserrat', sans-serif",
+      "scale": 1,
+      "color": "#ffffff",
+      "glitchEnabled": false,
+      "customSize": "11px"
+    },
+    "contactSubheadline": {
+      "font": "'Montserrat', sans-serif",
+      "scale": 1
+    },
+    "contactEmail": {
+      "font": "'Montserrat', sans-serif",
+      "scaleMobile": 1,
+      "scale": 1,
+      "glitchEnabled": true,
+      "semanticType": "h5"
+    },
+    "contactTagline": {
+      "scale": 1,
+      "scaleMobile": 1,
+      "color": "#000000",
+      "accent": "#699694",
+      "font": "'Montserrat', sans-serif",
+      "lineHeight": "none",
+      "semanticType": "h5"
+    },
+    "aboutStoryBody": {
+      "scaleMobile": 1,
+      "color": "#b4b1b1",
+      "semanticType": "body"
+    },
+    "aboutMissionHeadline": {
+      "font": "'Montserrat', sans-serif",
+      "scaleMobile": 0.85,
+      "scale": 1.3
+    },
+    "aboutMissionBody": {
+      "glitchEnabled": true,
+      "scale": 3,
+      "scaleMobile": 3,
+      "font": "'Montserrat', sans-serif",
+      "customSize": ""
+    },
+    "epkPitchBio": {
+      "scaleMobile": 0.85,
+      "color": "#b0b0b0",
+      "font": "'Montserrat', sans-serif",
+      "semanticType": "body"
+    },
+    "epkPitchTagline": {
+      "scaleMobile": 1,
+      "font": "'Montserrat', sans-serif",
+      "color": "#cccccc",
+      "scale": 1,
+      "glitchEnabled": true,
+      "semanticType": "h4"
+    },
+    "epkPitchHeadline": {
+      "scale": 1.75,
+      "scaleMobile": 0.8,
+      "font": "'Montserrat', sans-serif"
+    },
+    "epkQuoteText": {
+      "scaleMobile": 1,
+      "color": "#e0e0e0",
+      "font": "'Montserrat', sans-serif",
+      "semanticType": "h6"
+    },
+    "epkQuoteAuthor": {
+      "scaleMobile": 0.85,
+      "lineHeight": "tight",
+      "color": "#908e8e",
+      "font": "'Montserrat', sans-serif",
+      "semanticType": "h5"
+    },
+    "epkQuoteRole": {
+      "scaleMobile": 1,
+      "color": "#81d9d4",
+      "accent": "#6f9f9c",
+      "glitchEnabled": true,
+      "semanticType": "h6"
+    },
+    "epkIntroHeadline": {
+      "font": "'Montserrat', sans-serif",
+      "scale": 1,
+      "scaleMobile": 1,
+      "color": "#30827b",
+      "glitchEnabled": false,
+      "semanticType": "h5"
+    },
+    "epkIntroText": {
+      "font": "'Montserrat', sans-serif",
+      "scale": 1,
+      "scaleMobile": 1,
+      "color": "#a1a1aa",
+      "lineHeight": "relaxed",
+      "semanticType": "body"
+    },
+    "aboutStoryHeadline": {
+      "scaleMobile": 0.75
+    },
+    "aboutStoryTagline": {
+      "scaleMobile": 1,
+      "font": "'Montserrat', sans-serif",
+      "color": "#459694",
+      "semanticType": "h6"
+    },
+    "epkMediaTagline": {
+      "color": "#30827b",
+      "glitchEnabled": true,
+      "scaleMobile": 1,
+      "semanticType": "h6",
+      "font": "'Montserrat', sans-serif"
+    },
+    "epkPressTagline": {
+      "color": "#30827b",
+      "scaleMobile": 1,
+      "lineHeight": "loose",
+      "font": "'Montserrat', sans-serif",
+      "semanticType": "h6"
+    },
+    "epkPressHeadline": {
+      "scaleMobile": 1,
+      "font": "'Montserrat', sans-serif",
+      "semanticType": "h4"
+    },
+    "epkContactHeadline": {
+      "scale": 1.05,
+      "scaleMobile": 1,
+      "font": "'Montserrat', sans-serif",
+      "semanticType": "h5"
+    },
+    "epkContactEmail": {
+      "scale": 1.5,
+      "scaleMobile": 0.75
+    },
+    "homeLiveHeadline": {
+      "scale": 1,
+      "scaleMobile": 1,
+      "glitchEnabled": true,
+      "font": "'Montserrat', sans-serif",
+      "semanticType": "h1"
+    },
+    "homeLiveYoutubeText": {
+      "glitchEnabled": false
+    },
+    "aboutHeroIntroText": {
+      "glitchEnabled": true,
+      "scaleMobile": 1,
+      "font": "'Montserrat', sans-serif",
+      "scale": 1,
+      "semanticType": "h1"
+    },
+    "aboutMissionTagline": {
+      "semanticType": "h6",
+      "font": "'Montserrat', sans-serif"
+    },
+    "epkTracksHeadline": {
+      "semanticType": "h6",
+      "font": "'Montserrat', sans-serif"
+    },
+    "epkVideoHeadline": {
+      "font": "'Montserrat', sans-serif",
+      "semanticType": "h6"
+    }
+  },
+  "menuLogoName": "",
+  "menuTagline": "",
+  "navNames": {
+    "home": "KRÅKEFOT",
+    "about": "MADE IN NORWAY",
+    "contact": "KONTAKT",
+    "portfolio": "Portfolio",
+    "lab": "Lab",
+    "vault": "Vault",
+    "epk": "EPK"
+  },
+  "menuOpacity": 0.1,
+  "menuTintColor": "#3b8c83",
+  "menuTintAmount": 0.4,
+  "menuOverlayBlur": 9,
+  "menuOverlayBrightness": 50,
+  "menuOverlayOpacity": 50,
+  "menuOverlayColor": "#000000",
+  "isVaultVisible": false,
+  "pageVisibility": {
+    "home": true,
+    "about": true,
+    "contact": true,
+    "vault": false,
+    "epk": true
+  },
+  "socials": {
+    "youtubeUrl": "https://music.youtube.com/channel/UCSmN7GyatwUO3TB-rT4rYbw?si=0j2rCO5XNLd-t8LC",
+    "soundcloudUrl": "https://soundcloud.com/kraakefot",
+    "appleUrl": "https://music.apple.com/no/artist/kr%C3%A5kefot/1023722515",
+    "spotifyUrl": "https://open.spotify.com/artist/3Kug0veZ3RuBdPtYaFWd0n?si=Rp0Qa8LOSouvz2cdkn1kKg",
+    "instagramUrl": "https://www.instagram.com/kraakefotmusic/",
+    "xUrl": "https://x.com/kraakefot",
+    "facebookUrl": "https://www.facebook.com/kraakefot/"
+  },
+  "sections": {
+    "home": {
+      "hero": {
+        "layout": {
+          "heightMode": "screen",
+          "mobileHeightMode": "screen",
+          "paddingTopDesktop": 0,
+          "paddingBottomDesktop": 0,
+          "paddingTopMobile": 20,
+          "paddingBottomMobile": 12.5,
+          "marginBottom": 64,
+          "mobileMarginBottom": 104
+        },
+        "visuals": {
+          "saturation": 51,
+          "mobileSaturation": 51,
+          "dim": 100,
+          "mobileDim": 100,
+          "parallax": 20,
+          "mobileParallax": 10,
+          "opacity": 100,
+          "mobileOpacity": 100,
+          "blurEnabled": false,
+          "blurStrength": 7,
+          "blurRadius": 0.3,
+          "playbackRate": 100,
+          "auraEnabled": true,
+          "auraOpacity": 10,
+          "auraSpeed": 5,
+          "auraBlendMode": "color-dodge",
+          "auraColor": ""
+        },
+        "framing": {
+          "zoomDesktop": 1,
+          "zoomMobile": 1,
+          "xOffsetDesktop": 0,
+          "xOffsetMobile": 37,
+          "yOffsetDesktop": 0,
+          "yOffsetMobile": 50
+        },
+        "videoUrl": "qjaItW02vvdZdv7xthn8zs6GWe7GIzuxusMB1DWFhC8g",
+        "headline": "Kråkefot",
+        "subheadline": "––––––––––––––––––––––––––––",
+        "ctaText": "Hele Historien"
+      },
+      "origin": {
+        "layout": {
+          "heightMode": "screen",
+          "mobileHeightMode": "custom",
+          "paddingTopDesktop": 5.5,
+          "paddingBottomDesktop": 0,
+          "paddingTopMobile": 6.5,
+          "paddingBottomMobile": 8.5,
+          "marginBottom": 248,
+          "mobileMarginBottom": 0
+        },
+        "visuals": {
+          "saturation": 40,
+          "mobileSaturation": 40,
+          "dim": 100,
+          "mobileDim": 100,
+          "parallax": 5,
+          "mobileParallax": 5,
+          "blurEnabled": false,
+          "blurStrength": 4,
+          "blurRadius": 0.65,
+          "playbackRate": 100,
+          "mobileOpacity": 100
+        },
+        "framing": {
+          "zoomDesktop": 1,
+          "zoomMobile": 1,
+          "xOffsetDesktop": 0,
+          "xOffsetMobile": 7,
+          "yOffsetDesktop": 20,
+          "yOffsetMobile": 0
+        },
+        "imageUrl": "media/images/krkefot-crow-mask-pajamas-nordlys-mural-960.webp",
+        "tagline": "Et sted mellom det hellige og det fordømte",
+        "headline": "MADE IN NORWAY",
+        "text": "Historien starter på et slitt hotellrom i en trang bakgate i Hollywood....",
+        "description": ""
+      },
+      "live": {
+        "layout": {
+          "heightMode": "screen",
+          "mobileHeightMode": "auto",
+          "paddingTopDesktop": 0,
+          "paddingBottomDesktop": 0,
+          "paddingTopMobile": 20,
+          "paddingBottomMobile": 15.5,
+          "marginBottom": 224,
+          "mobileMarginBottom": 112
+        },
+        "visuals": {
+          "saturation": 30,
+          "mobileSaturation": 40,
+          "dim": 100,
+          "mobileDim": 100,
+          "parallax": 6,
+          "mobileParallax": 5,
+          "blurEnabled": false,
+          "blurStrength": 7,
+          "blurRadius": 0.3,
+          "playbackRate": 100,
+          "mobileOpacity": 100
+        },
+        "framing": {
+          "zoomDesktop": 1,
+          "zoomMobile": 1,
+          "xOffsetDesktop": 0,
+          "xOffsetMobile": 0,
+          "yOffsetDesktop": 0,
+          "yOffsetMobile": 0
+        },
+        "videoUrl": "gjRumxXFEPFKRc8MUb5t1hFgqCckorUhW00400VUXTTI8",
+        "previewImageUrl": "media/images/krakefot-band-live-konsert-1920.webp",
+        "framingImage": {
+          "zoomDesktop": 1,
+          "zoomMobile": 1,
+          "xOffsetDesktop": 0,
+          "xOffsetMobile": -1,
+          "yOffsetDesktop": 0,
+          "yOffsetMobile": 0
+        },
+        "tagline": "OPPLEV ENERGIEN",
+        "headline": "LIVE",
+        "youtubeUrl": "",
+        "youtubeText": "Se på YouTube",
+        "mediaConfig": {
+          "mux": {
+            "autoPlay": "off",
+            "showMuteButton": true,
+            "showFullscreenButton": false,
+            "showSeekButtons": false,
+            "showPlayButton": true,
+            "aspectRatioDesktop": "16/9",
+            "aspectRatioMobile": "16/9",
+            "loop": true,
+            "accentColor": "#892f2f",
+            "widthDesktop": "100%",
+            "widthMobile": "140%",
+            "xOffsetDesktop": 0,
+            "xOffsetMobile": 5,
+            "yOffsetMobile": 6,
+            "yOffsetDesktop": 0
+          }
+        }
+      },
+      "spotify": {
+        "layout": {
+          "heightMode": "auto",
+          "mobileHeightMode": "auto",
+          "paddingTopDesktop": 3.5,
+          "paddingBottomDesktop": 3.5,
+          "paddingTopMobile": 1.5,
+          "paddingBottomMobile": 1.5,
+          "marginBottom": 88,
+          "mobileMarginBottom": 56
+        },
+        "visuals": {
+          "saturation": 30,
+          "mobileSaturation": 100,
+          "dim": 100,
+          "mobileDim": 100,
+          "parallax": 0,
+          "mobileParallax": 0,
+          "opacity": 100,
+          "mobileOpacity": 100,
+          "blurEnabled": false,
+          "blurStrength": 15,
+          "blurRadius": 0.3,
+          "playbackRate": 100
+        },
+        "framing": {
+          "zoomDesktop": 1,
+          "zoomMobile": 1,
+          "xOffsetDesktop": 0,
+          "xOffsetMobile": 0,
+          "yOffsetDesktop": 0,
+          "yOffsetMobile": 0
+        },
+        "url": "",
+        "items": [
+          {
+            "id": "m1769185874059",
+            "type": "audio",
+            "url": "media/audio/på tryne.m4a",
+            "title": "På Tryne",
+            "artist": "Kråkefot",
+            "thumbnail": "media/images/faceplant-artwork-krkefot-song-1920.webp"
+          },
+          {
+            "id": "m1769263346162",
+            "type": "audio",
+            "url": "media/audio/ris til egen bak.m4a",
+            "title": "Ris Til Egen Bak",
+            "artist": "Artist",
+            "thumbnail": "media/images/gimme-mor-artwork-song-krkefot-1920.webp"
+          },
+          {
+            "id": "m1771946362838",
+            "type": "audio",
+            "url": "media/audio/bigami.m4a",
+            "title": "Bigami",
+            "thumbnail": "media/images/bigami-single-artwork-krkefot-song-1920.webp"
+          },
+          {
+            "id": "m1771946426206",
+            "type": "audio",
+            "url": "media/audio/dama i oslo.m4a",
+            "title": "Dama i Oslo",
+            "thumbnail": "media/images/dama-i-oslo-krkefot-song-artwork-1920.webp"
+          },
+          {
+            "id": "m1771946844268",
+            "type": "audio",
+            "url": "media/audio/er det no liv her.m4a",
+            "title": "Er det no' liv her",
+            "thumbnail": "media/images/krkefot-album-frst-artwork-1920.webp"
+          }
+        ],
+        "columnsDesktop": 4,
+        "columnsMobile": 2,
+        "scaleDesktop": 1,
+        "scaleMobile": 1,
+        "gapDesktop": 8,
+        "gapMobile": 4,
+        "aspectRatioDesktop": "4/3",
+        "aspectRatioMobile": "4/3",
+        "imageUrl": "",
+        "title": "MEDIA og utgivelser"
+      }
+    },
+    "about": {
+      "hero": {
+        "layout": {
+          "heightMode": "screen",
+          "paddingTopDesktop": 0,
+          "paddingBottomDesktop": 0,
+          "paddingTopMobile": 0,
+          "paddingBottomMobile": 5.5,
+          "marginBottom": 0,
+          "mobileMarginBottom": 0,
+          "mobileHeightMode": "auto"
+        },
+        "visuals": {
+          "saturation": 50,
+          "mobileSaturation": 100,
+          "dim": 70,
+          "mobileDim": 80,
+          "parallax": 1,
+          "mobileParallax": 0,
+          "opacity": 68,
+          "mobileOpacity": 100,
+          "blurEnabled": false,
+          "blurStrength": 0,
+          "blurRadius": 0,
+          "playbackRate": 100,
+          "auraEnabled": true,
+          "auraOpacity": 41,
+          "auraSpeed": 4,
+          "auraBlendMode": "hard-light",
+          "auraColor": ""
+        },
+        "framing": {
+          "zoomDesktop": 1,
+          "zoomMobile": 2.5,
+          "xOffsetDesktop": 0,
+          "xOffsetMobile": 0,
+          "yOffsetDesktop": 0,
+          "yOffsetMobile": 10
+        },
+        "videoUrl": "",
+        "headline": "fra landets dypeste sprekker...",
+        "subheadline": "",
+        "introText": "Et ekko.."
+      },
+      "story": {
+        "layout": {
+          "heightMode": "auto",
+          "mobileHeightMode": "auto",
+          "paddingTopDesktop": 0,
+          "paddingBottomDesktop": 4,
+          "paddingTopMobile": 0,
+          "paddingBottomMobile": 0,
+          "marginBottom": 0,
+          "mobileMarginBottom": 112
+        },
+        "visuals": {
+          "saturation": 100,
+          "mobileSaturation": 98,
+          "dim": 54,
+          "mobileDim": 100,
+          "parallax": 8,
+          "mobileParallax": 4,
+          "blurEnabled": false,
+          "blurStrength": 5,
+          "blurRadius": 0.5,
+          "playbackRate": 100,
+          "mobileOpacity": 100
+        },
+        "framing": {
+          "zoomDesktop": 1,
+          "zoomMobile": 1,
+          "xOffsetDesktop": 0,
+          "xOffsetMobile": -37,
+          "yOffsetDesktop": 0,
+          "yOffsetMobile": 0
+        },
+        "tagline": "Et sted mellom det hellige og det fordømte",
+        "text": "KRÅKEFOT: MADE IN NORWAY\n\nDet startet i en trang bakgate i Hollywood. To sjeler, et slitt hotellrom og ett felles mål: \nÅ skape lydbildet som skulle ryste verden. \n\nBak oss lå knuste drømmer og år med musikalske arr. Den første dagen forsvant i en tåke av solskinn på Sunset Strip og ekkoet av legender på Whisky-a-go-go, men på dag to løsnet det. Da Rolf dro det første riffet ut av forsterkeren, spratt Henning ut av den slitne toseteren og skrek: \"Der er det! Der har vi 'Ris til egen bak'!\"\n\nI løpet av fem intense døgn hamret vi ut seks skisser. Frøet til Kråkefot var sådd.\nHjemme i Norge startet det virkelige arbeidet. \nHenning kom med sekken full av tekstfragmenter og to år med uforløste ideer; Rolf hadde mac-en full av rå produksjoner og nådeløse riff. \nI studioet i Asker smeltet våre visjoner sammen med bidrag fra andre tungvektere i bransjen\n\nVi forsto tidlig at kvalitet og perfeksjon ikke er noe som skjer over natta; det er noe som må dyrkes frem. \nMusikken tok oss med på sin egen reise og er et resultat av samarbeider i Sao Paulo, Marbella, Nashville, Asker og Oslo - Det tok tre år å ferdigstille debutalbumet FØRST! \n\n Da vi endelig var ferdige kastet vi oss ut på veien etter bare et par øvinger. Det var rått, det var upolert, og publikum svarte med samme energi.\n\nNå står vi her:\nVi har  hatt æren av å samarbeide med bautaer som  Lars Lillo-Stenberg, Øystein Greni, Dale Thompson og Vanessa Campagna. \nKråkefot er ikke bare et band - det er en vandring gjennom menneskelig sårbarhet, indre demoner og kampen for frelse i en kaotisk verden.\nVi maner frem de skjulte kreftene i den norske folkesjelen; Et sted mellom det hellige og det fordømte.\n\nMusikken vår kjenner ingen grenser, \n\nVi er KRÅKEFOT.",
+        "imageUrl": "media/images/krkefot-crow-astronaut-frst-lost-1920.webp",
+        "body": "KRÅKEFOT:\n\nHistorien starter i en trang bakgate i Hollywood.:\nTo sjeler, et slitt hotellrom og ett felles mål: \nÅ skape lydbildet som skulle ryste verden. \n\nBak oss lå knuste drømmer og år med musikalske arr. Den første dagen forsvant i en tåke av solskinn på Sunset Strip og ekkoet av legender på Whisky-a-go-go, men på dag to løsnet det. Da Rolf dro det første riffet ut av forsterkeren, spratt jeg ut av den slitne toseteren og skrek: \"Der er det! Der har vi 'Ris til egen bak'!\"\n\nI løpet av fem intense døgn hamret vi ut seks skisser. Frøet til Kråkefot var sådd.\n\nHjemme i Norge startet det virkelige arbeidet. Jeg kom med sekken full av tekstfragmenter og to år med uforløste ideer; Rolf hadde mac-en full av rå produksjoner og nådeløse riff. \nI studioet i Asker smeltet våre visjoner sammen med bidrag fra tungvektere som Kenneth Lewis, Fredrik Wallumrød, Snorre Smørgrav og Roy Powell.\n\nDet tok tre år lage albumet FØRST.; Kvalitet og perfeksjon ikke er noe som skjer over natta; det er noe som må lides frem.\nDa vi endelig var klare kastet vi oss ut på veien etter bare et par øvinger. Det var rått, det var upolert, og publikum svarte med samme energi.\n\nNå står vi her. Albumet Transformator er klart for utgivelse – et prosjekt født ut av et eksplosivt skaperbehov og en trang til å tolke klassikere gjennom vårt eget mørke filter. Vi har også hatt æren av å samarbeide med bautaer som Øystein Greni, Lars Lillo-Stenberg, Dale Thompson og Vanessa Campagnari.\n\nKråkefot er ikke bare et band; det er en reise gjennom livet, kunsten og sinnet. Musikken vår er smidd i spennet mellom skyggen av fjellene og det flakkende nordlyset – en uforutsigbar kraft som nekter å la seg temme. Tekstene er en vandring gjennom menneskelig sårbarhet, indre demoner og den evige kampen for frelse i en kaotisk verden.\nVi maner frem de skjulte kreftene i den norske folkesjelen. Et sted mellom det hellige og det fordømte.\n\nMusikken vår ikke kjenner grenser;\nVi er Kråkefot!",
+        "headline": " Et sted mellom det hellige og det fordømte"
+      },
+      "mission": {
+        "layout": {
+          "heightMode": "auto",
+          "paddingTopDesktop": 8,
+          "paddingBottomDesktop": 8,
+          "paddingTopMobile": 0,
+          "paddingBottomMobile": 7.5,
+          "marginBottom": 0,
+          "mobileMarginBottom": 56
+        },
+        "visuals": {
+          "saturation": 100,
+          "mobileSaturation": 100,
+          "dim": 0,
+          "mobileDim": 0,
+          "parallax": 0,
+          "mobileParallax": 0,
+          "blurEnabled": false,
+          "blurStrength": 5,
+          "blurRadius": 0.5,
+          "playbackRate": 100,
+          "mobileOpacity": 100
+        },
+        "framing": {
+          "zoomDesktop": 1,
+          "zoomMobile": 1,
+          "xOffsetDesktop": 0,
+          "xOffsetMobile": 0,
+          "yOffsetDesktop": 0,
+          "yOffsetMobile": 0
+        },
+        "text": "TRØKKET!",
+        "headline": "ære være den som tåler",
+        "body": "TRØKKET!",
+        "tagline": "ÆRE VÆRE DEN SOM TÅLER"
+      },
+      "values": {
+        "layout": {
+          "heightMode": "screen",
+          "paddingTopDesktop": 8,
+          "paddingBottomDesktop": 8,
+          "paddingTopMobile": 6,
+          "paddingBottomMobile": 6,
+          "marginBottom": 0,
+          "mobileMarginBottom": 0
+        },
+        "visuals": {
+          "saturation": 100,
+          "mobileSaturation": 100,
+          "dim": 0,
+          "mobileDim": 0,
+          "parallax": 0,
+          "mobileParallax": 0,
+          "blurEnabled": true,
+          "blurStrength": 5,
+          "blurRadius": 0.5,
+          "playbackRate": 100
+        },
+        "framing": {
+          "zoomDesktop": 1,
+          "zoomMobile": 1,
+          "xOffsetDesktop": 0,
+          "xOffsetMobile": 0,
+          "yOffsetDesktop": 0,
+          "yOffsetMobile": 0
+        },
+        "items": [
+          "Autentisitet",
+          "Presisjon",
+          "Mystikk",
+          "Utholdenhet"
+        ],
+        "descriptions": [
+          "Vi er tro mot vår visjon og våre nordiske røtter.",
+          "Hver piksel og linje med kode har en hensikt.",
+          "Vi tør å la det uforklarlige og atmosfæriske få plass.",
+          "Vi gir oss ikke før resultatet er perfekt og sjelfullt."
+        ]
+      },
+      "cta": {
+        "headline": "Bli en del av ekkoet",
+        "buttonText": "Start prosjekt"
+      }
+    },
+    "contact": {
+      "layout": {
+        "heightMode": "screen",
+        "paddingTopDesktop": 20,
+        "paddingBottomDesktop": 0,
+        "paddingTopMobile": 19,
+        "paddingBottomMobile": 0,
+        "marginBottom": 0,
+        "mobileMarginBottom": 0,
+        "mobileHeightMode": "auto"
+      },
+      "visuals": {
+        "saturation": 94,
+        "mobileSaturation": 76,
+        "dim": 63,
+        "mobileDim": 76,
+        "parallax": 0,
+        "mobileParallax": 0,
+        "opacity": 100,
+        "mobileOpacity": 100,
+        "blurEnabled": false,
+        "blurStrength": 5,
+        "blurRadius": 0.5,
+        "playbackRate": 100,
+        "auraEnabled": false,
+        "auraOpacity": 65,
+        "auraSpeed": 4,
+        "auraBlendMode": "color-dodge"
+      },
+      "framing": {
+        "zoomDesktop": 1,
+        "zoomMobile": 1,
+        "xOffsetDesktop": 0,
+        "xOffsetMobile": 0,
+        "yOffsetDesktop": 0,
+        "yOffsetMobile": 0
+      },
+      "videoUrl": "UQZN3R7Svyt4UihfoGduEYz02G7qkgiMckzt4rzc91oo",
+      "headline": "",
+      "tagline": "booking og samarbeid",
+      "text": "",
+      "email": "kraakefotmusic@gmail.com",
+      "addresses": [
+        {
+          "label": "",
+          "address": ""
+        }
+      ]
+    },
+    "vault": {
+      "layout": {
+        "heightMode": "auto",
+        "paddingTopDesktop": 0,
+        "paddingBottomDesktop": 0,
+        "paddingTopMobile": 14.5,
+        "paddingBottomMobile": 0,
+        "marginBottom": 0,
+        "mobileMarginBottom": 0
+      },
+      "visuals": {
+        "saturation": 40,
+        "mobileSaturation": 60,
+        "dim": 40,
+        "mobileDim": 30,
+        "parallax": 15,
+        "mobileParallax": 0,
+        "blurEnabled": true,
+        "blurStrength": 5,
+        "blurRadius": 0.5,
+        "playbackRate": 100,
+        "auraEnabled": true,
+        "auraOpacity": 15,
+        "auraSpeed": 20,
+        "auraBlendMode": "screen"
+      },
+      "framing": {
+        "zoomDesktop": 1.2,
+        "zoomMobile": 1,
+        "xOffsetDesktop": 0,
+        "xOffsetMobile": 0,
+        "yOffsetDesktop": 0,
+        "yOffsetMobile": 0
+      },
+      "videoUrl": "",
+      "tagline": "Arkivet",
+      "headline": "THE VAULT TESTING",
+      "description": "En samling av våre mest sjelfulle digitale artefakter.",
+      "items": []
+    },
+    "footer": {
+      "layout": {
+        "heightMode": "screen",
+        "mobileHeightMode": "auto",
+        "paddingTopDesktop": 20,
+        "paddingBottomDesktop": 10.5,
+        "paddingTopMobile": 17,
+        "paddingBottomMobile": 12.5,
+        "marginBottom": 0,
+        "mobileMarginBottom": 40
+      },
+      "visuals": {
+        "saturation": 50,
+        "mobileSaturation": 71,
+        "dim": 100,
+        "mobileDim": 100,
+        "parallax": 0,
+        "mobileParallax": 0,
+        "blurEnabled": false,
+        "blurStrength": 7,
+        "blurRadius": 0.5,
+        "playbackRate": 100,
+        "mobileOpacity": 100,
+        "auraEnabled": false
+      },
+      "framing": {
+        "zoomDesktop": 1,
+        "zoomMobile": 1,
+        "xOffsetDesktop": 0,
+        "xOffsetMobile": 0,
+        "yOffsetDesktop": 0,
+        "yOffsetMobile": 0
+      },
+      "videoUrl": "UQZN3R7Svyt4UihfoGduEYz02G7qkgiMckzt4rzc91oo",
+      "upperTagline": "kontakt kråkefot",
+      "tagline": "Awaiting Your Signal",
+      "contactText": "Get \"In Touch\""
+    },
+    "epk": {
+      "hook": {
+        "layout": {
+          "heightMode": "screen",
+          "mobileHeightMode": "custom",
+          "paddingTopDesktop": 0,
+          "paddingBottomDesktop": 4.5,
+          "paddingTopMobile": 20,
+          "paddingBottomMobile": 6.5,
+          "marginBottom": 0,
+          "mobileMarginBottom": 56
+        },
+        "visuals": {
+          "saturation": 76,
+          "mobileSaturation": 108,
+          "dim": 51,
+          "mobileDim": 50,
+          "parallax": 15,
+          "mobileParallax": -20,
+          "opacity": 100,
+          "mobileOpacity": 100,
+          "blurEnabled": false,
+          "blurStrength": 12,
+          "blurRadius": 1,
+          "auraEnabled": false,
+          "auraOpacity": 53,
+          "auraSpeed": 4,
+          "auraBlendMode": "color-burn",
+          "glitchIntensity": 0,
+          "playbackRate": 1
+        },
+        "framing": {
+          "zoomDesktop": 1.13,
+          "zoomMobile": 1,
+          "xOffsetDesktop": 37,
+          "xOffsetMobile": -2,
+          "yOffsetDesktop": 0,
+          "yOffsetMobile": 0
+        },
+        "imageUrl": "media/images/krakefot-band-live-konsert-1920.webp",
+        "tagline": "",
+        "ctaVideoUrl": "gjRumxXFEPFKRc8MUb5t1hFgqCckorUhW00400VUXTTI8",
+        "ctaSpotifyUrl": "https://soundcloud.com/kraakefot/sets/festivaler?si=5389dbcf8be44e7db418312129da444d&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing",
+        "mediaConfig": {
+          "mux": {
+            "showSeekButtons": false,
+            "primaryColor": "#3a7173",
+            "showPlayButton": true,
+            "widthMobile": "140%",
+            "accentColor": "#8fbdba",
+            "secondaryColor": "#0a0a0a",
+            "aspectRatioMobile": "16/9",
+            "showFullscreenButton": false,
+            "autoPlay": "any",
+            "showMuteButton": false,
+            "xOffsetMobile": -9
+          }
+        }
+      },
+      "pitch": {
+        "layout": {
+          "heightMode": "auto",
+          "mobileHeightMode": "screen",
+          "paddingTopDesktop": 8,
+          "paddingBottomDesktop": 0,
+          "paddingTopMobile": 0,
+          "paddingBottomMobile": 0,
+          "marginBottom": 0,
+          "mobileMarginBottom": 0
+        },
+        "visuals": {
+          "saturation": 40,
+          "mobileSaturation": 100,
+          "dim": 60,
+          "mobileDim": 0,
+          "parallax": 8,
+          "mobileParallax": 0,
+          "opacity": 100,
+          "mobileOpacity": 100,
+          "blurEnabled": false,
+          "blurStrength": 5,
+          "blurRadius": 0.5,
+          "auraEnabled": true,
+          "auraOpacity": 100,
+          "auraSpeed": 8,
+          "auraBlendMode": "hard-light"
+        },
+        "framing": {
+          "zoomDesktop": 1.1,
+          "zoomMobile": 1,
+          "xOffsetDesktop": 0,
+          "xOffsetMobile": 0,
+          "yOffsetDesktop": 0,
+          "yOffsetMobile": 0
+        },
+        "imageUrl": "",
+        "tagline": "kråkefot",
+        "introHeadline": "Internasjonal tyngde. Norsk nerve.",
+        "introText": "\n",
+        "bioText": "KRÅKEFOT leverer en gjennomarbeidet produksjon, skreddersydd for alt fra tette klubbscener til store festivalflater. \n\nBandet kombinerer energisk rock med  dype og skarpe norske tekster, direkte drevet fremover av Fredrik Wallumrød (Span, El Caco) som en nådeløs rytmisk motor.\n\nLive-leveransen er en strategisk utformet totalopplevelse. \nRepertoaret balanserer originalmateriale fra debutalbumet Først med prosjektet Transformator – hvor norske rockeklassikere («Tøff i Pyjamas », «Girl in Oslo») dekonstrueres og gjenoppstår i Kråkefots  sofistikerte drakt. \nDette gir publikummet umiddelbare, kjente knagger, levert med kompromissløs  tyngde.\n\nProsjektets kvalitet og integritet er forankret i den norske bransjen. \nOm Kråkefots musikalske landskap uttaler Lars Lillo-Stenberg: \n\n\"Dette er overraskende og imponerende, lydbildet er veldig friskt og effektivt.\"",
+        "keyPoints": [],
+        "quotes": [
+          {
+            "text": "overraskende og imponerende!",
+            "author": "Lars Lillo-Stenberg",
+            "role": "DeLillos"
+          }
+        ]
+      },
+      "media": {
+        "layout": {
+          "heightMode": "auto",
+          "mobileHeightMode": "auto",
+          "paddingTopDesktop": 8,
+          "paddingBottomDesktop": 8,
+          "paddingTopMobile": 6,
+          "paddingBottomMobile": 6,
+          "marginBottom": 192,
+          "mobileMarginBottom": 0
+        },
+        "visuals": {
+          "saturation": 100,
+          "mobileSaturation": 100,
+          "dim": 0,
+          "mobileDim": 0,
+          "parallax": 0,
+          "mobileParallax": 0,
+          "opacity": 100,
+          "mobileOpacity": 100,
+          "blurEnabled": false,
+          "blurStrength": 5,
+          "blurRadius": 0.5
+        },
+        "framing": {
+          "zoomDesktop": 1,
+          "zoomMobile": 1,
+          "xOffsetDesktop": 0,
+          "xOffsetMobile": 0,
+          "yOffsetDesktop": 0,
+          "yOffsetMobile": 0
+        },
+        "videoEmbedUrl": "https://www.youtube.com/watch?v=tDP0QBGz4Ec&t=29s",
+        "spotifyEmbedUrl": "https://open.spotify.com/artist/3Kug0veZ3RuBdPtYaFWd0n?si=bC9Wt2AuQqWx7XVwykL2sg",
+        "tagline": "LYDEN AV KRÅKEFOT",
+        "tracks": [
+          {
+            "title": "Ris til egen bak",
+            "description": "",
+            "imageUrl": "media/images/gimme-mor-artwork-song-krkefot-1920.webp",
+            "audioUrl": "media/audio/ris til egen bak.m4a"
+          },
+          {
+            "title": "Tøff i Pyjamas",
+            "description": "",
+            "imageUrl": "media/images/awesome-in-pss-artwork-krkefot-album-960.webp",
+            "audioUrl": "media/audio/tøff i pyjamas.m4a"
+          },
+          {
+            "title": "Er det no liv her",
+            "description": "",
+            "audioUrl": "media/audio/er det no liv her.m4a",
+            "imageUrl": "media/images/thief-in-the-night-artwork-krkefot-song-1920.webp"
+          }
+        ],
+        "tracksHeadline": "Utvalgte spor",
+        "spotifyHeadline": "kråkefot på Spotify",
+        "videoHeadline": "kråkefot på youtube",
+        "mediaConfig": {
+          "youtube": {
+            "modestBranding": true,
+            "controls": true,
+            "autoplay": true
+          },
+          "spotify": {
+            "theme": "0",
+            "size": "normal"
+          }
+        }
+      },
+      "press": {
+        "layout": {
+          "heightMode": "auto",
+          "mobileHeightMode": "auto",
+          "paddingTopDesktop": 0,
+          "paddingBottomDesktop": 12,
+          "paddingTopMobile": 6,
+          "paddingBottomMobile": 0,
+          "marginBottom": 0,
+          "mobileMarginBottom": 0
+        },
+        "visuals": {
+          "saturation": 100,
+          "mobileSaturation": 100,
+          "dim": 0,
+          "mobileDim": 0,
+          "parallax": 0,
+          "mobileParallax": 0,
+          "opacity": 100,
+          "mobileOpacity": 100,
+          "blurEnabled": false,
+          "blurStrength": 5,
+          "blurRadius": 0.5
+        },
+        "framing": {
+          "zoomDesktop": 1,
+          "zoomMobile": 1,
+          "xOffsetDesktop": 0,
+          "xOffsetMobile": 0,
+          "yOffsetDesktop": 0,
+          "yOffsetMobile": 0
+        },
+        "tagline": "NEDLASTNINGER  EPK",
+        "headline": "Press Kit",
+        "assets": [
+          {
+            "label": "Press Photos (ZIP)",
+            "url": "https://kraakefot.com/media/#:~:text=pressebilder%20kr%C3%A5kefot.zip"
+          },
+          {
+            "label": "Technical Rider (PDF)",
+            "url": "https://kraakefot.com/press/rider.pdf"
+          },
+          {
+            "label": "Band Logo (SVG/PNG)",
+            "url": "https://kraakefot.com/press/logo.zip"
+          }
+        ]
+      },
+      "contact": {
+        "layout": {
+          "heightMode": "screen",
+          "mobileHeightMode": "custom",
+          "paddingTopDesktop": 13,
+          "paddingBottomDesktop": 1,
+          "paddingTopMobile": 12.5,
+          "paddingBottomMobile": 8,
+          "marginBottom": 112,
+          "mobileMarginBottom": 0
+        },
+        "visuals": {
+          "saturation": 25,
+          "mobileSaturation": 30,
+          "dim": 100,
+          "mobileDim": 100,
+          "parallax": 8,
+          "mobileParallax": 5,
+          "opacity": 80,
+          "mobileOpacity": 99,
+          "blurEnabled": false,
+          "blurStrength": 5,
+          "blurRadius": 0.5,
+          "glitchIntensity": 0,
+          "auraEnabled": false,
+          "auraBlendMode": "color-burn",
+          "auraOpacity": 18,
+          "auraSpeed": 4
+        },
+        "framing": {
+          "zoomDesktop": 1.09,
+          "zoomMobile": 1,
+          "xOffsetDesktop": 0,
+          "xOffsetMobile": 27,
+          "yOffsetDesktop": -33,
+          "yOffsetMobile": 0
+        },
+        "imageUrl": "media/images/krkefot-live-1920.webp",
+        "tagline": "BOOK KRÅKEFOT",
+        "headline": "La oss skape noe unikt sammen!",
+        "email": "",
+        "phone": ""
+      }
+    }
+  },
+  "team": [
+    {
+      "name": "Elias Thorne",
+      "role": "Visionary & Founder",
+      "image": "https://kraakefot.com/media/Birdman%20profile%203.webp"
+    }
+  ],
+  "mediaImgSizeDesktop": 100,
+  "mediaImgSizeMobile": 100,
+  "socialIconSize": 24,
+  "seo": {
+    "global": {
+      "siteName": "Kråkefot",
+      "robotsTxt": "User-agent: *\nAllow: /",
+      "favicon": "favicon.svg"
+    },
+    "pages": {
+      "home": {
+        "title": "Kråkefot - made in norway ",
+        "description": "Norwegian rock band"
+      },
+      "about": {
+        "title": "Om Kråkefot",
+        "description": "KRÅKEFOT er resultatet av arven etter hardføre vikinger,  norønne myter og historier"
+      },
+      "contact": {
+        "title": "Kontakt Kråkefot",
+        "description": "Ta kontakt for et samarbeid."
+      }
+    }
+  },
+  "h1SizeMobile": 4,
+  "h4SizeMobile": 2,
+  "h1SizeDesktop": 8.7,
+  "h3SizeMobile": 2.6,
+  "h2SizeMobile": 2.9,
+  "h6SizeMobile": 0.7,
+  "h3Color": "#39ac99",
+  "h3SizeDesktop": 3.2,
+  "h4SizeDesktop": 2.5,
+  "h5Font": "'Montserrat', sans-serif",
+  "h6Font": "'Montserrat', sans-serif"
+}
