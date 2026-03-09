@@ -110,6 +110,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ brandData, onUpdat
                         opacity={isMobile ? (data.visuals?.mobileOpacity ?? 100) : (data.visuals?.opacity ?? 100)}
                         scrollY={scrollY}
                         mediaConfig={data.mediaConfig}
+                        publishMode={isPublish}
                     />
                 </div>
 

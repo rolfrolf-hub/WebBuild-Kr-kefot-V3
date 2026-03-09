@@ -99,6 +99,7 @@ export const OriginSection: React.FC<OriginSectionProps> = ({ brandData, onUpdat
                     opacity={isMobile ? (visuals.mobileOpacity ?? 100) : (visuals.opacity ?? 100)}
                     scrollY={scrollY}
                     mediaConfig={data.mediaConfig}
+                    publishMode={isPublish}
                 />
             </div>
 

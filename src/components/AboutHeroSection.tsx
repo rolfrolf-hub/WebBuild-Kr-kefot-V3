@@ -127,6 +127,7 @@ export const AboutHeroSection: React.FC<AboutHeroSectionProps> = ({ brandData, o
                                 parallax={parallax}
                                 framing={data.framing}
                                 mediaConfig={data.mediaConfig}
+                                publishMode={isPublish}
                             />
                         </React.Suspense>
                     </div>

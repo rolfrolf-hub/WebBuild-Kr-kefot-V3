@@ -261,6 +261,7 @@ export const MediaGallerySection: React.FC<MediaGallerySectionProps> = ({ brandD
                     opacity={isMobile ? visuals.mobileOpacity : visuals.opacity}
                     scrollY={0}
                     mediaConfig={data.mediaConfig}
+                    publishMode={isPublish}
                 />
             </div>
 

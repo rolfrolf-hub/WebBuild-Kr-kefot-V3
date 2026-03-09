@@ -177,6 +177,7 @@ export const LiveSection: React.FC<LiveSectionProps> = ({ brandData, onUpdate, s
                                 videoRef={liveVideoRef}
                                 autoPlay={false}
                                 mediaConfig={data.mediaConfig}
+                                publishMode={isPublish}
                             />
                         )}
                     </div>
@@ -198,6 +199,7 @@ export const LiveSection: React.FC<LiveSectionProps> = ({ brandData, onUpdate, s
                                     opacity={isMobile ? visuals.mobileOpacity : visuals.opacity}
                                     scrollY={scrollY}
                                     mediaConfig={data.mediaConfig}
+                                    publishMode={isPublish}
                                 />
                             );
                         })()}

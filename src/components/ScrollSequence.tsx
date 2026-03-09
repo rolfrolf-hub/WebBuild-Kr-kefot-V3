@@ -24,6 +24,7 @@ interface ScrollSequenceProps {
     serverBaseUrl?: string;
     framing?: SectionFraming;
     mediaConfig?: any;
+    publishMode?: boolean;
 }
 
 export const ScrollSequence: React.FC<ScrollSequenceProps> = ({
@@ -34,7 +35,8 @@ export const ScrollSequence: React.FC<ScrollSequenceProps> = ({
     fallbackUrl,
     serverBaseUrl,
     framing,
-    mediaConfig
+    mediaConfig,
+    publishMode = false
 }) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const framesRef = useRef<(HTMLImageElement | null)[]>([]);
@@ -187,6 +189,7 @@ export const ScrollSequence: React.FC<ScrollSequenceProps> = ({
                 scrollY={0}
                 serverBaseUrl={serverBaseUrl ?? ''}
                 mediaConfig={mediaConfig}
+                publishMode={publishMode}
             />
         );
     }

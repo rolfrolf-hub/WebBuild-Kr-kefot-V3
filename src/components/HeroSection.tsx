@@ -97,6 +97,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ brandData, onUpdate, s
                     scrollY={scrollY}
                     isHero={true}
                     mediaConfig={data.mediaConfig}
+                    publishMode={isPublish}
                 />
             </div>
 

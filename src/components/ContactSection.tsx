@@ -75,6 +75,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ brandData, onUpd
                     scrollY={scrollY}
                     isHero
                     mediaConfig={data.mediaConfig}
+                    publishMode={isPublish}
                 />
             </div>
 

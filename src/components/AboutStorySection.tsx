@@ -109,6 +109,7 @@ export const AboutStorySection: React.FC<AboutStorySectionProps> = ({ brandData,
                                 opacity={isMobile ? (data.visuals?.mobileOpacity ?? 100) : (data.visuals?.opacity ?? 100)}
                                 scrollY={scrollY}
                                 mediaConfig={data.mediaConfig}
+                                publishMode={isPublish}
                             />
                         </div>
                     </FadeIn>

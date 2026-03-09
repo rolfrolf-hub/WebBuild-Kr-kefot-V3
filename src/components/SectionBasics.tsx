@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
+
+
 import { getResponsiveSrcSet } from '../utils/mediaProcessing';
 import { isMuxUrl, getMuxStreamUrl, extractMuxId } from '../utils/mediaHelpers';
 import { MOBILE_NORM, DESKTOP_NORM, MOBILE_BUFFER, DESKTOP_BUFFER } from '../utils/framingUtils';
@@ -48,7 +50,16 @@ interface UniversalMediaProps {
     isHero?: boolean;
     serverBaseUrl?: string; // Add serverBaseUrl to props to resolve relative URLs in builder preview
     mediaConfig?: UniversalMediaConfig;
+    publishMode?: boolean;
 }
+
+// wsrv.nl CDN image optimizer — used in publish mode to serve WebP at the right size
+const wsrvSrc = (imgUrl: string, width: number): string => {
+    if (!imgUrl || imgUrl.startsWith('data:') || imgUrl.includes('wsrv.nl')) return imgUrl;
+    if (/\.(mp4|webm|mov|m4v)$/i.test(imgUrl)) return imgUrl;
+    const fullUrl = imgUrl.startsWith('http') ? imgUrl : `https://kraakefot.com/${imgUrl.replace(/^\//, '')}`;
+    return `https://wsrv.nl/?url=${encodeURIComponent(fullUrl)}&w=${width}&q=80&output=webp`;
+};
 
 export const UniversalMedia: React.FC<UniversalMediaProps & { prefix?: string }> = ({
     url, isMobile, zoom, x, y, saturation, parallax, dim, opacity = 100, scrollY,
@@ -58,7 +69,8 @@ export const UniversalMedia: React.FC<UniversalMediaProps & { prefix?: string }>
     prefix,
     isHero = false,
     serverBaseUrl = '',
-    mediaConfig
+    mediaConfig,
+    publishMode = false
 }) => {
     if (!url) return null;
 
@@ -68,11 +80,15 @@ export const UniversalMedia: React.FC<UniversalMediaProps & { prefix?: string }>
         setIsLoaded(false);
     }, [url]);
 
-    let baseOpacity = isLoaded ? 1 : 0; // Smart Loading: Start hidden
-    if (isVideo(url)) {
-        baseOpacity = isLoaded ? 0.4 : 0;
-        if (id === 'live-video' && isLivePlaying) {
-            baseOpacity = 1;
+    // Publish mode: skip fade-in loading state — media is visible immediately in static HTML
+    let baseOpacity: number;
+    if (publishMode) {
+        baseOpacity = 1;
+    } else {
+        baseOpacity = isLoaded ? 1 : 0;
+        if (isVideo(url)) {
+            baseOpacity = isLoaded ? 0.4 : 0;
+            if (id === 'live-video' && isLivePlaying) baseOpacity = 1;
         }
     }
 
@@ -149,16 +165,37 @@ export const UniversalMedia: React.FC<UniversalMediaProps & { prefix?: string }>
                     const mConfig: Partial<MuxPlayerConfig> = mediaConfig?.mux ?? {};
                     const aspect = isMobile ? mConfig.aspectRatioMobile : mConfig.aspectRatioDesktop;
                     const widthOverride = isMobile ? mConfig.widthMobile : mConfig.widthDesktop;
+                    const wrapStyle = {
+                        ...baseStyle,
+                        ...transformStyle,
+                        width: widthOverride || baseStyle.width,
+                        aspectRatio: aspect || (isMobile ? '9/16' : '16/9'),
+                        transform: `${transformStyle.transform} translateX(${isMobile ? (mConfig.xOffsetMobile || 0) : (mConfig.xOffsetDesktop || 0)}%)`,
+                        background: '#000'
+                    };
+
+                    // PUBLISH MODE: use native web components (no React overhead in static HTML)
+                    if (publishMode) {
+                        return isHero
+                            // Hero background — mux-background-video (eager, no controls)
+                            ? React.createElement('mux-background-video', {
+                                src: `https://stream.mux.com/${muxId}.m3u8`,
+                                id,
+                                autoplay: true,
+                                muted: true,
+                                loop: true,
+                                style: { ...wrapStyle, width: '100%', height: '100%' }
+                            })
+                            // Below-fold — mux-player (lazy-loaded by script.js IntersectionObserver)
+                            : React.createElement('mux-player', {
+                                'playback-id': muxId || '',
+                                'stream-type': mConfig.streamType || 'on-demand',
+                                style: wrapStyle
+                            });
+                    }
 
                     return (
-                        <div style={{
-                            ...baseStyle,
-                            ...transformStyle,
-                            width: widthOverride || baseStyle.width,
-                            aspectRatio: aspect || (isMobile ? '9/16' : '16/9'),
-                            transform: `${transformStyle.transform} translateX(${isMobile ? (mConfig.xOffsetMobile || 0) : (mConfig.xOffsetDesktop || 0)}%)`,
-                            background: '#000'
-                        }}>
+                        <div style={wrapStyle}>
                             <MuxPlayer
                                 ref={videoRef as any}
                                 playbackId={muxId || ''}
@@ -191,7 +228,6 @@ export const UniversalMedia: React.FC<UniversalMediaProps & { prefix?: string }>
                                         '--duration-display': mConfig.showDurationDisplay === false ? 'none' : undefined,
                                         '--poster': 'none'
                                     })
-
                                 }}
                             />
                         </div>
@@ -205,9 +241,23 @@ export const UniversalMedia: React.FC<UniversalMediaProps & { prefix?: string }>
                         loop
                         muted={muted}
                         playsInline
-                        onLoadedData={handleLoad}
+                        preload={publishMode && !isHero ? 'none' : 'auto'}
+                        onLoadedData={publishMode ? undefined : handleLoad}
                         className="universal-media-element"
                         style={{ ...baseStyle, ...transformStyle }}
+                    />
+                ) : publishMode ? (
+                    // PUBLISH MODE image: wsrv.nl WebP + fetchpriority + lazy loading
+                    <img
+                        id={id}
+                        src={wsrvSrc(url, 1920)}
+                        srcSet={`${wsrvSrc(url, 320)} 320w, ${wsrvSrc(url, 640)} 640w, ${wsrvSrc(url, 960)} 960w, ${wsrvSrc(url, 1920)} 1920w`}
+                        sizes="100vw"
+                        fetchPriority={isHero ? 'high' : 'auto'}
+                        loading={isHero ? 'eager' : 'lazy'}
+                        className="universal-media-element"
+                        style={{ ...baseStyle, ...transformStyle }}
+                        alt="Background"
                     />
                 ) : (
                     <img
