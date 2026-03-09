@@ -55,10 +55,6 @@ const ContactControls = React.lazy(async () => {
   const mod = await import('./components/controls/sections/ContactControls');
   return { default: mod.ContactControls };
 });
-const VaultHeroControls = React.lazy(async () => {
-  const mod = await import('./components/controls/sections/VaultHeroControls');
-  return { default: mod.VaultHeroControls };
-});
 const EpkControls = React.lazy(async () => {
   const mod = await import('./components/controls/sections/EpkControls');
   return { default: mod.EpkControls };
@@ -143,7 +139,7 @@ const PreviewFrame = memo(({
 
 const App: React.FC = () => {
   const [brandData, setBrandData] = useState<ProjectState>(INITIAL_DEFAULTS);
-  const [activePage, setActivePage] = useState<'home' | 'about' | 'contact' | 'vault' | 'epk'>('home');
+  const [activePage, setActivePage] = useState<'home' | 'about' | 'contact' | 'epk'>('home');
   const [activeSection, setActiveSection] = useState<string | null>('home-hero');
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
   const [publishModalTab, setPublishModalTab] = useState<'download' | 'deploy'>('download');
@@ -216,11 +212,11 @@ const App: React.FC = () => {
         // Ensure ALL vital structures exist to prevent crashes
         if (!merged.sections) merged.sections = INITIAL_DEFAULTS.sections;
         else {
-          const requiredSections: (keyof typeof INITIAL_DEFAULTS.sections)[] = ['home', 'about', 'contact', 'vault', 'footer'];
+          const requiredSections: (keyof typeof INITIAL_DEFAULTS.sections)[] = ['home', 'about', 'contact', 'footer'];
           requiredSections.forEach(sKey => {
             if (!merged.sections[sKey]) merged.sections[sKey] = INITIAL_DEFAULTS.sections[sKey] as any;
           });
-          const vis = merged.pageVisibility || { home: true, about: true, contact: true, vault: false, epk: false };
+          const vis = merged.pageVisibility || { home: true, about: true, contact: true, epk: false };
           if (vis.epk && !merged.sections.epk) {
             merged.sections.epk = INITIAL_DEFAULTS.sections.epk;
           }
@@ -382,7 +378,7 @@ const App: React.FC = () => {
       const endpoint = `${baseUrl}deploy.php`;
 
       // Build file list — respects deployPageFilter (null = all pages)
-      const vis = brandData.pageVisibility || { home: true, about: true, contact: true, vault: brandData.isVaultVisible ?? false, epk: false };
+      const vis = brandData.pageVisibility || { home: true, about: true, contact: true, epk: false };
       const isFiltered = deployPageFilter !== null && deployPageFilter.length > 0;
       const wantsPage = (page: string) => !isFiltered || deployPageFilter!.includes(page);
 
@@ -397,7 +393,6 @@ const App: React.FC = () => {
       if (wantsPage('home')) files.push({ name: 'index.html', content: generatePageHTML('home', brandData) });
       if (wantsPage('about') && vis.about !== false) files.push({ name: 'about.html', content: generatePageHTML('about', brandData) });
       if (wantsPage('contact') && vis.contact !== false) files.push({ name: 'contact.html', content: generatePageHTML('contact', brandData) });
-      if (wantsPage('vault') && vis.vault) files.push({ name: 'vault.html', content: generatePageHTML('vault', brandData) });
       if (wantsPage('epk') && vis.epk) files.push({ name: 'epk.html', content: generatePageHTML('epk', brandData) });
 
       // Sitemap / robots only when deploying all pages (or home is selected as the canonical entry point)
@@ -469,9 +464,9 @@ const App: React.FC = () => {
           <div className="p-6 space-y-8">
             {/* Page Selector */}
             <div className="flex bg-zinc-900 p-1 rounded-lg border border-zinc-800">
-              {(['home', 'about', 'contact', 'vault', 'epk'] as const).map((page) => {
-                const vis = brandData.pageVisibility || { home: true, about: true, contact: true, vault: false, epk: false };
-                const isVisible = vis[page] ?? (page === 'vault' || page === 'epk' ? false : true);
+              {(['home', 'about', 'contact', 'epk'] as const).map((page) => {
+                const vis = brandData.pageVisibility || { home: true, about: true, contact: true, epk: false };
+                const isVisible = vis[page] ?? (page === 'epk' ? false : true);
                 return (
                   <button
                     key={page}
@@ -556,9 +551,9 @@ const App: React.FC = () => {
                     Page Visibility (Publish)
                   </h4>
                   <div className="space-y-2">
-                    {(['home', 'about', 'contact', 'vault', 'epk'] as const).map((page) => {
-                      const vis = brandData.pageVisibility || { home: true, about: true, contact: true, vault: false, epk: false };
-                      const isVisible = vis[page] ?? (page === 'vault' || page === 'epk' ? false : true);
+                    {(['home', 'about', 'contact', 'epk'] as const).map((page) => {
+                      const vis = brandData.pageVisibility || { home: true, about: true, contact: true, epk: false };
+                      const isVisible = vis[page] ?? (page === 'epk' ? false : true);
                       const displayName = brandData.navNames[page] || page;
                       return (
                         <div
@@ -568,11 +563,9 @@ const App: React.FC = () => {
                             : 'bg-zinc-950/50 border-zinc-900 hover:border-zinc-700'
                             }`}
                           onClick={() => {
-                            const current = brandData.pageVisibility || { home: true, about: true, contact: true, vault: false, epk: false };
+                            const current = brandData.pageVisibility || { home: true, about: true, contact: true, epk: false };
                             const newVisibility = { ...current, [page]: !isVisible };
-                            const updates: any = { pageVisibility: newVisibility };
-                            if (page === 'vault') updates.isVaultVisible = !isVisible;
-                            updateBrand(updates);
+                            updateBrand({ pageVisibility: newVisibility });
                           }}
                         >
                           <div className="flex items-center gap-2">
@@ -796,39 +789,6 @@ const App: React.FC = () => {
                     </CollapsibleSection>
                   </div>
                 </div>
-              ) : activePage === 'vault' ? (
-                <div className="space-y-2">
-                  <div id="control-vault-hero">
-                    <CollapsibleSection
-                      title="Vault Hero"
-                      sectionId="vault-hero"
-                      isActive={activeSection === 'vault-hero'}
-                      onClick={() => { setActiveSection('vault-hero'); scrollToPreviewSection('vault-hero'); }}
-                      actions={<PresetButton path="vault" label="Vault" getData={() => brandData.sections.vault} onRestore={(d) => updateBrand({ sections: { vault: d } } as any)} />}
-                    >
-                      <SectionErrorBoundary sectionName="Vault Hero">
-                        <Suspense fallback={<ControlFallback />}>
-                          <VaultHeroControls brandData={brandData} onUpdate={updateBrand} isMobile={brandData.isMobilePreview} />
-                        </Suspense>
-                      </SectionErrorBoundary>
-                    </CollapsibleSection>
-                  </div>
-                  <div id="control-vault-footer">
-                    <CollapsibleSection
-                      title="Footer"
-                      sectionId="vault-footer"
-                      isActive={activeSection === 'vault-footer'}
-                      onClick={() => { setActiveSection('vault-footer'); scrollToPreviewSection('vault-footer'); }}
-                      actions={<PresetButton path="footer" label="Footer" getData={() => brandData.sections.footer} onRestore={(d) => updateBrand({ sections: { footer: d } } as any)} />}
-                    >
-                      <SectionErrorBoundary sectionName="Footer">
-                        <Suspense fallback={<ControlFallback />}>
-                          <FooterControls brandData={brandData} onUpdate={updateBrand} isMobile={brandData.isMobilePreview} />
-                        </Suspense>
-                      </SectionErrorBoundary>
-                    </CollapsibleSection>
-                  </div>
-                </div>
               ) : activePage === 'epk' ? (
                 <div className="space-y-2">
                   <div className="flex items-center justify-between px-1 mb-1">
@@ -863,12 +823,11 @@ const App: React.FC = () => {
 
           {/* Per-page deploy selector */}
           {(() => {
-            const vis = brandData.pageVisibility || { home: true, about: true, contact: true, vault: false, epk: false };
+            const vis = brandData.pageVisibility || { home: true, about: true, contact: true, epk: false };
             const availablePages: { key: string; label: string }[] = [
               { key: 'home', label: 'Home' },
               ...(vis.about !== false ? [{ key: 'about', label: 'About' }] : []),
               ...(vis.contact !== false ? [{ key: 'contact', label: 'Contact' }] : []),
-              ...(vis.vault ? [{ key: 'vault', label: 'Vault' }] : []),
               ...(vis.epk ? [{ key: 'epk', label: 'EPK' }] : []),
             ];
             const isAll = deployPageFilter === null;

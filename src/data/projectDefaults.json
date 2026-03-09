@@ -66,12 +66,6 @@
       "glitchEnabled": false,
       "semanticType": "h2"
     },
-    "vaultTagline": {
-      "font": "'Montserrat', sans-serif",
-      "scale": 1,
-      "color": "#459694",
-      "glitchEnabled": true
-    },
     "epkHookTagline": {
       "font": "'Montserrat', sans-serif",
       "scale": 1,
@@ -343,7 +337,6 @@
     "contact": "KONTAKT",
     "portfolio": "Portfolio",
     "lab": "Lab",
-    "vault": "Vault",
     "epk": "EPK"
   },
   "menuOpacity": 0.1,
@@ -353,12 +346,10 @@
   "menuOverlayBrightness": 50,
   "menuOverlayOpacity": 50,
   "menuOverlayColor": "#000000",
-  "isVaultVisible": false,
   "pageVisibility": {
     "home": true,
     "about": true,
     "contact": true,
-    "vault": false,
     "epk": true
   },
   "socials": {
@@ -818,46 +809,6 @@
           "address": ""
         }
       ]
-    },
-    "vault": {
-      "layout": {
-        "heightMode": "auto",
-        "paddingTopDesktop": 0,
-        "paddingBottomDesktop": 0,
-        "paddingTopMobile": 14.5,
-        "paddingBottomMobile": 0,
-        "marginBottom": 0,
-        "mobileMarginBottom": 0
-      },
-      "visuals": {
-        "saturation": 40,
-        "mobileSaturation": 60,
-        "dim": 40,
-        "mobileDim": 30,
-        "parallax": 15,
-        "mobileParallax": 0,
-        "blurEnabled": true,
-        "blurStrength": 5,
-        "blurRadius": 0.5,
-        "playbackRate": 100,
-        "auraEnabled": true,
-        "auraOpacity": 15,
-        "auraSpeed": 20,
-        "auraBlendMode": "screen"
-      },
-      "framing": {
-        "zoomDesktop": 1.2,
-        "zoomMobile": 1,
-        "xOffsetDesktop": 0,
-        "xOffsetMobile": 0,
-        "yOffsetDesktop": 0,
-        "yOffsetMobile": 0
-      },
-      "videoUrl": "",
-      "tagline": "Arkivet",
-      "headline": "THE VAULT TESTING",
-      "description": "En samling av våre mest sjelfulle digitale artefakter.",
-      "items": []
     },
     "footer": {
       "layout": {

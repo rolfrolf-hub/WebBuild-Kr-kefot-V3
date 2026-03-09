@@ -21,7 +21,7 @@ interface PublishModalProps {
   onClose: () => void;
   brandData: BrandState;
   onUpdate: (newData: Partial<BrandState>) => void;
-  activePage: 'home' | 'about' | 'contact' | 'vault' | 'epk';
+  activePage: 'home' | 'about' | 'contact' | 'epk';
   initialTab?: TabType;
 }
 
@@ -65,7 +65,7 @@ export const PublishModal: React.FC<PublishModalProps> = ({ isOpen, onClose, bra
   // Build file list respecting page visibility (async — generator loaded on demand)
   const getEnabledPageFiles = async () => {
     const { generatePageHTML, generateScriptJS, generateSitemap, generateRobots } = await getGenerator();
-    const vis = brandData.pageVisibility || { home: true, about: true, contact: true, vault: brandData.isVaultVisible ?? false };
+    const vis = brandData.pageVisibility || { home: true, about: true, contact: true };
     const files: { name: string; content: string }[] = [
       { name: 'index.html', content: generatePageHTML('home', brandData) },
     ];
@@ -74,9 +74,6 @@ export const PublishModal: React.FC<PublishModalProps> = ({ isOpen, onClose, bra
     }
     if (vis.contact !== false) {
       files.push({ name: 'contact.html', content: generatePageHTML('contact', brandData) });
-    }
-    if (vis.vault) {
-      files.push({ name: 'vault.html', content: generatePageHTML('vault', brandData) });
     }
     // Always include shared assets
     files.push(
@@ -147,7 +144,7 @@ export const PublishModal: React.FC<PublishModalProps> = ({ isOpen, onClose, bra
     const files = await getEnabledPageFiles();
     files.push({ name: '.htaccess', content: generateHtaccess() });
 
-    const vis = brandData.pageVisibility || { home: true, about: true, contact: true, vault: false };
+    const vis = brandData.pageVisibility || { home: true, about: true, contact: true };
     const enabledPages = Object.entries(vis).filter(([_, v]) => v).map(([k]) => k);
     log(`Publiserer sider: ${enabledPages.join(', ').toUpperCase()}`);
 

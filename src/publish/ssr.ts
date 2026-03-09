@@ -74,7 +74,6 @@ const PublishNav: React.FC<NavProps> = ({ brandData, page }) => {
       React.createElement('a', { href: 'index.html', className: linkCls(page === 'home') }, names.home || 'Home'),
       vis?.about !== false && React.createElement('a', { href: 'about.html', className: linkCls(page === 'about') }, names.about || 'About'),
       vis?.contact !== false && React.createElement('a', { href: 'contact.html', className: linkCls(page === 'contact') }, names.contact || 'Contact'),
-      vis?.vault && React.createElement('a', { href: 'vault.html', className: linkCls(false) }, names.vault || 'Vault'),
       vis?.epk && React.createElement('a', { href: 'epk.html', className: linkCls(false) }, names.epk || 'EPK'),
     ),
 

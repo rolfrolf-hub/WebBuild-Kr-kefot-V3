@@ -9,8 +9,8 @@ interface HeaderProps {
   onUpdate: (newData: Partial<BrandState>) => void;
   onPublish: () => void;
   onReset: () => void;
-  activePage: 'home' | 'about' | 'contact' | 'vault' | 'epk';
-  onNavigate: (page: 'home' | 'about' | 'contact' | 'vault' | 'epk') => void;
+  activePage: 'home' | 'about' | 'contact' | 'epk';
+  onNavigate: (page: 'home' | 'about' | 'contact' | 'epk') => void;
   onManualSave: () => void;
   hasUnsavedChanges: boolean;
   scrollContainerRef?: React.RefObject<HTMLDivElement>;
@@ -69,12 +69,11 @@ const Header: React.FC<HeaderProps> = ({
     setTimeout(() => setShowSaveConfirm(false), 2000);
   };
 
-  const vis = brandData.pageVisibility || { home: true, about: true, contact: true, vault: brandData.isVaultVisible ?? false, epk: false };
+  const vis = brandData.pageVisibility || { home: true, about: true, contact: true, epk: false };
   const navItems = [
     { key: 'home', label: brandData.navNames.home },
     ...(vis.about !== false ? [{ key: 'about', label: brandData.navNames.about }] : []),
     ...(vis.contact !== false ? [{ key: 'contact', label: brandData.navNames.contact }] : []),
-    ...(vis.vault ? [{ key: 'vault', label: brandData.navNames.vault }] : []),
     ...(vis.epk ? [{ key: 'epk', label: brandData.navNames.epk || 'EPK' }] : []),
   ];
 

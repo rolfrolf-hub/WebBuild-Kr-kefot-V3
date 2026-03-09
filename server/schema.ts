@@ -82,14 +82,6 @@ export const MediaItemSchema = z.object({
     mediaConfig: UniversalMediaConfigSchema.optional(),
 });
 
-export const VaultItemSchema = z.object({
-    id: z.string(),
-    type: z.enum(['image', 'video']),
-    url: z.string(),
-    title: z.string(),
-    description: z.string(),
-});
-
 export const TextStyleSchema = z.object({
     font: z.string().optional(),
     scale: z.number().optional(),
@@ -262,14 +254,6 @@ export const ContactSectionSchema = SectionConfigSchema.extend({
     addresses: z.array(z.object({ label: z.string(), address: z.string() })),
 });
 
-export const VaultSectionSchema = SectionConfigSchema.extend({
-    videoUrl: z.string(),
-    tagline: z.string(),
-    headline: z.string(),
-    description: z.string(),
-    items: z.array(VaultItemSchema),
-});
-
 export const FooterConfigSchema = SectionConfigSchema.extend({
     videoUrl: z.string(),
     upperTagline: z.string().optional().default(''),
@@ -420,7 +404,6 @@ export const ProjectStateSchema = z.object({
         contact: z.string(),
         portfolio: z.string(),
         lab: z.string(),
-        vault: z.string().optional(),
         epk: z.string().optional(),
     }),
     menuOpacity: z.number().optional(),
@@ -430,16 +413,13 @@ export const ProjectStateSchema = z.object({
     menuOverlayBrightness: z.number().optional().default(95),
     menuOverlayOpacity: z.number().optional().default(5),
     menuOverlayColor: z.string().optional().default('#000000'),
-    isVaultVisible: z.boolean().optional(),
-
     // Page Visibility (for publish/nav control)
     pageVisibility: z.object({
         home: z.boolean().optional().default(true),
         about: z.boolean().optional().default(true),
         contact: z.boolean().optional().default(true),
-        vault: z.boolean().optional().default(false),
         epk: z.boolean().optional().default(false),
-    }).optional().default(() => ({ home: true, about: true, contact: true, vault: false, epk: false })),
+    }).optional().default(() => ({ home: true, about: true, contact: true, epk: false })),
 
     // Socials
     socials: z.object({
@@ -457,7 +437,6 @@ export const ProjectStateSchema = z.object({
         home: HomeSectionsSchema,
         about: AboutSectionsSchema,
         contact: ContactSectionSchema,
-        vault: VaultSectionSchema,
         footer: FooterConfigSchema,
         epk: EpkSectionSchema.optional(),
     }),
@@ -488,7 +467,6 @@ export type ToneType = z.infer<typeof ToneTypeSchema>;
 export type MediaType = z.infer<typeof MediaTypeSchema>;
 export type SectionHeightMode = z.infer<typeof SectionHeightModeSchema>;
 export type MediaItem = z.infer<typeof MediaItemSchema>;
-export type VaultItem = z.infer<typeof VaultItemSchema>;
 export type TextStyle = z.infer<typeof TextStyleSchema>;
 
 export type SectionLayout = z.infer<typeof SectionLayoutSchema>;
@@ -515,7 +493,6 @@ export type AboutCta = z.infer<typeof AboutCtaSchema>;
 export type AboutSections = z.infer<typeof AboutSectionsSchema>;
 
 export type ContactSection = z.infer<typeof ContactSectionSchema>;
-export type VaultSection = z.infer<typeof VaultSectionSchema>;
 export type FooterConfig = z.infer<typeof FooterConfigSchema>;
 export type EpkSection = z.infer<typeof EpkSectionSchema>;
 export type EpkHook = z.infer<typeof EpkHookSchema>;

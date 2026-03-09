@@ -87,7 +87,6 @@ export function generateCSSVars(brandData: BrandState): string {
   const aValues  = s.about.values;
   const contact  = s.contact;
   const footer   = s.footer;
-  const vault    = s.vault;
   const epk      = s.epk;
 
   const safeDiv = (num: number, div: number) => (div === 0 ? 0 : num / div);
@@ -149,7 +148,6 @@ export function generateCSSVars(brandData: BrandState): string {
   ${getAtomicSpacing('about-values',   aValues)}
   ${getAtomicSpacing('contact',        contact)}
   ${getAtomicSpacing('footer-section', footer)}
-  ${getAtomicSpacing('vault',          vault)}
   ${epk ? getAtomicSpacing('epk-hook',     epk.hook)    : ''}
   ${epk ? getAtomicSpacing('epk-pitch',    epk.pitch)   : ''}
   ${epk ? getAtomicSpacing('epk-media',    epk.media)   : ''}
@@ -184,7 +182,6 @@ export function generateCSSVars(brandData: BrandState): string {
   ${getFramingCss('live-image', (hLive.framingImage || hLive.framing).zoomDesktop, (hLive.framingImage || hLive.framing).xOffsetDesktop, (hLive.framingImage || hLive.framing).yOffsetDesktop)}
   ${getFramingCss('footer',     footer.framing.zoomDesktop,  footer.framing.xOffsetDesktop,  footer.framing.yOffsetDesktop)}
   ${getFramingCss('contact',    contact.framing.zoomDesktop, contact.framing.xOffsetDesktop, contact.framing.yOffsetDesktop)}
-  ${getFramingCss('vault',      vault.framing.zoomDesktop,   vault.framing.xOffsetDesktop,   vault.framing.yOffsetDesktop)}
   ${getFramingCss('story',      aStory.framing.zoomDesktop,  aStory.framing.xOffsetDesktop,  aStory.framing.yOffsetDesktop)}
   ${getFramingCss('about-hero', aHero.framing.zoomDesktop,   aHero.framing.xOffsetDesktop,   aHero.framing.yOffsetDesktop)}
   ${getMuxPropsCss('live-mux',  hLive.mediaConfig?.mux?.widthDesktop, hLive.mediaConfig?.mux?.xOffsetDesktop, (hLive.mediaConfig?.mux as any)?.yOffsetDesktop)}
@@ -199,7 +196,6 @@ export function generateCSSVars(brandData: BrandState): string {
   --story-sat: ${aStory.visuals.saturation}%; --story-dim: ${aStory.visuals.dim / 100}; --story-para: ${aStory.visuals.parallax}; --story-op: ${(aStory.visuals.opacity ?? 100) / 100};
   --footer-sat: ${footer.visuals.saturation}%; --footer-dim: ${footer.visuals.dim / 100}; --footer-para: ${footer.visuals.parallax}; --footer-op: ${(footer.visuals.opacity ?? 100) / 100};
   --contact-sat: ${contact.visuals.saturation}%; --contact-dim: ${contact.visuals.dim / 100}; --contact-para: ${contact.visuals.parallax}; --contact-op: ${(contact.visuals.opacity ?? 100) / 100};
-  --vault-sat: ${vault.visuals.saturation}%; --vault-dim: ${vault.visuals.dim / 100}; --vault-para: ${vault.visuals.parallax}; --vault-op: ${(vault.visuals.opacity ?? 100) / 100};
   ${epk ? `
   --epk-hook-sat: ${epk.hook.visuals.saturation}%; --epk-hook-dim: ${epk.hook.visuals.dim / 100}; --epk-hook-para: ${epk.hook.visuals.parallax}; --epk-hook-op: ${(epk.hook.visuals.opacity ?? 100) / 100}; --epk-hook-margin: ${epk.hook.layout.marginBottom ?? 0}px;
   --epk-hook-aura-op: ${(epk.hook.visuals.auraOpacity ?? 15) / 100}; --epk-hook-aura-speed: ${epk.hook.visuals.auraSpeed ?? 20}s; --epk-hook-aura-blend: ${epk.hook.visuals.auraBlendMode || 'screen'}; --epk-hook-aura-display: ${epk.hook.visuals.auraEnabled ? 'block' : 'none'};
@@ -229,7 +225,6 @@ export function generateCSSVars(brandData: BrandState): string {
   --about-mission-margin: ${aMission.layout.marginBottom}px;
   --about-values-margin: ${aValues.layout.marginBottom}px;
   --footer-margin: ${footer.layout.marginBottom}px;
-  --vault-margin: ${vault.layout.marginBottom}px;
 
   --fs-hero-mobile: 2.25rem;
   --fs-hero-desktop: 8rem;

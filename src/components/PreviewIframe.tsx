@@ -4,7 +4,7 @@ import { generateCSSVariableOverrides, generatePageHTML, generateScriptJS } from
 
 interface PreviewIframeProps {
   brandData: BrandState;
-  activePage: 'home' | 'about' | 'contact' | 'vault' | 'epk';
+  activePage: 'home' | 'about' | 'contact' | 'epk';
   deviceWidth: number;
   deviceHeight: number;
 }
@@ -53,8 +53,6 @@ export const PreviewIframe: React.FC<PreviewIframeProps> = ({
       case 'mission': return (s.about.mission as any)?.text ?? '';
       case 'aboutMissionHeadline': return (s.about.mission as any)?.headline ?? '';
       case 'aboutMissionBody': return (s.about.mission as any)?.body ?? '';
-      case 'vaultHeadline': return s.vault?.headline || '';
-      case 'vaultDescription': return s.vault?.description || '';
       case 'contactHeadline': return s.contact.headline;
       case 'contactSubheadline': return (s.contact as any)?.subheadline ?? '';
       case 'homeFooterContactText': return s.footer?.contactText || '';
@@ -79,7 +77,6 @@ export const PreviewIframe: React.FC<PreviewIframeProps> = ({
       case 'navHome': return data.navNames.home || '';
       case 'navAbout': return data.navNames.about || '';
       case 'navContact': return data.navNames.contact || '';
-      case 'navVault': return data.navNames.vault || '';
       case 'navEpk': return data.navNames.epk || '';
       default: return '';
     }
@@ -91,13 +88,12 @@ export const PreviewIframe: React.FC<PreviewIframeProps> = ({
     'homeLiveTagline', 'homeLiveHeadline', 'homeLiveYoutubeText',
     'aboutHeroHeadline', 'aboutHeroSubheadline', 'aboutHeroIntroText', 'aboutStoryTagline', 'story', 'aboutStoryHeadline', 'aboutStoryBody',
     'aboutMissionTagline', 'mission', 'aboutMissionHeadline', 'aboutMissionBody',
-    'vaultHeadline', 'vaultDescription',
     'contactHeadline', 'contactSubheadline',
     'homeFooterContactText', 'homeFooterTagline', 'homeFooterUpperTagline',
     // EPK
     'epkHookHeadline', 'epkHookTagline', 'epkPitchTagline', 'epkPitchBio',
     'epkMediaTagline', 'epkTracksHeadline', 'epkVideoHeadline', 'epkSpotifyHeadline', 'epkPressTagline', 'epkContactTagline', 'epkContactHeadline', 'epkContactEmail', 'epkContactPhone',
-    'menuLogoName', 'menuTagline', 'navHome', 'navAbout', 'navContact', 'navVault', 'navEpk'
+    'menuLogoName', 'menuTagline', 'navHome', 'navAbout', 'navContact', 'navEpk'
   ];
 
   const sendMessage = useCallback((msg: any) => {
@@ -269,7 +265,6 @@ export const PreviewIframe: React.FC<PreviewIframeProps> = ({
         (ls.about?.story as any)?.imageUrl, '#media-about-story');
 
       // Other pages
-      patchMedia(s.vault?.videoUrl, ls.vault?.videoUrl, '#media-vault');
       patchMedia(s.contact?.videoUrl as string | undefined,
         ls.contact?.videoUrl as string | undefined, '#media-contact');
 

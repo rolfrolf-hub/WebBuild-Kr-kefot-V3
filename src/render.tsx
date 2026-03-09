@@ -202,7 +202,6 @@ class PreviewRenderer {
         if (filename === 'index.html' || filename === '' || filename === 'home.html') return 'home';
         if (filename === 'about.html') return 'about';
         if (filename === 'contact.html') return 'contact';
-        if (filename === 'vault.html') return 'vault';
         if (filename === 'epk.html') return 'epk';
         return null;
     }

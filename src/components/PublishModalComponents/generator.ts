@@ -4,7 +4,7 @@ import { getEmbedUrl, extractMuxId } from '../../utils/mediaHelpers';
 import { renderPageBody } from '../../publish/ssr';
 import { generateCSSVars } from '../../publish/css-vars';
 
-export type PageKey = 'home' | 'about' | 'contact' | 'vault' | 'epk';
+export type PageKey = 'home' | 'about' | 'contact' | 'epk';
 
 export const generateMetaTags = (page: PageKey, brandData: BrandState) => {
   const global = brandData.seo?.global || { siteName: brandData.companyName };
@@ -69,7 +69,7 @@ export const generateJsonLd = (page: PageKey, brandData: BrandState) => {
 export const generateSitemap = (brandData: BrandState) => {
   const baseUrl = brandData.serverBaseUrl.replace(/\/$/, '');
   const date = new Date().toISOString().split('T')[0];
-  const vis = brandData.pageVisibility || { home: true, about: true, contact: true, vault: brandData.isVaultVisible ?? false, epk: false };
+  const vis = brandData.pageVisibility || { home: true, about: true, contact: true, epk: false };
 
   let urls = `
   <url>
@@ -96,16 +96,6 @@ export const generateSitemap = (brandData: BrandState) => {
     <lastmod>${date}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>`;
-  }
-
-  if (vis.vault) {
-    urls += `
-  <url>
-    <loc>${baseUrl}/vault.html</loc>
-    <lastmod>${date}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
   </url>`;
   }
 
@@ -136,7 +126,6 @@ RewriteBase /
 RewriteRule ^index\\.html$ - [L]
 RewriteRule ^about/?$ about.html [L]
 RewriteRule ^contact/?$ contact.html [L]
-RewriteRule ^vault/?$ vault.html [L]
 RewriteRule ^epk/?$ epk.html [L]
 </IfModule>
 
@@ -199,7 +188,6 @@ export const generateCSSVariableOverrides = (brandData: BrandState, deviceWidth:
   const aValues = s.about?.values ?? {};
   const contact = s.contact ?? {};
   const footer = s.footer ?? {};
-  const vault = s.vault ?? {};
   const epk = s.epk;
   const safeDiv = (num: number, div: number) => (div === 0 ? 0 : num / div);
 
@@ -340,7 +328,6 @@ export const generateCSSVariableOverrides = (brandData: BrandState, deviceWidth:
     ...getSpacingVars('about-values', aValues),
     ...getSpacingVars('contact', contact),
     ...getSpacingVars('footer-section', footer),
-    ...getSpacingVars('vault', vault),
     ...(epk ? getSpacingVars('epk-hook', epk.hook) : {}),
     ...(epk ? getSpacingVars('epk-pitch', epk.pitch) : {}),
     ...(epk ? getSpacingVars('epk-media', epk.media) : {}),
@@ -354,7 +341,6 @@ export const generateCSSVariableOverrides = (brandData: BrandState, deviceWidth:
     ...getFramingVars('live-image', hLive.framingImage || hLive.framing),
     ...getFramingVars('footer', footer.framing),
     ...getFramingVars('contact', contact.framing),
-    ...getFramingVars('vault', vault.framing),
     ...getFramingVars('story', aStory.framing),
     ...getFramingVars('about', aHero.framing),
     ...(epk ? getFramingVars('epk-hook', epk.hook.framing) : {}),
@@ -370,7 +356,6 @@ export const generateCSSVariableOverrides = (brandData: BrandState, deviceWidth:
     ...getVisualVars('story', aStory.visuals),
     ...getVisualVars('footer', footer.visuals),
     ...getVisualVars('contact', contact.visuals),
-    ...getVisualVars('vault', vault.visuals),
     ...(epk ? getVisualVars('epk-hook', epk.hook.visuals) : {}),
     ...(epk ? getVisualVars('epk-pitch', epk.pitch.visuals) : {}),
     ...(epk ? getVisualVars('epk-contact', epk.contact.visuals) : {}),
@@ -393,7 +378,6 @@ export const generateCSSVariableOverrides = (brandData: BrandState, deviceWidth:
     ...getMarginVar('about-mission', aMission.layout),
     ...getMarginVar('about-values', aValues.layout),
     ...getMarginVar('footer', footer.layout),
-    ...getMarginVar('vault', vault.layout),
 
     // Media gallery (device-aware)
     '--media-width': isSmallDesktop ? `${mobileMediaWidth}%` : `${desktopMediaWidth}%`,
@@ -416,7 +400,7 @@ export const generateCSSVariableOverrides = (brandData: BrandState, deviceWidth:
       homeOriginTagline: false, homeOriginHeadline: true, homeOriginText: false, homeOriginDescription: false,
       homeLiveTagline: false, homeLiveHeadline: true, tagline: true, story: false, mission: true,
       aboutHeroHeadline: true, aboutHeroSubheadline: false, aboutStoryTagline: false, aboutMissionTagline: false,
-      vaultHeadline: true, vaultDescription: false, contactHeadline: true, contactText: false,
+      contactHeadline: true, contactText: false,
       homeFooterTagline: true, homeFooterUpperTagline: false,
       epkHookHeadline: true, epkHookTagline: false, epkPitchTagline: false, epkIntroHeadline: true, epkIntroText: false,
       epkPitchBio: false, epkQuoteText: true, epkQuoteAuthor: true, epkQuoteRole: false,
@@ -482,7 +466,6 @@ export const generateScriptJS = (brandData: BrandState) => `
                 const rateMap = ${JSON.stringify({
   'media-home-hero': brandData.sections.home?.hero?.visuals?.playbackRate ?? 0.8,
   'media-about-hero': (brandData.sections.about?.hero as any)?.visuals?.playbackRate ?? 0.8,
-  'media-vault': brandData.sections.vault?.visuals?.playbackRate ?? 0.8,
   'media-home-origin': brandData.sections.home?.origin?.visuals?.playbackRate ?? 1.0,
   'media-home-gallery': brandData.sections.home?.spotify?.visuals?.playbackRate ?? 1.0,
   'media-about-story': (brandData.sections.about?.story as any)?.visuals?.playbackRate ?? 1.0,
@@ -1417,8 +1400,6 @@ export const generatePageHTML = (page: PageKey, brandData: BrandState, contentOn
     tagline: true, // About Hero
     story: false,  // About Story
     mission: true, // About Mission
-    vaultHeadline: true,
-    vaultDescription: false,
     contactHeadline: true,
     contactText: false,
     epkHookTagline: false,
@@ -1777,7 +1758,6 @@ export const generatePageHTML = (page: PageKey, brandData: BrandState, contentOn
               <a href="index.html" data-text-key="navHome" class="text-sm font-medium transition-colors ${page === 'home' ? 'text-[var(--accent-light)] font-bold' : 'text-zinc-300 hover:text-[var(--accent-light)]'}" style="font-family: var(--font-h1); text-decoration: none;">${brandData.navNames.home}</a>
               ${(brandData.pageVisibility?.about !== false) ? `<a href="about.html" data-text-key="navAbout" class="text-sm font-medium transition-colors ${page === 'about' ? 'text-[var(--accent-light)] font-bold' : 'text-zinc-300 hover:text-[var(--accent-light)]'}" style="font-family: var(--font-h1); text-decoration: none;">${brandData.navNames.about}</a>` : ''}
               ${(brandData.pageVisibility?.contact !== false) ? `<a href="contact.html" data-text-key="navContact" class="text-sm font-medium transition-colors ${page === 'contact' ? 'text-[var(--accent-light)] font-bold' : 'text-zinc-300 hover:text-[var(--accent-light)]'}" style="font-family: var(--font-h1); text-decoration: none;">${brandData.navNames.contact}</a>` : ''}
-              ${(brandData.pageVisibility?.vault || brandData.isVaultVisible) ? `<a href="vault.html" data-text-key="navVault" class="text-sm font-medium transition-colors ${page === 'vault' ? 'text-[var(--accent-light)] font-bold' : 'text-zinc-300 hover:text-[var(--accent-light)]'}" style="font-family: var(--font-h1); text-decoration: none;">${brandData.navNames.vault}</a>` : ''}
               ${(brandData.pageVisibility?.epk) ? `<a href="epk.html" data-text-key="navEpk" class="text-sm font-medium transition-colors ${page === 'epk' ? 'text-[var(--accent-light)] font-bold' : 'text-zinc-300 hover:text-[var(--accent-light)]'}" style="font-family: var(--font-h1); text-decoration: none;">${brandData.navNames.epk || 'EPK'}</a>` : ''}
           </nav>
           
@@ -1795,7 +1775,6 @@ export const generatePageHTML = (page: PageKey, brandData: BrandState, contentOn
          <a href="index.html" data-text-key="navHome" class="text-lg uppercase text-[var(--accent)] not-italic text-left py-4 border-b border-zinc-900/50 ${page === 'home' ? 'font-bold' : 'font-medium opacity-80'}" style="font-family: var(--font-h1); text-decoration: none;">${brandData.navNames.home}</a>
          ${(brandData.pageVisibility?.about !== false) ? `<a href="about.html" data-text-key="navAbout" class="text-lg uppercase text-[var(--accent)] not-italic text-left py-4 border-b border-zinc-900/50 ${page === 'about' ? 'font-bold' : 'font-medium opacity-80'}" style="font-family: var(--font-h1); text-decoration: none;">${brandData.navNames.about}</a>` : ''}
          ${(brandData.pageVisibility?.contact !== false) ? `<a href="contact.html" data-text-key="navContact" class="text-lg uppercase text-[var(--accent)] not-italic text-left py-4 border-b border-zinc-900/50 ${page === 'contact' ? 'font-bold' : 'font-medium opacity-80'}" style="font-family: var(--font-h1); text-decoration: none;">${brandData.navNames.contact}</a>` : ''}
-         ${(brandData.pageVisibility?.vault || brandData.isVaultVisible) ? `<a href="vault.html" data-text-key="navVault" class="text-lg uppercase text-[var(--accent)] not-italic text-left py-4 border-b border-zinc-900/50 ${page === 'vault' ? 'font-bold' : 'font-medium opacity-80'}" style="font-family: var(--font-h1); text-decoration: none;">${brandData.navNames.vault}</a>` : ''}
          ${(brandData.pageVisibility?.epk) ? `<a href="epk.html" data-text-key="navEpk" class="text-lg uppercase text-[var(--accent)] not-italic text-left py-4 border-b border-zinc-900/50 ${page === 'epk' ? 'font-bold' : 'font-medium opacity-80'}" style="font-family: var(--font-h1); text-decoration: none;">${brandData.navNames.epk || 'EPK'}</a>` : ''}
       </div>`;
 
@@ -2031,37 +2010,6 @@ export const generatePageHTML = (page: PageKey, brandData: BrandState, contentOn
 
 
 
-  } else if (page === 'vault') {
-    const v = s.vault;
-    mainContent = `
-      <section ${getBlurAttrs(v.visuals)} class="relative flex flex-col justify-center items-center px-6 overflow-hidden" style="min-height:var(--vault-min-h); padding-top:var(--vault-pt); padding-bottom:var(--vault-pb); margin-bottom:var(--vault-margin)">
-        <div class="blur-target absolute inset-0 z-0">
-          ${renderUniversalMedia(isVideo(v.videoUrl) ? 'video' : 'image', v.videoUrl, 'vault', '--vault-sat', '--vault-dim', '--vault-para', '--vault-op', 'media-vault', '', true, v.mediaConfig)}
-        </div>
-        ${renderAura(v.visuals, 'vault')}
-        <div class="scroll-reveal relative z-10 text-center max-w-4xl">
-          <span class="text-[var(--accent)] font-bold text-xs uppercase tracking-[0.4em] block mb-8 animate-pulse">${v.tagline}</span>
-          <h1 data-text-key="vaultHeadline" class="${resolveTextClasses('vaultHeadline', 'glitch-heading font-serif text-white mb-8')}" data-text="${v.headline}" style="${resolveTextStyle('vaultHeadline', true)}">${v.headline}</h1>
-          <p data-text-key="vaultDescription" class="${resolveTextClasses('vaultDescription', 'text-xl text-zinc-300 max-w-2xl mx-auto')}" style="${resolveTextStyle('vaultDescription', false)}">${v.description}</p>
-        </div>
-      </section>
-      <section class="container mx-auto px-4 pb-32">
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                  ${v.items.map(item => `
-                    <div class="group relative aspect-[4/5] bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800 hover:border-[var(--accent)] transition-all">
-                        ${item.type === 'video' ?
-        `<video src="${normalizePath(item.url)}" muted loop playsinline class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all"></video>` :
-        `<img src="${normalizePath(item.url)}" alt="${item.title || ''}" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all">`
-      }
-                        <div class="absolute bottom-0 left-0 right-0 p-6 transform translate-y-2 group-hover:translate-y-0 transition-transform">
-                             <h3 class="text-xl font-bold text-white mb-1">${item.title}</h3>
-                             <p class="text-xs text-[var(--accent)] uppercase tracking-widest">${item.description}</p>
-                        </div>
-                    </div>
-                `).join('')
-      }
-    </div>
-      </section>`;
   } else if (page === 'contact') {
     const c = s.contact;
     mainContent = `

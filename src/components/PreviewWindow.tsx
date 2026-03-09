@@ -18,7 +18,7 @@ const DEVICES: Device[] = [
 
 export const PreviewWindow: React.FC = () => {
     const [brandData, setBrandData] = useState<ProjectState | null>(null);
-    const [activePage, setActivePage] = useState<'home' | 'about' | 'contact' | 'vault' | 'epk'>('home');
+    const [activePage, setActivePage] = useState<'home' | 'about' | 'contact' | 'epk'>('home');
     const [selectedDeviceIndex, setSelectedDeviceIndex] = useState(0); // Default to iPhone 14 Pro
     const [scale, setScale] = useState(1);
 
@@ -158,7 +158,7 @@ export const PreviewWindow: React.FC = () => {
 
                 {/* Page Tabs */}
                 <div className="flex items-center gap-1 bg-black/20 p-1 rounded-lg">
-                    {(['home', 'about', 'contact', 'vault', 'epk'] as const).map((page) => (
+                    {(['home', 'about', 'contact', 'epk'] as const).map((page) => (
                         <button
                             key={page}
                             onClick={() => {
