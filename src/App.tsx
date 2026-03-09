@@ -354,11 +354,27 @@ const App: React.FC = () => {
       const {
         generatePageHTML,
         generateHtaccess,
-        generateGlobalCSS,
         generateScriptJS,
         generateSitemap,
         generateRobots,
       } = await import('./components/PublishModalComponents/generator');
+
+      // Collect compiled CSS from Vite-injected <style> elements in the editor DOM
+      const collectCompiledCSS = async (): Promise<string> => {
+        const parts: string[] = [];
+        for (const sheet of Array.from(document.styleSheets)) {
+          try {
+            if (sheet.href) {
+              const text = await fetch(sheet.href).then(r => r.text());
+              parts.push(text);
+            } else if (sheet.ownerNode instanceof HTMLStyleElement) {
+              const content = sheet.ownerNode.textContent || '';
+              if (content.length > 200) parts.push(content);
+            }
+          } catch { /* cross-origin sheets skipped */ }
+        }
+        return parts.join('\n');
+      };
 
       const targetUrl = brandData.serverBaseUrl || 'https://kraakefot.com';
       const secretKey = brandData.ftpPass || "tryte-999-en-Roste-Draes";
@@ -372,7 +388,7 @@ const App: React.FC = () => {
 
       // Shared assets are ALWAYS deployed (CSS/JS affect all pages, .htaccess is server config)
       const files: { name: string; content: string }[] = [
-        { name: 'style.css', content: generateGlobalCSS(brandData) },
+        { name: 'style.css', content: await collectCompiledCSS() },
         { name: 'script.js', content: generateScriptJS(brandData) },
         { name: '.htaccess', content: generateHtaccess() },
       ];

@@ -43,9 +43,28 @@ export const PublishModal: React.FC<PublishModalProps> = ({ isOpen, onClose, bra
 
   if (!isOpen) return null;
 
+  // Collects compiled Tailwind CSS from Vite's injected <style> elements in the editor DOM.
+  // In dev mode, @tailwindcss/vite injects the compiled CSS as inline style elements.
+  // In production, it falls back to fetching the linked stylesheet.
+  const collectCompiledCSS = async (): Promise<string> => {
+    const parts: string[] = [];
+    for (const sheet of Array.from(document.styleSheets)) {
+      try {
+        if (sheet.href) {
+          const text = await fetch(sheet.href).then(r => r.text());
+          parts.push(text);
+        } else if (sheet.ownerNode instanceof HTMLStyleElement) {
+          const content = sheet.ownerNode.textContent || '';
+          if (content.length > 200) parts.push(content);
+        }
+      } catch { /* cross-origin sheets are skipped */ }
+    }
+    return parts.join('\n');
+  };
+
   // Build file list respecting page visibility (async — generator loaded on demand)
   const getEnabledPageFiles = async () => {
-    const { generatePageHTML, generateGlobalCSS, generateScriptJS, generateSitemap, generateRobots } = await getGenerator();
+    const { generatePageHTML, generateScriptJS, generateSitemap, generateRobots } = await getGenerator();
     const vis = brandData.pageVisibility || { home: true, about: true, contact: true, vault: brandData.isVaultVisible ?? false };
     const files: { name: string; content: string }[] = [
       { name: 'index.html', content: generatePageHTML('home', brandData) },
@@ -61,7 +80,7 @@ export const PublishModal: React.FC<PublishModalProps> = ({ isOpen, onClose, bra
     }
     // Always include shared assets
     files.push(
-      { name: 'style.css', content: generateGlobalCSS(brandData) },
+      { name: 'style.css', content: await collectCompiledCSS() },
       { name: 'script.js', content: generateScriptJS(brandData) },
       { name: 'sitemap.xml', content: generateSitemap(brandData) },
       { name: 'robots.txt', content: generateRobots(brandData) },
