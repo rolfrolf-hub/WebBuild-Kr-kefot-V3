@@ -382,23 +382,25 @@ const App: React.FC = () => {
       const vis = brandData.pageVisibility || { home: true, about: true, contact: true, epk: false };
       const isFiltered = deployPageFilter !== null && deployPageFilter.length > 0;
       const wantsPage = (page: string) => !isFiltered || deployPageFilter!.includes(page);
+      
+      const basePath = isTestMode ? '/v3/' : '/';
 
       // Shared assets are ALWAYS deployed (CSS/JS affect all pages, .htaccess is server config)
       const files: { name: string; content: string }[] = [
         { name: 'style.css', content: await collectCompiledCSS() },
         { name: 'script.js', content: generateScriptJS(brandData) },
-        { name: '.htaccess', content: generateHtaccess() },
+        { name: '.htaccess', content: generateHtaccess(basePath) },
       ];
 
       // Page HTMLs — only include pages that pass the filter
-      if (wantsPage('home')) files.push({ name: 'index.html', content: generatePageHTML('home', brandData) });
-      if (wantsPage('about') && vis.about !== false) files.push({ name: 'about.html', content: generatePageHTML('about', brandData) });
-      if (wantsPage('contact') && vis.contact !== false) files.push({ name: 'contact.html', content: generatePageHTML('contact', brandData) });
-      if (wantsPage('epk') && vis.epk) files.push({ name: 'epk.html', content: generatePageHTML('epk', brandData) });
+      if (wantsPage('home')) files.push({ name: 'index.html', content: generatePageHTML('home', brandData, false, false, basePath) });
+      if (wantsPage('about') && vis.about !== false) files.push({ name: 'about.html', content: generatePageHTML('about', brandData, false, false, basePath) });
+      if (wantsPage('contact') && vis.contact !== false) files.push({ name: 'contact.html', content: generatePageHTML('contact', brandData, false, false, basePath) });
+      if (wantsPage('epk') && vis.epk) files.push({ name: 'epk.html', content: generatePageHTML('epk', brandData, false, false, basePath) });
 
       // Sitemap / robots only when deploying all pages (or home is selected as the canonical entry point)
       if (!isFiltered || wantsPage('home')) {
-        files.push({ name: 'sitemap.xml', content: generateSitemap(brandData) });
+        files.push({ name: 'sitemap.xml', content: generateSitemap(brandData, basePath) });
         files.push({ name: 'robots.txt', content: generateRobots(brandData) });
       }
 

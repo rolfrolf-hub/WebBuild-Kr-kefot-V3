@@ -6,13 +6,22 @@ import { generateCSSVars } from '../../publish/css-vars';
 
 export type PageKey = 'home' | 'about' | 'contact' | 'epk';
 
-export const generateMetaTags = (page: PageKey, brandData: BrandState) => {
+export const getInternalLink = (page: PageKey, basePath: string = '/') => {
+  const cleanBase = basePath.endsWith('/') ? basePath : `${basePath}/`;
+  if (page === 'home') return `${cleanBase}index.html`;
+  return `${cleanBase}${page}.html`;
+};
+
+export const generateMetaTags = (page: PageKey, brandData: BrandState, basePath: string = '/') => {
   const global = brandData.seo?.global || { siteName: brandData.companyName };
   const pageSeo = brandData.seo?.pages?.[page] || {};
 
   const title = pageSeo.title || `${brandData.companyName} | ${page.charAt(0).toUpperCase() + page.slice(1)}`;
   const description = pageSeo.description || "Digital opplevelse fra Kråkefot";
-  const url = `${brandData.serverBaseUrl}/${page === 'home' ? '' : page + '.html'}`;
+
+  // Canonical URL must include the subfolder if applicable
+  const cleanBase = basePath === '/' ? '' : basePath.replace(/^\/+/, '').replace(/\/+$/, '') + '/';
+  const url = `${brandData.serverBaseUrl}/${cleanBase}${page === 'home' ? '' : page + '.html'}`;
   const image = pageSeo.ogImage || brandData.sections.home.hero.videoUrl.replace(/\.(mp4|mov|webm)$/i, '.jpg'); // Fallback logic
 
   // Preload Hero media — image gets preload link, video gets preload link for faster start
@@ -66,14 +75,17 @@ export const generateJsonLd = (page: PageKey, brandData: BrandState) => {
   return `<script type="application/ld+json">${JSON.stringify(schema)}</script>`;
 };
 
-export const generateSitemap = (brandData: BrandState) => {
+export const generateSitemap = (brandData: BrandState, basePath: string = '/') => {
   const baseUrl = brandData.serverBaseUrl.replace(/\/$/, '');
+  const cleanBase = basePath === '/' ? '' : basePath.replace(/^\/+/, '').replace(/\/+$/, '') + '/';
+  const fullBase = `${baseUrl}/${cleanBase}`;
+
   const date = new Date().toISOString().split('T')[0];
   const vis = brandData.pageVisibility || { home: true, about: true, contact: true, epk: false };
 
   let urls = `
   <url>
-    <loc>${baseUrl}/</loc>
+    <loc>${fullBase}</loc>
     <lastmod>${date}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -82,7 +94,7 @@ export const generateSitemap = (brandData: BrandState) => {
   if (vis.about !== false) {
     urls += `
   <url>
-    <loc>${baseUrl}/about.html</loc>
+    <loc>${fullBase}about.html</loc>
     <lastmod>${date}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -92,7 +104,7 @@ export const generateSitemap = (brandData: BrandState) => {
   if (vis.contact !== false) {
     urls += `
   <url>
-    <loc>${baseUrl}/contact.html</loc>
+    <loc>${fullBase}contact.html</loc>
     <lastmod>${date}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -102,7 +114,7 @@ export const generateSitemap = (brandData: BrandState) => {
   if (vis.epk) {
     urls += `
   <url>
-    <loc>${baseUrl}/epk.html</loc>
+    <loc>${fullBase}epk.html</loc>
     <lastmod>${date}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -113,16 +125,19 @@ export const generateSitemap = (brandData: BrandState) => {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls}
 </urlset>`;
 };
-
 export const generateRobots = (brandData: BrandState) => {
   return brandData.seo?.global?.robotsTxt || "User-agent: *\nAllow: /";
 };
 
-export const generateHtaccess = () => `
+export const generateHtaccess = (basePath: string = '/') => {
+  const cleanBase = basePath.startsWith('/') ? basePath : `/${basePath}`;
+  const finalBase = cleanBase.endsWith('/') ? cleanBase : `${cleanBase}/`;
+
+  return `
 # Kråkefot Builder Routes
 <IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteBase /
+RewriteBase ${finalBase}
 RewriteRule ^index\\.html$ - [L]
 RewriteRule ^about/?$ about.html [L]
 RewriteRule ^contact/?$ contact.html [L]
@@ -155,6 +170,7 @@ RewriteRule ^epk/?$ epk.html [L]
   Header set Expires 0
 </FilesMatch>
 `;
+};
 
 
 /**
@@ -267,7 +283,7 @@ export const generateCSSVariableOverrides = (brandData: BrandState, deviceWidth:
     '--font-h5': brandData.h5Font || brandData.headingFont || "'Playfair Display', serif",
     '--font-h6': brandData.h6Font || brandData.headingFont || "'Playfair Display', serif",
     '--font-body': brandData.bodyFont || "'Montserrat', sans-serif",
-    
+
     // Header & Menu Global
     '--header-bg': (() => {
       const opacity = brandData.menuOpacity ?? 0.4;
@@ -1294,7 +1310,7 @@ const minifyHTML = (html: string) => {
     .trim();
 };
 
-export const generatePageHTML = (page: PageKey, brandData: BrandState, contentOnly = false, isPreview = false) => {
+export const generatePageHTML = (page: PageKey, brandData: BrandState, contentOnly = false, isPreview = false, basePath: string = '/') => {
   // ... (existing code for generatePageHTML helper functions) ...
   const hexToRgb = (hex: string) => {
     if (!hex || typeof hex !== 'string') return '69 150 148';
@@ -1479,7 +1495,7 @@ export const generatePageHTML = (page: PageKey, brandData: BrandState, contentOn
   };
 
   const resolveTextClasses = (key: string, baseClasses: string = '') => {
-    const style = (brandData.textStyles || {})[key];
+    let style = (brandData.textStyles || {})[key];
     let final = `${baseClasses} ${(style && style.classes) || ''}`.trim();
 
     if (style && style.glitchEnabled === false) {
@@ -1503,7 +1519,8 @@ export const generatePageHTML = (page: PageKey, brandData: BrandState, contentOn
     if (!url.startsWith('http') && !url.startsWith('data:')) {
       // Remove leading slash if present
       const cleanPath = url.startsWith('/') ? url.slice(1) : url;
-      fullUrl = `https://kraakefot.com/${cleanPath}`;
+      const baseDomain = (brandData.serverBaseUrl || 'https://kraakefot.com').replace(/\/$/, '');
+      fullUrl = `${baseDomain}/${cleanPath}`;
     }
 
     return `https://wsrv.nl/?url=${encodeURIComponent(fullUrl)}&w=${width}&q=80&output=webp`;
@@ -1715,7 +1732,7 @@ export const generatePageHTML = (page: PageKey, brandData: BrandState, contentOn
 
                 <div class="relative z-10 text-center px-6">
                     <a href="contact.html" class="btn-glass group">
-                        <span class="${resolveTextClasses('homeFooterContactText', '')}" style="${resolveTextStyle('homeFooterContactText', false)}" data-text-key="homeFooterContactText">${s.footer.contactText}</span>
+                        <span data-text-key="homeFooterContactText" class="${resolveTextClasses('homeFooterContactText', '')}" style="${resolveTextStyle('homeFooterContactText', false)}">${s.footer.contactText}</span>
                         <svg class="group-hover:translate-x-1 transition-transform inline-block ml-2 mb-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="5" y1="12" x2="19" y2="12"></line>
                             <polyline points="12 5 19 12 12 19"></polyline>
@@ -1730,10 +1747,10 @@ export const generatePageHTML = (page: PageKey, brandData: BrandState, contentOn
   const tintAmount = brandData.menuTintAmount ?? 0.1;
   const baseOpacity = brandData.menuOpacity ?? 0.4;
   const rgbLegacy = hexToRgb(tintColor).split(' ').join(', ');
-  const tC = { 
-    r: parseInt(rgbLegacy.split(',')[0]), 
-    g: parseInt(rgbLegacy.split(',')[1]), 
-    b: parseInt(rgbLegacy.split(',')[2]) 
+  const tC = {
+    r: parseInt(rgbLegacy.split(',')[0]),
+    g: parseInt(rgbLegacy.split(',')[1]),
+    b: parseInt(rgbLegacy.split(',')[2])
   };
 
   const r = Math.round(tC.r * tintAmount + 10);
@@ -2070,7 +2087,7 @@ export const generatePageHTML = (page: PageKey, brandData: BrandState, contentOn
           <div class="absolute inset-0 z-0" style="background: linear-gradient(to bottom, rgba(0,0,0,0) 90%, rgba(0,0,0,1) 100%)"></div>
           <div class="relative z-10 text-center px-6 max-w-5xl mx-auto">
 
-              <p class="${resolveTextClasses('epkHookTagline', '')}" style="font-weight:700;text-transform:uppercase;letter-spacing:.4em;margin-bottom:3rem; ${resolveTextStyle('epkHookTagline', false)}" data-text-key="epkHookTagline">${epk.hook.tagline}</p>
+              <p class="${resolveTextClasses('epkHookTagline', '')}" style="font-weight:700;text-transform:uppercase;letter-spacing:.4em; ${resolveTextStyle('epkHookTagline', false)}" data-text-key="epkHookTagline">${epk.hook.tagline}</p>
           <div class="epk-hook-buttons">
             <div class="flex flex-row gap-4 md:gap-14 justify-center items-center">
             ${(() => {
@@ -2577,8 +2594,8 @@ ${generateJsonLd(page, brandData)}
 <body class="bg-black text-white kraakefot-site overflow-x-clip">
 <div id="site-loader"><div class="loader-content"><div class="loader-spinner"></div><div class="loader-text">Loading</div></div></div>
 ${(page === 'home' || page === 'about' || page === 'contact')
-  ? renderPageBody(page, brandData)
-  : `${headerHTML}
+      ? renderPageBody(page, brandData, basePath)
+      : `${headerHTML}
 <main id="main-content">
 ${mainContent}
 ${finalFooter}

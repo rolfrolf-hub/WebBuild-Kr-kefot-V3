@@ -40,9 +40,11 @@ const publishBrand = (brandData: BrandState): BrandState => ({
 interface NavProps {
   brandData: BrandState;
   page: PageKey;
+  basePath?: string;
 }
 
-const PublishNav: React.FC<NavProps> = ({ brandData, page }) => {
+const PublishNav: React.FC<NavProps> = ({ brandData, page, basePath = '/' }) => {
+  const cleanBase = basePath.endsWith('/') ? basePath : `${basePath}/`;
   const vis = brandData.pageVisibility;
   const names = brandData.navNames;
 
@@ -65,16 +67,16 @@ const PublishNav: React.FC<NavProps> = ({ brandData, page }) => {
   },
     // Logo
     React.createElement('a', {
-      href: 'index.html',
+      href: `${cleanBase}index.html`,
       className: 'text-white font-bold text-xl tracking-widest uppercase no-underline hover:text-[var(--accent-light)] transition-colors'
     }, brandData.companyName),
 
     // Desktop nav
     React.createElement('nav', { className: 'hidden md:flex items-center gap-8' },
-      React.createElement('a', { href: 'index.html', className: linkCls(page === 'home') }, names.home || 'Home'),
-      vis?.about !== false && React.createElement('a', { href: 'about.html', className: linkCls(page === 'about') }, names.about || 'About'),
-      vis?.contact !== false && React.createElement('a', { href: 'contact.html', className: linkCls(page === 'contact') }, names.contact || 'Contact'),
-      vis?.epk && React.createElement('a', { href: 'epk.html', className: linkCls(false) }, names.epk || 'EPK'),
+      React.createElement('a', { href: `${cleanBase}index.html`, className: linkCls(page === 'home') }, names.home || 'Home'),
+      vis?.about !== false && React.createElement('a', { href: `${cleanBase}about.html`, className: linkCls(page === 'about') }, names.about || 'About'),
+      vis?.contact !== false && React.createElement('a', { href: `${cleanBase}contact.html`, className: linkCls(page === 'contact') }, names.contact || 'Contact'),
+      vis?.epk && React.createElement('a', { href: `${cleanBase}epk.html`, className: linkCls(false) }, names.epk || 'EPK'),
     ),
 
     // Hamburger (mobile — JS-driven)
@@ -96,10 +98,10 @@ const PublishNav: React.FC<NavProps> = ({ brandData, page }) => {
 
 // ── Page element trees ────────────────────────────────────────────────────────
 
-function homePage(brandData: BrandState): React.ReactElement {
+function homePage(brandData: BrandState, basePath: string): React.ReactElement {
   const d = publishBrand(brandData);
   return React.createElement(React.Fragment, null,
-    React.createElement(PublishNav, { brandData: d, page: 'home' }),
+    React.createElement(PublishNav, { brandData: d, page: 'home', basePath }),
     React.createElement('main', null,
       React.createElement(HeroSection, {
         brandData: d, onUpdate: noop, scrollY: 0, mode: 'publish'
@@ -121,10 +123,10 @@ function homePage(brandData: BrandState): React.ReactElement {
   );
 }
 
-function aboutPage(brandData: BrandState): React.ReactElement {
+function aboutPage(brandData: BrandState, basePath: string): React.ReactElement {
   const d = publishBrand(brandData);
   return React.createElement(React.Fragment, null,
-    React.createElement(PublishNav, { brandData: d, page: 'about' }),
+    React.createElement(PublishNav, { brandData: d, page: 'about', basePath }),
     React.createElement('main', null,
       React.createElement(AboutHeroSection, {
         brandData: d, onUpdate: noop, scrollY: 0, mode: 'publish'
@@ -140,10 +142,10 @@ function aboutPage(brandData: BrandState): React.ReactElement {
   );
 }
 
-function contactPage(brandData: BrandState): React.ReactElement {
+function contactPage(brandData: BrandState, basePath: string): React.ReactElement {
   const d = publishBrand(brandData);
   return React.createElement(React.Fragment, null,
-    React.createElement(PublishNav, { brandData: d, page: 'contact' }),
+    React.createElement(PublishNav, { brandData: d, page: 'contact', basePath }),
     React.createElement('main', null,
       React.createElement(ContactSection, {
         brandData: d, onUpdate: noop, scrollY: 0, mode: 'publish'
@@ -160,12 +162,12 @@ function contactPage(brandData: BrandState): React.ReactElement {
  * Returns only the body content — no <html>, <head>, CSS or JS.
  * The caller (generator.ts) assembles the full HTML document.
  */
-export function renderPageBody(page: PageKey, brandData: BrandState): string {
+export function renderPageBody(page: PageKey, brandData: BrandState, basePath: string = '/'): string {
   let element: React.ReactElement;
   switch (page) {
-    case 'home':    element = homePage(brandData);    break;
-    case 'about':   element = aboutPage(brandData);   break;
-    case 'contact': element = contactPage(brandData); break;
+    case 'home':    element = homePage(brandData, basePath);    break;
+    case 'about':   element = aboutPage(brandData, basePath);   break;
+    case 'contact': element = contactPage(brandData, basePath); break;
     default:
       throw new Error(`renderPageBody: unknown page "${page}"`);
   }
