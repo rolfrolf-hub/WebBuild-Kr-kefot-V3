@@ -99,6 +99,29 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ brandData, onUpdate, s
                     mediaConfig={data.mediaConfig}
                     publishMode={isPublish}
                 />
+                {/* Cover image layer — mirrors Live section previewImageUrl pattern.
+                    Sits on top of the video and is visible immediately (no WC dependency).
+                    This is the LCP element in publish mode. */}
+                {data.heroImageUrl && (
+                    <div className="hero-cover-overlay absolute inset-0 z-10 transition-opacity duration-1000">
+                        <UniversalMedia
+                            serverBaseUrl={brandData.serverBaseUrl}
+                            url={data.heroImageUrl}
+                            isMobile={isMobile}
+                            prefix="hero"
+                            zoom={isMobile ? (data.framing?.zoomMobile ?? 1) : (data.framing?.zoomDesktop ?? 1)}
+                            x={isMobile ? (data.framing?.xOffsetMobile ?? 0) : (data.framing?.xOffsetDesktop ?? 0)}
+                            y={isMobile ? (data.framing?.yOffsetMobile ?? 0) : (data.framing?.yOffsetDesktop ?? 0)}
+                            saturation={isMobile ? (data.visuals?.mobileSaturation ?? 100) : (data.visuals?.saturation ?? 100)}
+                            parallax={isMobile ? (data.visuals?.mobileParallax ?? 0) : (data.visuals?.parallax ?? 0)}
+                            dim={isMobile ? (data.visuals?.mobileDim ?? 0) : (data.visuals?.dim ?? 0)}
+                            opacity={isMobile ? (data.visuals?.mobileOpacity ?? 100) : (data.visuals?.opacity ?? 100)}
+                            scrollY={scrollY}
+                            isHero={true}
+                            publishMode={isPublish}
+                        />
+                    </div>
+                )}
             </div>
 
             {!isPublish && (
@@ -107,9 +130,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ brandData, onUpdate, s
                     <FloatingControlPanel title="Hero Section" className="absolute top-0 right-0" isMobile={brandData.isMobilePreview}>
                         <ControlTab label="Content">
                             <MediaEditControl
-                                label="Change BG"
+                                label="Background"
                                 value={data.videoUrl}
                                 onSave={(val) => updateSection({ videoUrl: val })}
+                                brandData={brandData}
+                                onUpdate={onUpdate}
+                                variant="sidebar"
+                            />
+                            <MediaEditControl
+                                label="Cover Image"
+                                value={data.heroImageUrl ?? ''}
+                                onSave={(val) => updateSection({ heroImageUrl: val })}
                                 brandData={brandData}
                                 onUpdate={onUpdate}
                                 variant="sidebar"

@@ -10,10 +10,8 @@ type Device = {
 };
 
 const DEVICES: Device[] = [
-    { name: 'iPhone 14 Pro', width: 390, height: 844, icon: '📱' },
-    { name: 'iPhone SE', width: 375, height: 667, icon: '📱' },
-    { name: 'iPad Pro 11"', width: 834, height: 1194, icon: '📱' },
     { name: 'Desktop HD', width: 1920, height: 1080, icon: '🖥️' },
+    { name: 'Mobil', width: 390, height: 844, icon: '📱' },
 ];
 
 export const PreviewWindow: React.FC = () => {
@@ -34,7 +32,9 @@ export const PreviewWindow: React.FC = () => {
                 case 'INIT':
                 case 'UPDATE':
                     setBrandData(payload.brandData);
-                    setActivePage(payload.activePage);
+                    if (payload.activePage) {
+                        setActivePage(payload.activePage);
+                    }
                     break;
 
                 case 'PAGE_CHANGED':

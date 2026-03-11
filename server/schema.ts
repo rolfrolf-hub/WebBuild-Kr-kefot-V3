@@ -35,12 +35,6 @@ export const MuxPlayerConfigSchema = z.object({
     backwardSeekOffset: z.number().optional(),
     aspectRatioDesktop: z.string().optional().default('16/9'),
     aspectRatioMobile: z.string().optional().default('16/9'),
-    widthDesktop: z.string().optional().default('100%'),
-    widthMobile: z.string().optional().default('100%'),
-    xOffsetDesktop: z.number().optional().default(0),
-    xOffsetMobile: z.number().optional().default(0),
-    yOffsetDesktop: z.number().optional().default(0),
-    yOffsetMobile: z.number().optional().default(0),
 });
 
 export const YouTubeConfigSchema = z.object({
@@ -161,6 +155,7 @@ export const SectionConfigSchema = z.object({
 
 export const HomeHeroSchema = SectionConfigSchema.extend({
     videoUrl: z.string(),
+    heroImageUrl: z.string().optional(), // cover image layer over video (LCP element)
     headline: z.string(),
     subheadline: z.string(),
     ctaText: z.string(),
@@ -431,6 +426,9 @@ export const ProjectStateSchema = z.object({
         xUrl: z.string().optional(),
         facebookUrl: z.string().optional(),
     }),
+
+    // Global Visuals
+    buttonAuraEnabled: z.boolean().optional().default(true),
 
     // Sections
     sections: z.object({

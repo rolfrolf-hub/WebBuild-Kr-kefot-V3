@@ -19,6 +19,6 @@ git commit -m "$MSG
 
 Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>"
 
-git push origin main
+git push origin HEAD
 echo ""
 echo "✅ Pushet til GitHub: github.com/rolfrolf-hub/WebBuild-Kr-kefot-V3"

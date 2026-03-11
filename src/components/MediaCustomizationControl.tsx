@@ -108,26 +108,6 @@ export const MediaCustomizationControl: React.FC<MediaCustomizationControlProps>
                 <ColorPicker label="Primary Icons" value={mux.primaryColor || ''} onChange={(val) => updateMux({ primaryColor: val })} />
                 <ColorPicker label="Background" value={mux.secondaryColor || ''} onChange={(val) => updateMux({ secondaryColor: val })} />
 
-                <div className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mt-2 mb-1">Size (Desktop / Mobile)</div>
-                <Select
-                    label="Ratio Desk"
-                    value={mux.aspectRatioDesktop || '16/9'}
-                    onChange={(val) => updateMux({ aspectRatioDesktop: val })}
-                    options={[{ label: '16:9', value: '16/9' }, { label: '4:3', value: '4/3' }, { label: '1:1', value: '1/1' }, { label: '21:9', value: '21/9' }]}
-                />
-                <Select
-                    label="Ratio Mob"
-                    value={mux.aspectRatioMobile || '16/9'}
-                    onChange={(val) => updateMux({ aspectRatioMobile: val })}
-                    options={[{ label: '16:9', value: '16/9' }, { label: '9:16', value: '9/16' }, { label: '1:1', value: '1/1' }]}
-                />
-                <Slider label="Width Desk" min={10} max={200} step={1} value={parseInt(mux.widthDesktop || '100')} suffix="%" onChange={(val) => updateMux({ widthDesktop: `${val}%` })} />
-                <Slider label="Width Mob" min={10} max={200} step={1} value={parseInt(mux.widthMobile || '100')} suffix="%" onChange={(val) => updateMux({ widthMobile: `${val}%` })} />
-                <Slider label="X-Pos Desk" min={-100} max={100} step={1} value={mux.xOffsetDesktop || 0} suffix="%" onChange={(val) => updateMux({ xOffsetDesktop: val })} />
-                <Slider label="X-Pos Mob" min={-100} max={100} step={1} value={mux.xOffsetMobile || 0} suffix="%" onChange={(val) => updateMux({ xOffsetMobile: val })} />
-                <Slider label="Y-Pos Desk" min={-100} max={100} step={1} value={mux.yOffsetDesktop || 0} suffix="%" onChange={(val) => updateMux({ yOffsetDesktop: val })} />
-                <Slider label="Y-Pos Mob" min={-100} max={100} step={1} value={mux.yOffsetMobile || 0} suffix="%" onChange={(val) => updateMux({ yOffsetMobile: val })} />
-
                 <div className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mt-2 mb-1">Controls Visibility</div>
                 <Select
                     label="Autoplay"

@@ -164,13 +164,10 @@ export const UniversalMedia: React.FC<UniversalMediaProps & { prefix?: string }>
                     const muxId = extractMuxId(url);
                     const mConfig: Partial<MuxPlayerConfig> = mediaConfig?.mux ?? {};
                     const aspect = isMobile ? mConfig.aspectRatioMobile : mConfig.aspectRatioDesktop;
-                    const widthOverride = isMobile ? mConfig.widthMobile : mConfig.widthDesktop;
                     const wrapStyle = {
                         ...baseStyle,
                         ...transformStyle,
-                        width: widthOverride || baseStyle.width,
                         aspectRatio: aspect || (isMobile ? '9/16' : '16/9'),
-                        transform: `${transformStyle.transform} translateX(${isMobile ? (mConfig.xOffsetMobile || 0) : (mConfig.xOffsetDesktop || 0)}%)`,
                         background: '#000'
                     };
 

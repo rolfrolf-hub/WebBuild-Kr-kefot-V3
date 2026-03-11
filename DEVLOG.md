@@ -6,6 +6,24 @@
 
 ---
 
+## 🟢 NÅVÆRENDE TILSTAND (per 2026-03-11) — oppdatert pagespeed-branch
+
+### PageSpeed-fikser (branch: pagespeed)
+| Hva | Fil | Rollback |
+|---|---|---|
+| Ny felt `heroImageUrl` (optional) i `HomeHeroSchema` | `server/schema.ts:163` | Fjern linjen |
+| `heroImageUrl: ""` lagt til i projectDefaults.json | `src/data/projectDefaults.json` | Fjern linjen |
+| Cover image-lag (z-10) over video i `HeroSection.tsx` | `HeroSection.tsx:85-120` | Fjern `<div class="hero-cover-overlay...">` blokken |
+| "Cover Image" kontroll lagt til i Hero Content-tab | `HeroSection.tsx` | Fjern den andre `MediaEditControl` |
+| Cover image-lag i `generator.ts` (publisert HTML) | `generator.ts:1822-1830` | Fjern `${hHero.heroImageUrl ? ...}` blokken |
+| Hero preload-tag fikset: `as="video"` → `as="image"` med prioriteringskjede | `generator.ts:27-42` | Tilbake til gammel `isHeroVideo` logikk |
+| `site-loader` overlay fjernet fra HTML | `generator.ts:2615` | Legg tilbake `<div id="site-loader">...` |
+| `hideLoader()` funksjon og kall fjernet fra script.js | `generator.ts:555-573` | Legg tilbake hele hideLoader-blokken |
+| `Date.now()` → FNV-1a content hash for script.js cache-busting | `generator.ts:1302-1320, 2617` | Bytt tilbake til `${Date.now()}` |
+| `<link rel="preload" href="style.css" as="style">` lagt til | `generator.ts:2611` | Fjern preload-linjen |
+
+---
+
 ## 🟢 NÅVÆRENDE TILSTAND (per 2026-03-11)
 
 **Stack:** React 19, Vite 7, Tailwind v4, TypeScript strict, Express API

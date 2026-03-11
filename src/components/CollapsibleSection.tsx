@@ -20,7 +20,13 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
     defaultExpanded = false,
     actions,
 }) => {
-    const [isExpanded, setIsExpanded] = useState(defaultExpanded);
+    const [isExpanded, setIsExpanded] = useState(defaultExpanded || isActive);
+
+    React.useEffect(() => {
+        if (isActive) {
+            setIsExpanded(true);
+        }
+    }, [isActive]);
 
     const handleToggle = () => {
         setIsExpanded(!isExpanded);

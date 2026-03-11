@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Gå til prosjektmappen
-PROJECT_DIR="/Users/rolf-olavringkjob/Desktop/Kr-kefot-V2-Unified"
+PROJECT_DIR="/Users/rolf-olavringkjob/Desktop/Kr-kefot-V3"
 cd "$PROJECT_DIR" || exit 1
 
 BACKUP_DIR="$PROJECT_DIR/backups_hard_copy"
@@ -38,7 +38,7 @@ import time
 import glob
 from collections import defaultdict
 
-backup_dir = "/Users/rolf-olavringkjob/Desktop/Kr-kefot-V2-Unified/backups_hard_copy"
+backup_dir = "/Users/rolf-olavringkjob/Desktop/Kr-kefot-V3/backups_hard_copy"
 now = time.time()
 
 files = glob.glob(os.path.join(backup_dir, "backup_*.tar.gz"))
@@ -101,7 +101,7 @@ EOF
     # Prøv å committe, fungerer kun hvis det faktisk er endringer racket av git add
     git commit -m "Auto-backup: $TIMESTAMP | $CHANGES" || echo "[$TIMESTAMP] ⚠️ Advarsel: Fikk ikke committet (kanskje ingen nye endringer). Fortsetter..."
     
-    git push origin main || echo "[$TIMESTAMP] ⚠️ Advarsel: 'git push' feilet. Prøver igjen ved neste intervall..."
+    git push origin HEAD || echo "[$TIMESTAMP] ⚠️ Advarsel: 'git push' feilet. Prøver igjen ved neste intervall..."
     echo "[$TIMESTAMP] GitHub push fullført!"
   else
     echo "[$TIMESTAMP] Ingen git-endringer å pushe."

@@ -24,12 +24,24 @@ export const generateMetaTags = (page: PageKey, brandData: BrandState, basePath:
   const url = `${brandData.serverBaseUrl}/${cleanBase}${page === 'home' ? '' : page + '.html'}`;
   const image = pageSeo.ogImage || brandData.sections.home.hero.videoUrl.replace(/\.(mp4|mov|webm)$/i, '.jpg'); // Fallback logic
 
-  // Preload Hero media — image gets preload link, video gets preload link for faster start
-  const heroUrl = brandData.sections.home.hero.videoUrl;
-  const isHeroVideo = /\.(mp4|mov|webm|m4v)$/i.test(heroUrl);
-  const preloadTag = isHeroVideo
-    ? `<link rel="preload" as="video" href="${heroUrl}" type="video/mp4">`
-    : `<link rel="preload" as="image" href="${heroUrl}">`;
+  // Preload the LCP element — priority chain:
+  // 1. heroImageUrl (user-chosen cover image, always an <img>, fastest possible LCP)
+  // 2. Mux auto-thumbnail (if hero is a Mux video and no custom image set)
+  // 3. Static image hero (already an <img>, preload it directly)
+  // Browsers ignore <link rel="preload" as="video"> — that tag is useless and removed.
+  const hero = brandData.sections.home.hero;
+  const heroUrl = hero.videoUrl;
+  const heroImageUrl = (hero as any).heroImageUrl || '';
+  const muxId = extractMuxId(heroUrl);
+  let preloadTag = '';
+  if (heroImageUrl) {
+    preloadTag = `<link rel="preload" as="image" href="${heroImageUrl}" fetchpriority="high">`;
+  } else if (muxId) {
+    const muxThumb = `https://image.mux.com/${muxId}/thumbnail.jpg?width=1920&time=0`;
+    preloadTag = `<link rel="preload" as="image" href="${muxThumb}" fetchpriority="high">`;
+  } else if (!/\.(mp4|mov|webm|m4v)$/i.test(heroUrl) && heroUrl) {
+    preloadTag = `<link rel="preload" as="image" href="${heroUrl}" fetchpriority="high">`;
+  }
 
   return `
     <title>${title}</title>
@@ -299,6 +311,9 @@ export const generateCSSVariableOverrides = (brandData: BrandState, deviceWidth:
     '--header-px': isMobile ? '1rem' : '2rem',
     '--header-py': isMobile ? '1rem' : '1.5rem',
 
+    // Global Button Aura
+    '--btn-aura-display': brandData.buttonAuraEnabled !== false ? 'block' : 'none',
+
     // Dynamic Typography Sizes (device-aware)
     // NOTE: CSS var names are shifted to match computeFontSize mapping:
     // semanticType h1 → --fs-display, h2 → --fs-h1, h3 → --fs-h2, h4 → --fs-h3
@@ -540,25 +555,13 @@ export const generateScriptJS = (brandData: BrandState) => `
     });
   };
 
-  const hideLoader = () => {
-    const loader = document.getElementById('site-loader');
-    if (loader) {
-        loader.style.opacity = '0';
-        loader.style.pointerEvents = 'none';
-        setTimeout(() => {
-          loader.style.display = 'none';
-        }, 850);
-    }
-  };
-
   // Immediate init
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => { initMedia(); });
   } else {
     initMedia();
   }
-  window.addEventListener('load', () => { initMedia(); hideLoader(); });
-  setTimeout(hideLoader, 2500);
+  window.addEventListener('load', () => { initMedia(); });
 
   const initInteractiveElements = () => {
     // Infinite Carousel (Optimized scroll version to prevent cutting off)
@@ -1251,10 +1254,6 @@ addCleanup(() => window.removeEventListener('scroll', mainScrollListener));
 
 // Pre-sync state to prevent jump on first scroll
 updateScrollProps();
-
-// Manual loader hide fallback
-const ldr = document.getElementById('site-loader');
-if (ldr) ldr.addEventListener('click', hideLoader);
   };
 
   if (document.readyState === 'loading') {
@@ -1310,6 +1309,17 @@ const minifyHTML = (html: string) => {
     .trim();
 };
 
+/** FNV-1a 32-bit hash — fast, no imports, collision-resistant enough for cache busting.
+ *  Returns an 8-char hex string that only changes when the script content changes. */
+const fnv1a = (str: string): string => {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = (h * 0x01000193) >>> 0;
+  }
+  return h.toString(16).padStart(8, '0');
+};
+
 export const generatePageHTML = (page: PageKey, brandData: BrandState, contentOnly = false, isPreview = false, basePath: string = '/') => {
   // ... (existing code for generatePageHTML helper functions) ...
   const hexToRgb = (hex: string) => {
@@ -1351,12 +1361,14 @@ export const generatePageHTML = (page: PageKey, brandData: BrandState, contentOn
     const auraBlend = visuals?.auraBlendMode || 'screen';
     const auraColor = visuals?.auraColor || '';
 
+    const colorStyle = auraColor ? `--aura-color: var(--${prefix}-aura-color, ${auraColor});` : '';
+
     return `<div class="hero-aurora" style="
       --aura-display: var(--${prefix}-aura-display, ${auraEnabled ? 'block' : 'none'});
       --aura-speed: var(--${prefix}-aura-speed, ${auraSpeed}s);
       --aura-op: var(--${prefix}-aura-op, ${auraOp});
       --aura-blend: var(--${prefix}-aura-blend, ${auraBlend});
-      ${auraColor ? `--aura-color: var(--${prefix}-aura-color, ${auraColor});` : `--aura-color: var(--${prefix}-aura-color);`}
+      ${colorStyle}
     "></div>`;
   };
 
@@ -1817,6 +1829,12 @@ export const generatePageHTML = (page: PageKey, brandData: BrandState, contentOn
         <section id="home-hero" data-section="hero" ${getBlurAttrs(hHero.visuals)} class="relative flex flex-col justify-center items-center px-4 overflow-hidden" style="min-height:var(--hero-min-h); padding-top:var(--hero-pt); padding-bottom:var(--hero-pb); margin-bottom:var(--hero-margin)">
             <div class="blur-target absolute inset-0 z-0">
                 ${renderUniversalMedia(isVideo(hHero.videoUrl) ? 'video' : 'image', hHero.videoUrl, 'hero', '--hero-sat', '--hero-dim', '--hero-para', '--hero-op', 'media-home-hero', '', true, hHero.mediaConfig)}
+                ${hHero.heroImageUrl ? `
+                <!-- Cover image layer: LCP element — visible immediately from SSR, no WC dependency.
+                     Mirrors Live section previewImageUrl pattern. -->
+                <div class="hero-cover-overlay absolute inset-0 z-10">
+                    ${renderUniversalMedia('image', hHero.heroImageUrl, 'hero', '--hero-sat', '--hero-dim', '--hero-para', '--hero-op', 'media-home-hero-cover', '', true, undefined)}
+                </div>` : ''}
             </div>
             ${renderAura(hHero.visuals, 'hero')}
             <div class="scroll-reveal relative z-10 text-center">
@@ -2452,10 +2470,8 @@ export const generatePageHTML = (page: PageKey, brandData: BrandState, contentOn
 
                             // Apply responsive sizes and position
                             var isMobile = window.innerWidth < 768;
-                            mxWrap.style.width = (isMobile ? mux.widthMobile : mux.widthDesktop) || '90vw';
-                            mxWrap.style.aspectRatio = (isMobile ? mux.aspectRatioMobile : mux.aspectRatioDesktop) || '16/9';
-                            mxWrap.style.transform = 'translateX(' + ((isMobile ? mux.xOffsetMobile : mux.xOffsetDesktop) || 0) + '%)';
-                            
+                            mxWrap.style.width = '100%';
+                            mxWrap.style.aspectRatio = (isMobile ? mux.aspectRatioMobile : mux.aspectRatioDesktop) || '16/9';                            
                             // Explicitly call play to start immediately without relying on attribute updates
                             try {
                                 muxPlayer.play();
@@ -2588,11 +2604,11 @@ ${generateJsonLd(page, brandData)}
 <!-- All other fonts (optional display — no layout shift) -->
 <link rel="preload" href="${googleFontsUrl}" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="${googleFontsUrl}"></noscript>
+<link rel="preload" href="style.css" as="style">
 <link rel="stylesheet" href="style.css">
 <style>${generateCSSVars(brandData)}</style>
 </head>
 <body class="bg-black text-white kraakefot-site overflow-x-clip">
-<div id="site-loader"><div class="loader-content"><div class="loader-spinner"></div><div class="loader-text">Loading</div></div></div>
 ${(page === 'home' || page === 'about' || page === 'contact')
       ? renderPageBody(page, brandData, basePath)
       : `${headerHTML}
@@ -2611,7 +2627,7 @@ ${globalFooterHTML}`}
 <script type="module" src="https://cdn.jsdelivr.net/npm/@mux/mux-background-video/html/+esm"></script>
 
 <!-- PERF: defer ensures script runs after DOM is parsed, no render-blocking -->
-<script defer src="script.js?v=${Date.now()}"></script>
+<script defer src="script.js?v=${fnv1a(generateScriptJS(brandData))}"></script>
 </body>
 </html>`;
 

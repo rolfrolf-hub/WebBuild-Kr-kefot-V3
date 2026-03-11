@@ -9,6 +9,24 @@ interface GlobalVisualsControlProps {
 export const GlobalVisualsControl: React.FC<GlobalVisualsControlProps> = ({ brandData, onUpdate }) => {
     return (
         <div className="space-y-6">
+            {/* Global Button Aura */}
+            <div className="space-y-4">
+                <h4 className="text-xs font-bold uppercase tracking-widest text-[var(--accent)] border-b border-zinc-800 pb-2 flex justify-between items-center">
+                    Knappeeffekter (Global)
+                    <div
+                        onClick={() => onUpdate({ buttonAuraEnabled: brandData.buttonAuraEnabled !== false ? false : true })}
+                        className={`w-8 h-4 rounded-full transition-colors cursor-pointer relative ${brandData.buttonAuraEnabled !== false ? 'bg-emerald-600' : 'bg-zinc-700'}`}
+                    >
+                        <div className={`absolute top-0.5 w-3 h-3 bg-white rounded-full transition-all ${brandData.buttonAuraEnabled !== false ? 'right-0.5' : 'left-0.5'}`} />
+                    </div>
+                </h4>
+                <div className="pl-2">
+                    <p className="text-[10px] text-zinc-500 leading-relaxed">
+                        Aktiver dette for å vise det animerte nordlyset (Aura) bak alle hovedknapper (btn-glass).
+                    </p>
+                </div>
+            </div>
+
             {/* Header Background */}
             <div className="space-y-4">
                 <h4 className="text-xs font-bold uppercase tracking-widest text-[var(--accent)] border-b border-zinc-800 pb-2">

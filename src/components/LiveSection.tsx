@@ -154,7 +154,7 @@ export const LiveSection: React.FC<LiveSectionProps> = ({ brandData, onUpdate, s
                                             display: 'block',
                                             '--poster': 'none',
                                             '--controls': 'none',
-                                            transform: `scale(${parseFloat(isMobile ? (mConfig.widthMobile || '100') : (mConfig.widthDesktop || '100')) / 100}) translate(${isMobile ? (mConfig.xOffsetMobile || 0) : (mConfig.xOffsetDesktop || 0)}%, ${isMobile ? (mConfig.yOffsetMobile || 0) : (mConfig.yOffsetDesktop || 0)}%)`,
+                                            transform: `scale(${isMobile ? framing.zoomMobile : framing.zoomDesktop}) translate(${isMobile ? framing.xOffsetMobile : framing.xOffsetDesktop}%, ${isMobile ? framing.yOffsetMobile : framing.yOffsetDesktop}%)`,
                                             transformOrigin: 'center'
                                         } as any}
                                     />

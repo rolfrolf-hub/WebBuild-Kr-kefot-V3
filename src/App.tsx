@@ -139,8 +139,20 @@ const PreviewFrame = memo(({
 
 const App: React.FC = () => {
   const [brandData, setBrandData] = useState<ProjectState>(INITIAL_DEFAULTS);
-  const [activePage, setActivePage] = useState<'home' | 'about' | 'contact' | 'epk'>('home');
-  const [activeSection, setActiveSection] = useState<string | null>('home-hero');
+  const [activePage, setActivePage] = useState<'home' | 'about' | 'contact' | 'epk'>(() => {
+    return (sessionStorage.getItem('kraakefot-active-page') as any) || 'home';
+  });
+  const [activeSection, setActiveSection] = useState<string | null>(() => {
+    return sessionStorage.getItem('kraakefot-active-section') || 'home-hero';
+  });
+
+  useEffect(() => {
+    sessionStorage.setItem('kraakefot-active-page', activePage);
+  }, [activePage]);
+
+  useEffect(() => {
+    if (activeSection) sessionStorage.setItem('kraakefot-active-section', activeSection);
+  }, [activeSection]);
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
   const [publishModalTab, setPublishModalTab] = useState<'download' | 'deploy'>('download');
   const [directDeployStatus, setDirectDeployStatus] = useState<'idle' | 'deploying' | 'success' | 'error'>('idle');
@@ -305,6 +317,12 @@ const App: React.FC = () => {
         setActiveSection(sectionId);
         const el = document.getElementById(`control-${sectionId}`);
         el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      // 2.5 Page Sync (Clicking page link in preview -> Switches Editor tab)
+      if (event.data.type === 'PAGE_CHANGED') {
+        const { page } = event.data.payload;
+        setActivePage(page);
       }
 
       // 3. Device Change Notification from Preview

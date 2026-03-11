@@ -1,9 +1,9 @@
 {
   "meta": {
-    "lastModified": 1773002094381,
+    "lastModified": 1773245011195,
     "version": "2.6.0"
   },
-  "isMobilePreview": false,
+  "isMobilePreview": true,
   "ftpUser": "",
   "ftpPass": "",
   "serverBaseUrl": "https://kraakefot.com",
@@ -327,6 +327,12 @@
     "epkVideoHeadline": {
       "font": "'Montserrat', sans-serif",
       "semanticType": "h6"
+    },
+    "vaultTagline": {
+      "font": "'Montserrat', sans-serif",
+      "scale": 1,
+      "color": "#459694",
+      "glitchEnabled": true
     }
   },
   "menuLogoName": "",
@@ -337,7 +343,8 @@
     "contact": "KONTAKT",
     "portfolio": "Portfolio",
     "lab": "Lab",
-    "epk": "EPK"
+    "epk": "EPK",
+    "vault": "Vault"
   },
   "menuOpacity": 0.1,
   "menuTintColor": "#3b8c83",
@@ -350,7 +357,8 @@
     "home": true,
     "about": true,
     "contact": true,
-    "epk": true
+    "epk": true,
+    "vault": false
   },
   "socials": {
     "youtubeUrl": "https://music.youtube.com/channel/UCSmN7GyatwUO3TB-rT4rYbw?si=0j2rCO5XNLd-t8LC",
@@ -366,7 +374,7 @@
       "hero": {
         "layout": {
           "heightMode": "screen",
-          "mobileHeightMode": "screen",
+          "mobileHeightMode": "auto",
           "paddingTopDesktop": 0,
           "paddingBottomDesktop": 0,
           "paddingTopMobile": 20,
@@ -401,7 +409,8 @@
           "yOffsetDesktop": 0,
           "yOffsetMobile": 50
         },
-        "videoUrl": "qjaItW02vvdZdv7xthn8zs6GWe7GIzuxusMB1DWFhC8g",
+        "videoUrl": "media/images/dama-i-oslo-krkefot-song-artwork-1920.webp",
+        "heroImageUrl": "",
         "headline": "Kråkefot",
         "subheadline": "––––––––––––––––––––––––––––",
         "ctaText": "Hele Historien"
@@ -1119,6 +1128,46 @@
         "email": "",
         "phone": ""
       }
+    },
+    "vault": {
+      "layout": {
+        "heightMode": "auto",
+        "paddingTopDesktop": 0,
+        "paddingBottomDesktop": 0,
+        "paddingTopMobile": 14.5,
+        "paddingBottomMobile": 0,
+        "marginBottom": 0,
+        "mobileMarginBottom": 0
+      },
+      "visuals": {
+        "saturation": 40,
+        "mobileSaturation": 60,
+        "dim": 40,
+        "mobileDim": 30,
+        "parallax": 15,
+        "mobileParallax": 0,
+        "blurEnabled": true,
+        "blurStrength": 5,
+        "blurRadius": 0.5,
+        "playbackRate": 100,
+        "auraEnabled": true,
+        "auraOpacity": 15,
+        "auraSpeed": 20,
+        "auraBlendMode": "screen"
+      },
+      "framing": {
+        "zoomDesktop": 1.2,
+        "zoomMobile": 1,
+        "xOffsetDesktop": 0,
+        "xOffsetMobile": 0,
+        "yOffsetDesktop": 0,
+        "yOffsetMobile": 0
+      },
+      "videoUrl": "",
+      "tagline": "Arkivet",
+      "headline": "THE VAULT TESTING",
+      "description": "En samling av våre mest sjelfulle digitale artefakter.",
+      "items": []
     }
   },
   "team": [
@@ -1162,5 +1211,6 @@
   "h3SizeDesktop": 3.2,
   "h4SizeDesktop": 2.5,
   "h5Font": "'Montserrat', sans-serif",
-  "h6Font": "'Montserrat', sans-serif"
+  "h6Font": "'Montserrat', sans-serif",
+  "isVaultVisible": false
 }

@@ -192,9 +192,9 @@ export const MediaCard: React.FC<MediaCardProps> = ({ item, index, onUpdate, bra
                     }}
                 >
                     <div style={{
-                        width: brandData.isMobilePreview ? (mConfig.widthMobile || '100%') : (mConfig.widthDesktop || '100%'),
+                        width: '100%',
+                        height: '100%',
                         aspectRatio: brandData.isMobilePreview ? (mConfig.aspectRatioMobile || mConfig.aspectRatioDesktop || '16/9') : (mConfig.aspectRatioDesktop || '16/9'),
-                        transform: `translateX(${brandData.isMobilePreview ? (mConfig.xOffsetMobile || 0) : (mConfig.xOffsetDesktop || 0)}%)`,
                         position: 'relative',
                     }}>
                         <MuxPlayer

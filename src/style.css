@@ -374,6 +374,7 @@ header::after {
     opacity: 0.8;
     z-index: -1;
     transition: opacity 0.6s, filter 0.6s;
+    display: var(--btn-aura-display, block);
 }
 
 .btn-glass:hover {
