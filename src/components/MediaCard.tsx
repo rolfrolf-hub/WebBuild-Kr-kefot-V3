@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { BrandState, MediaItem, MediaType, MuxPlayerConfig } from '../types';
 declare global { namespace JSX { interface IntrinsicElements { 'mux-video': any; } } }
-import MuxPlayer from '@mux/mux-player/react';
+import MuxPlayer from '@mux/mux-player-react';
 import { InlineText } from './InlineText';
 import { MediaEditControl } from './MediaEditControl';
 import { MediaCustomizationControl } from './MediaCustomizationControl';

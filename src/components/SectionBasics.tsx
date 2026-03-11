@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { getResponsiveSrcSet } from '../utils/mediaProcessing';
 import { isMuxUrl, getMuxStreamUrl, extractMuxId } from '../utils/mediaHelpers';
 import { MOBILE_NORM, DESKTOP_NORM, MOBILE_BUFFER, DESKTOP_BUFFER } from '../utils/framingUtils';
-import MuxPlayer from '@mux/mux-player/react';
+import MuxPlayer from '@mux/mux-player-react';
 import { UniversalMediaConfig, MuxPlayerConfig } from '../types';
 
 export const isVideo = (url: string) => /\.(mp4|mov|webm|m4v|mkv)$/i.test(url);

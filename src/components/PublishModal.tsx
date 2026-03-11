@@ -129,7 +129,7 @@ export const PublishModal: React.FC<PublishModalProps> = ({ isOpen, onClose, bra
     setTimeout(() => setCopySuccess(false), 3000);
   };
 
-  const handleDeploy = async () => {
+  const handleDeploy = async (isTestMode: boolean = false) => {
     setDeployStatus('deploying');
     setDeployLog([]);
     const log = (msg: string) => setDeployLog(prev => [...prev, msg]);
@@ -138,7 +138,7 @@ export const PublishModal: React.FC<PublishModalProps> = ({ isOpen, onClose, bra
     const baseUrl = targetUrl.endsWith('/') ? targetUrl : `${targetUrl}/`;
     const endpoint = `${baseUrl}deploy.php`;
 
-    log(`Klargjør filer for Kråkefot...`);
+    log(isTestMode ? `Klargjør filer for TEST ( /v3 )...` : `Klargjør filer for Kråkefot...`);
 
     const { generateHtaccess } = await getGenerator();
     const files = await getEnabledPageFiles();
@@ -151,7 +151,8 @@ export const PublishModal: React.FC<PublishModalProps> = ({ isOpen, onClose, bra
     try {
       let successCount = 0;
       for (const f of files) {
-        log(`Laster opp ${f.name}...`);
+        const remoteFilename = isTestMode ? `v3/${f.name}` : f.name;
+        log(`Laster opp ${remoteFilename}...`);
 
         await new Promise(r => setTimeout(r, 200));
 
@@ -160,7 +161,7 @@ export const PublishModal: React.FC<PublishModalProps> = ({ isOpen, onClose, bra
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             password: secretKey,
-            filename: f.name,
+            filename: remoteFilename,
             content: f.content
           })
         });
@@ -183,7 +184,8 @@ export const PublishModal: React.FC<PublishModalProps> = ({ isOpen, onClose, bra
 
       setDeployStatus('success');
       log(`------------------------------`);
-      log(`VELLYKKET: ${successCount} filer er nå live på ${targetUrl}`);
+      const finalUrl = isTestMode ? `${baseUrl}v3/` : targetUrl;
+      log(`VELLYKKET: ${successCount} filer er nå live på ${finalUrl}`);
     } catch (e: any) {
       console.error("Deployment feil:", e);
       let msg = e.message;
@@ -217,7 +219,8 @@ export const PublishModal: React.FC<PublishModalProps> = ({ isOpen, onClose, bra
               setTargetUrl={setTargetUrl}
               deployStatus={deployStatus}
               deployLog={deployLog}
-              onDeploy={handleDeploy}
+              onDeploy={() => handleDeploy(false)}
+              onDeployTest={() => handleDeploy(true)}
               password={secretKey}
               setPassword={setSecretKey}
             />

@@ -7,11 +7,12 @@ interface DeployTabProps {
     deployStatus: 'idle' | 'deploying' | 'success' | 'error';
     deployLog: string[];
     onDeploy: () => void;
+    onDeployTest: () => void;
     password?: string;
     setPassword?: (pass: string) => void;
 }
 
-export const DeployTab: React.FC<DeployTabProps> = ({ targetUrl, setTargetUrl, deployStatus, deployLog, onDeploy, password, setPassword }) => {
+export const DeployTab: React.FC<DeployTabProps> = ({ targetUrl, setTargetUrl, deployStatus, deployLog, onDeploy, onDeployTest, password, setPassword }) => {
     const handleDownloadScripts = async () => {
         const JSZip = (await import('https://esm.sh/jszip')).default;
         const zip = new JSZip();
@@ -283,9 +284,18 @@ echo json_encode(array('error' => 'Invalid action'));
                 </div>
             </div>
 
-            <button onClick={onDeploy} disabled={deployStatus === 'deploying'} className="w-full bg-[var(--accent)] hover:bg-[var(--accent-dark)] text-white py-4 rounded-xl font-bold uppercase tracking-widest transition-all shadow-lg hover:shadow-[var(--accent)]/20 disabled:opacity-50 disabled:cursor-not-allowed">
-                {deployStatus === 'deploying' ? 'Publishing...' : 'Deploy Now (One-Click)'}
-            </button>
+            <div className="grid grid-cols-1 gap-4">
+                <button onClick={onDeploy} disabled={deployStatus === 'deploying'} className="w-full bg-[var(--accent)] hover:bg-[var(--accent-dark)] text-white py-4 rounded-xl font-bold uppercase tracking-widest transition-all shadow-lg hover:shadow-[var(--accent)]/20 disabled:opacity-50 disabled:cursor-not-allowed">
+                    {deployStatus === 'deploying' ? 'Publishing...' : 'Deploy Live (Main)'}
+                </button>
+                <button 
+                    onClick={onDeployTest} 
+                    disabled={deployStatus === 'deploying'} 
+                    className="w-full bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-zinc-300 py-3 rounded-xl font-bold uppercase tracking-widest transition-all disabled:opacity-50"
+                >
+                    Test Version ( /v3 )
+                </button>
+            </div>
 
             <div className="flex justify-center">
                 <button onClick={handleDownloadScripts} className="text-[10px] text-zinc-500 hover:text-zinc-300 underline decoration-zinc-700 hover:decoration-zinc-300 underline-offset-4 transition-all">

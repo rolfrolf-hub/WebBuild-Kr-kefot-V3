@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { BrandState } from '../types';
 import { UniversalMedia, isVideo, isMux } from './SectionBasics';
-import MuxPlayer from '@mux/mux-player/react';
+import MuxPlayer from '@mux/mux-player-react';
 import { extractMuxId } from '../utils/mediaHelpers';
 import { InlineText } from './InlineText';
 import { MediaEditControl } from './MediaEditControl';
@@ -156,7 +156,7 @@ export const LiveSection: React.FC<LiveSectionProps> = ({ brandData, onUpdate, s
                                             '--controls': 'none',
                                             transform: `scale(${parseFloat(isMobile ? (mConfig.widthMobile || '100') : (mConfig.widthDesktop || '100')) / 100}) translate(${isMobile ? (mConfig.xOffsetMobile || 0) : (mConfig.xOffsetDesktop || 0)}%, ${isMobile ? (mConfig.yOffsetMobile || 0) : (mConfig.yOffsetDesktop || 0)}%)`,
                                             transformOrigin: 'center'
-                                        } as React.CSSProperties}
+                                        } as any}
                                     />
                                 </div>
                             );

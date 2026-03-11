@@ -147,6 +147,7 @@ const App: React.FC = () => {
   const [directDeployMessage, setDirectDeployMessage] = useState('');
   // Per-page deploy: null = all pages, otherwise only the listed pages
   const [deployPageFilter, setDeployPageFilter] = useState<string[] | null>(null);
+  const [isLiveEnabled, setIsLiveEnabled] = useState(false);
 
   // Debounce: Wait 80ms after typing before updating preview (near-instant)
   const debouncedBrandData = useDebounce(brandData, 80);
@@ -339,11 +340,11 @@ const App: React.FC = () => {
     }
   };
 
-  const handleDirectDeploy = async () => {
+  const handleDirectDeploy = async (isTestMode = false) => {
     if (directDeployStatus === 'deploying') return;
 
     setDirectDeployStatus('deploying');
-    setDirectDeployMessage('Starting push...');
+    setDirectDeployMessage(isTestMode ? 'Starting test push to /v3...' : 'Starting live push...');
 
     try {
       // #3: Dynamic import — generator only loads when Deploy is actually clicked
@@ -402,13 +403,14 @@ const App: React.FC = () => {
       }
 
       for (const f of files) {
-        setDirectDeployMessage(`Pushing ${f.name}...`);
+        const remoteFilename = isTestMode ? `v3/${f.name}` : f.name;
+        setDirectDeployMessage(`Pushing ${remoteFilename}...`);
         const response = await fetch(endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             password: secretKey,
-            filename: f.name,
+            filename: remoteFilename,
             content: f.content
           })
         });
@@ -420,7 +422,7 @@ const App: React.FC = () => {
       }
 
       setDirectDeployStatus('success');
-      setDirectDeployMessage('Changes pushed successfully!');
+      setDirectDeployMessage(isTestMode ? 'Test version pushed to /v3!' : 'Changes pushed successfully!');
 
       // #7: Store timer ref so it can be cleared on unmount
       if (deployTimerRef.current) clearTimeout(deployTimerRef.current);
@@ -815,8 +817,18 @@ const App: React.FC = () => {
 
         <div className="p-4 bg-zinc-950 border-t border-zinc-800 shrink-0 space-y-3">
           <button
+            onClick={() => handleDirectDeploy(true)}
+            disabled={directDeployStatus === 'deploying'}
+            className="w-full py-3 bg-zinc-900 hover:bg-zinc-800 text-blue-400 font-bold uppercase tracking-widest text-[10px] rounded transition-all border border-zinc-800 hover:border-blue-500/50 flex items-center justify-center gap-2"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+            Test Version ( /v3 )
+          </button>
+
+          <button
             onClick={() => { setPublishModalTab('download'); setIsPublishModalOpen(true); }}
-            className="w-full py-3 bg-zinc-800 hover:bg-zinc-700 text-white font-bold uppercase tracking-widest text-xs rounded transition-all border border-zinc-700"
+            disabled={!isLiveEnabled}
+            className={`w-full py-3 bg-zinc-800 hover:bg-zinc-700 text-white font-bold uppercase tracking-widest text-xs rounded transition-all border border-zinc-700 ${!isLiveEnabled ? 'opacity-30 grayscale cursor-not-allowed' : ''}`}
           >
             Publish Changes
           </button>
@@ -873,17 +885,32 @@ const App: React.FC = () => {
             );
           })()}
 
+          <div className="flex items-center justify-between px-1 py-1">
+            <span className={`text-[9px] font-bold uppercase tracking-widest transition-colors ${isLiveEnabled ? 'text-emerald-500' : 'text-zinc-700'}`}>
+              Enable Live Deploy
+            </span>
+            <button
+              onClick={() => setIsLiveEnabled(!isLiveEnabled)}
+              className={`relative w-8 h-4 rounded-full transition-all duration-300 ${isLiveEnabled ? 'bg-emerald-600 shadow-[0_0_10px_rgba(16,185,129,0.3)]' : 'bg-zinc-800'}`}
+            >
+              <div className={`absolute top-0.5 w-3 h-3 rounded-full transition-all duration-300 ${isLiveEnabled ? 'left-[18px] bg-white' : 'left-0.5 bg-zinc-600'}`} />
+            </button>
+          </div>
+
           <button
-            onClick={handleDirectDeploy}
-            disabled={directDeployStatus === 'deploying'}
-            className={`w-full py-3 font-bold uppercase tracking-widest text-xs rounded transition-all shadow-lg flex items-center justify-center gap-2 ${directDeployStatus === 'deploying'
-              ? 'bg-zinc-700 text-zinc-400 cursor-not-allowed'
-              : directDeployStatus === 'success'
-                ? 'bg-emerald-500 text-white shadow-[0_0_20px_rgba(16,185,129,0.4)]'
-                : directDeployStatus === 'error'
-                  ? 'bg-red-600 text-white'
-                  : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)]'
-              }`}
+            onClick={() => handleDirectDeploy(false)}
+            disabled={directDeployStatus === 'deploying' || !isLiveEnabled}
+            className={`w-full py-3 font-bold uppercase tracking-widest text-xs rounded transition-all shadow-lg flex items-center justify-center gap-2 ${
+              !isLiveEnabled 
+                ? 'bg-zinc-800 text-zinc-600 cursor-not-allowed opacity-50 border border-zinc-700'
+                : directDeployStatus === 'deploying'
+                  ? 'bg-zinc-700 text-zinc-400 cursor-not-allowed'
+                  : directDeployStatus === 'success'
+                    ? 'bg-emerald-500 text-white shadow-[0_0_20px_rgba(16,185,129,0.4)]'
+                    : directDeployStatus === 'error'
+                      ? 'bg-red-600 text-white'
+                      : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)]'
+            }`}
           >
             {directDeployStatus === 'deploying' ? (
               <>
