@@ -19,6 +19,7 @@ interface MediaCardProps {
     isActive?: boolean;
     onToggleActive: (id: string | null) => void;
     sizes?: string;
+    mode?: 'edit' | 'publish';
 }
 
 const normalizePath = (url: string) => {
@@ -64,7 +65,7 @@ const resolveThumbnail = (item: MediaItem): { url: string; isVideo: boolean } =>
     return { url: fallback, isVideo: false };
 };
 
-export const MediaCard: React.FC<MediaCardProps> = ({ item, index, onUpdate, brandData, onGlobalUpdate, style, isClone, isActive, onToggleActive, sizes }) => {
+export const MediaCard: React.FC<MediaCardProps> = ({ item, index, onUpdate, brandData, onGlobalUpdate, style, isClone, isActive, onToggleActive, sizes, mode = 'edit' }) => {
 
     const [isLoaded, setIsLoaded] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);

@@ -148,10 +148,20 @@ export const PublishModal: React.FC<PublishModalProps> = ({ isOpen, onClose, bra
     const enabledPages = Object.entries(vis).filter(([_, v]) => v).map(([k]) => k);
     log(`Publiserer sider: ${enabledPages.join(', ').toUpperCase()}`);
 
+    let branchName = 'main';
+    try {
+      const branchRes = await fetch('http://localhost:3015/api/branch');
+      const branchData = await branchRes.json();
+      if (branchData.branch) branchName = branchData.branch;
+    } catch (e) {
+      console.warn('Could not fetch branch name for deploy path', e);
+    }
+    const testSubPath = branchName === 'main' ? 'main' : branchName;
+
     try {
       let successCount = 0;
       for (const f of files) {
-        const remoteFilename = isTestMode ? `v3/${f.name}` : f.name;
+        const remoteFilename = isTestMode ? `v3/${testSubPath}/${f.name}` : f.name;
         log(`Laster opp ${remoteFilename}...`);
 
         await new Promise(r => setTimeout(r, 200));

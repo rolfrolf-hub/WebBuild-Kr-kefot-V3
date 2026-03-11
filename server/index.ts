@@ -93,6 +93,18 @@ app.get('/api/media-manager-php', async (_req: Request, res: Response) => {
     }
 });
 
+import { execSync } from 'child_process';
+// API: Get Current Git Branch
+app.get('/api/branch', (_req: Request, res: Response) => {
+    try {
+        const branch = execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
+        res.json({ branch });
+    } catch (error) {
+        console.error('Failed to get git branch:', error);
+        res.status(500).json({ error: 'Could not resolve git branch' });
+    }
+});
+
 // API: List Backups
 app.get('/api/backups', async (_req: Request, res: Response) => {
     try {

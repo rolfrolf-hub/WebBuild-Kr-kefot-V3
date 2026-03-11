@@ -113,3 +113,5 @@ export const getMediaTypeFromUrl = (url: string): import('../types').MediaType =
     if (/\.(mp3|wav|ogg|aac|flac)$/i.test(url)) return 'audio';
     return 'video';
 };
+
+export const isVideo = (url: string) => /\.(mp4|mov|webm|m4v|mkv)$/i.test(url);

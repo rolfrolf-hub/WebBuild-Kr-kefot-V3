@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { BrandState } from '../types';
-import { UniversalMedia, isVideo, isMux } from './SectionBasics';
+import { UniversalMedia } from './SectionBasics';
+import { isVideo, isMuxUrl as isMux } from '../utils/mediaHelpers';
 import MuxPlayer from '@mux/mux-player-react';
 import { extractMuxId } from '../utils/mediaHelpers';
 import { InlineText } from './InlineText';

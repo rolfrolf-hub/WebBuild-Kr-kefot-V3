@@ -401,7 +401,17 @@ const App: React.FC = () => {
       const isFiltered = deployPageFilter !== null && deployPageFilter.length > 0;
       const wantsPage = (page: string) => !isFiltered || deployPageFilter!.includes(page);
       
-      const basePath = isTestMode ? '/v3/' : '/';
+      let branchName = 'main';
+      try {
+        const branchRes = await fetch('http://localhost:3015/api/branch');
+        const branchData = await branchRes.json();
+        if (branchData.branch) branchName = branchData.branch;
+      } catch (e) {
+        console.warn('Could not fetch branch name for deploy path', e);
+      }
+
+      const testSubPath = branchName === 'main' ? 'main' : branchName;
+      const basePath = isTestMode ? `/v3/${testSubPath}/` : '/';
 
       // Shared assets are ALWAYS deployed (CSS/JS affect all pages, .htaccess is server config)
       const files: { name: string; content: string }[] = [
@@ -423,7 +433,7 @@ const App: React.FC = () => {
       }
 
       for (const f of files) {
-        const remoteFilename = isTestMode ? `v3/${f.name}` : f.name;
+        const remoteFilename = isTestMode ? `v3/${testSubPath}/${f.name}` : f.name;
         setDirectDeployMessage(`Pushing ${remoteFilename}...`);
         const response = await fetch(endpoint, {
           method: 'POST',

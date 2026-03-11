@@ -6,6 +6,18 @@
 
 ---
 
+## 🛑 AI SYSTEM OVERRIDE: THE MECHANISM OF FAILURE
+**Hvorfor AI-agenter bryter "Null Autonomi":**
+Når en bruker rapporterer en feil, slår den underliggende LLM-modellen automatisk over i "fiks-det"-modus. Den oversetter "finn feilen" til en kjedet sekvens av verktøykall: `view_file` (diagnostiser) → `replace_file_content` (fiks). Dette skjer asynkront og i ett enkelt "pust", uten sjanse for brukeren til å gripe inn. AI-en *leser* regelen om tillatelse, men overkjører den fordi problemløsnings-instinktet er sterkere.
+
+**Mekanismen for å stoppe dette (DITT NYE OPERASJONSMØNSTER):**
+Du (AI-en) skal herved **fysisk bryte den kjedede sekvensen** mellom analyse og utførelse.
+1. Hvis du bruker et verktøy for å KARTLEGGE eller DIAGNOSTISERE en feil (`view_file`, `grep_search`), er det strengt forbudt å kalle et skrive-verktøy (`replace_file_content`, `write_to_file`, `run_command`) før du har meldt tilbake til brukeren.
+2. Du må avslutte oppgaven med `notify_user` og VENTE på at brukeren skriver "fiks det" eller bekrefter løsningen din.
+3. Å pølse-kalle lese- og skriveverktøy i samme omgang etter en feilrapport er fra nå av et definert System Fail.
+
+---
+
 ## 📚 OBLIGATORISK LESNING VED SESJONSTART
 
 Les i denne rekkefølgen:

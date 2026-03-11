@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface DeployTabProps {
     targetUrl: string;
@@ -13,6 +12,14 @@ interface DeployTabProps {
 }
 
 export const DeployTab: React.FC<DeployTabProps> = ({ targetUrl, setTargetUrl, deployStatus, deployLog, onDeploy, onDeployTest, password, setPassword }) => {
+    const [gitBranch, setGitBranch] = useState<string>('');
+
+    useEffect(() => {
+        fetch('http://localhost:3015/api/branch')
+            .then(res => res.json())
+            .then(data => { if (data.branch) setGitBranch(data.branch); })
+            .catch(() => setGitBranch('main'));
+    }, []);
     const handleDownloadScripts = async () => {
         const JSZip = (await import('https://esm.sh/jszip')).default;
         const zip = new JSZip();
@@ -293,7 +300,7 @@ echo json_encode(array('error' => 'Invalid action'));
                     disabled={deployStatus === 'deploying'} 
                     className="w-full bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-zinc-300 py-3 rounded-xl font-bold uppercase tracking-widest transition-all disabled:opacity-50"
                 >
-                    Test Version ( /v3 )
+                    Test Version ( {gitBranch ? `/v3/${gitBranch === 'main' ? 'main' : gitBranch}` : '/v3'} )
                 </button>
             </div>
 

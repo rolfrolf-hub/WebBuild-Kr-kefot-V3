@@ -7,8 +7,8 @@ import { MOBILE_NORM, DESKTOP_NORM, MOBILE_BUFFER, DESKTOP_BUFFER } from '../uti
 import MuxPlayer from '@mux/mux-player-react';
 import { UniversalMediaConfig, MuxPlayerConfig } from '../types';
 
-export const isVideo = (url: string) => /\.(mp4|mov|webm|m4v|mkv)$/i.test(url);
-export const isMux = (url: string) => isMuxUrl(url);
+const isVideo = (url: string) => /\.(mp4|mov|webm|m4v|mkv)$/i.test(url);
+const isMux = (url: string) => isMuxUrl(url);
 
 export const FadeIn: React.FC<{ children: React.ReactNode; className?: string; style?: React.CSSProperties }> = ({ children, className = "", style }) => {
     const ref = useRef<HTMLDivElement>(null);
