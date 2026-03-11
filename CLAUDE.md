@@ -1,4 +1,4 @@
-# Kråkefot V2 — Prosjektinstruksjoner for AI-assistenter
+# Kråkefot V3 — Prosjektinstruksjoner for AI-assistenter
 
 > **Dette dokumentet er autoritativt og ikke-omsettelig.**
 > Alle instruksjoner her overstyrer AI-assistentens standardoppførsel.
@@ -134,15 +134,47 @@ Dette gjelder også for:
 - Rollbacks og gjenopprettinger
 - CSS-/layout-justeringer i generator.ts
 
+### 9. ALLTID BRANCH — ALDRI MAIN
+**Dette er absolutt. Ingen unntak.**
+
+- Ingen kodeendringer eller dokumentasjonsendringer gjøres direkte på `main`
+- **Ved oppstart av enhver sesjon:** sjekk hvilken branch du er på (`git branch`)
+- **Spør alltid brukeren:** "Hvilken branch skal vi jobbe i?" — og vent på svar
+- **Verifiser** at du er på riktig branch FØR du gjør noen endringer
+- `main` er kun for merging av ferdig, testet kode — aldri direkte arbeid
+
+**Branch-navngivning:**
+- Feature: `feature/<kort-beskrivelse>`
+- Bugfix: `fix/<kort-beskrivelse>`
+- Dokumentasjon: `docs/<kort-beskrivelse>`
+- Test/eksperiment: `test/<kort-beskrivelse>` eller `test2`, `test3`
+- Staging (pre-merge): `staging`
+
+**Merge-protokoll:**
+1. Arbeid skjer i feature-branch
+2. Test i `staging` ved behov
+3. Merge til `main` kun etter eksplisitt bruker-godkjenning
+
+### 10. PANIC MODE — STOPP OG SPØR
+**Trigger:** Krasj, uventet tilstand, rollback-behov, feilmelding som stopper fremdrift, eller noe som "ikke ser riktig ut".
+
+**Protokoll — ingen unntak:**
+1. **STOPP umiddelbart** — ingen nye kommandoer, ingen forsøk på å "fikse det selv"
+2. **Beskriv** situasjonen nøyaktig: hva skjedde, hvilken kommando/handling, hvilken tilstand er vi i nå
+3. **Still kontrollspørsmål** for å finne beste vei fremover — minst to alternativer med konsekvenser
+4. **Vent på brukers beslutning** — null autonomi i panic mode
+
+**Formål:** Beskytte arbeid. Forhindre at panikk-løsninger ødelegger mer enn problemet.
+
 ---
 
 ## 📁 PROSJEKTSTRUKTUR
 
 ```
-Kr-kefot-V2-Unified/
+Kr-kefot-V3/
 ├── server/
 │   ├── schema.ts          ← ENESTE kilde til sannhet for alle typer (Zod)
-│   └── index.ts           ← Express API (port 3005)
+│   └── index.ts           ← Express API (port 3015)
 ├── src/
 │   ├── App.tsx            ← Rot-editor, all state management
 │   ├── index.tsx          ← React entry point + ErrorBoundary + Mux imports
@@ -152,7 +184,10 @@ Kr-kefot-V2-Unified/
 │   ├── preview.css        ← Preview-spesifikk CSS
 │   ├── data/
 │   │   └── projectDefaults.json  ← Komplett standard-prosjektdata (37 KB)
+│   ├── publish/
+│   │   └── ssr.ts               ← SSR-renderer (renderToStaticMarkup) — V3 NYTT
 │   ├── utils/
+│   │   ├── framingUtils.ts      ← Delte framing-konstanter (MOBILE_NORM etc.)
 │   │   ├── mediaHelpers.ts      ← URL-parsing og Mux ID-ekstraksjon
 │   │   └── mediaProcessing.ts   ← Bilde-resize, WebP-konvertering, srcSet
 │   ├── hooks/
@@ -185,8 +220,8 @@ Kr-kefot-V2-Unified/
 ```
 
 **Dev-server:**
-- `localhost:3000` — Vite (React-editor)
-- `localhost:3005` — Express API
+- `localhost:3010` — Vite (React-editor)
+- `localhost:3015` — Express API
 - Start: `npm run dev`
 
 ---
@@ -362,6 +397,8 @@ Hver seksjon har tre lag:
 ## ✅ SJEKKLISTE FØR ENHVER IMPLEMENTERING
 
 ```
+□ Er jeg på riktig branch? (kjør: git branch — svar skal ALDRI være 'main')
+□ Har jeg verifisert branch med brukeren?
 □ Har jeg lest alle relevante filer, ikke bare én?
 □ Forstår jeg hvilke andre filer som påvirkes av denne endringen?
 □ Er endringen kompatibel med eksisterende data i projectDefaults.json?
@@ -378,6 +415,8 @@ Hver seksjon har tre lag:
 
 ## 🚫 FORBUDTE HANDLINGER
 
+- **`git reset --hard <commit-hash>`** — ABSOLUTT FORBUDT. Irreversibelt. Historisk bevist destruktivt.
+- **Arbeid direkte på `main`-branchen** — Bruk alltid en dedikert branch
 - **Rename eller slett** eksisterende MediaType-verdier i schema
 - **Dupliser** typedefinisjoner utenfor `server/schema.ts`
 - **Bruk worktree** for kodeendringer som skal testes i preview
@@ -385,7 +424,7 @@ Hver seksjon har tre lag:
 - **Bytt ut** YouTube/Spotify/SoundCloud iframes med noe annet
 - **Legg til** kode som omgår Zod-validering på API-endepunktet
 - **Skriv** kode som ikke er TypeScript-kompatibel
-- **Improviser** løsninger når noe ikke virker — stopp og spør
+- **Improviser** løsninger når noe ikke virker — stopp og spør (PANIC MODE)
 
 ---
 
@@ -419,22 +458,71 @@ src/components/PublishModalComponents/generator.ts  ← Stor, kritisk
 - En pre-commit hook er installert som **blokkerer** sletting av mer enn 2 filer
 - Dersom du trenger å overstyre: bruk `git commit --no-verify` — men **spør alltid brukeren først**
 - Lag **alltid** en git-commit (checkpoint) før større endringer
+- **Aldri arbeid på `main`** — se regel 9 ovenfor
+- **`git reset --hard` er ABSOLUTT FORBUDT** — se Rollback-seksjonen
+- Ved usikkerhet om git-tilstand: kjør `git status` og `git log --oneline -5` og vis til brukeren
 
 ---
 
-## 🔄 ROLLBACK
+## 🔄 ROLLBACK — SIKKER PROTOKOLL
 
-Tag `rollback/pre-mux-player-migration` markerer tilstanden før MuxPlayer-migrasjonen.
+> ⛔ **`git reset --hard` er ABSOLUTT FORBUDT.** Dette er irreversibelt og har tidligere ført til tap av 8+ timers arbeid uten brukersamtykke. Bruk aldri denne kommandoen.
 
-Rull tilbake enkeltfiler:
+### Sikre rollback-metoder
+
+**Rull tilbake én enkelt fil (trygt, reversibelt):**
 ```bash
 git checkout <commit-hash> -- src/components/MinFil.tsx
 ```
 
-Rull tilbake alt til en commit:
+**Se hva som endret seg mellom commits (alltid gjør dette FØR rollback):**
 ```bash
-git reset --hard <commit-hash>
+git diff <commit-hash> HEAD
+git log --oneline -20
 ```
+
+**Lag en revert-commit (trygt, bevarer historikk):**
+```bash
+git revert <commit-hash>
+```
+
+**Midlertidig stash av ukommittert arbeid:**
+```bash
+git stash push -m "beskrivelse av arbeid"
+# ...gjør noe annet...
+git stash pop
+```
+
+### Rollback-protokoll (PANIC MODE gjelder)
+1. **STOPP** — ikke gjør noe uten brukerens godkjenning
+2. Kjør `git log --oneline -20` og vis output til brukeren
+3. Beskriv: hvilken commit er trygg? Hva vil gå tapt?
+4. Still minst to alternativer med konsekvenser
+5. Vent på eksplisitt godkjenning av valgt metode
+6. Utfør **kun** den godkjente metoden
+
+**Tag for kjent-god tilstand:**
+`rollback/pre-mux-player-migration` — tilstanden før MuxPlayer-migrasjonen.
+
+---
+
+## 🔍 KODEBASE-SØK — BRUK JCODEMUNCH
+
+Prosjektet er indeksert med **jcodemunch** (MCP). Bruk alltid jcodemunch FØR du leser filer manuelt.
+
+**Repo-ID:** `local/Kr-kefot-V3-e87e128c`
+
+**Når du skal finne noe i kodebasen:**
+```
+1. mcp__jcodemunch__search_symbols  — finn funksjoner/klasser/metoder
+2. mcp__jcodemunch__search_text     — finn streng-matches og kommentarer
+3. mcp__jcodemunch__get_file_outline — se alle symboler i en fil
+4. mcp__jcodemunch__get_symbol      — hent full kildekode for et symbol
+5. mcp__jcodemunch__get_file_tree   — se filtre og struktur
+```
+
+**Effektivisering:** Bruk `mcp__jcodemunch__get_symbols` for å hente multiple symboler i ett kall.
+Re-indekser etter større endringer: `mcp__jcodemunch__index_folder` (incremental=true).
 
 ---
 
@@ -444,6 +532,6 @@ Dette prosjektet skal skalere. Nye funksjoner skal:
 1. **Planlegges** grundig før implementering
 2. **Søke** etter nyeste dokumentasjon og pakkeversjon (ikke anta at du husker riktig)
 3. **Respektere** schema-arkitekturen som er etablert
-4. **Testes** visuelt i preview (localhost:3000) mot generert HTML
+4. **Testes** visuelt i preview (localhost:3010) mot generert HTML
 
 > Planlegging er overordnet. En time brukt på planlegging sparer ti timer på feilretting.
